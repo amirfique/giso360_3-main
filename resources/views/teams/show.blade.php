@@ -165,6 +165,69 @@
             </div>
         </div>
 
+                <!-- Presentation Schedule Card -->
+        @if($schedule)
+        <div class="row mb-4">
+            <div class="col-12">
+                <div class="card border shadow-xs">
+                    <div class="card-header bg-gradient-primary text-white">
+                        <h6 class="font-weight-semibold text-lg mb-0 text-white">Your Presentation Schedule</h6>
+                    </div>
+                    <div class="card-body">
+                        <div class="row">
+                            <div class="col-md-3 text-center">
+                                <div class="border-right border-gray-300 pr-3">
+                                    <h6 class="text-sm text-secondary mb-1">Date</h6>
+                                    <p class="text-lg font-weight-bold text-dark mb-0">
+                                        {{ $schedule->presentation_date->format('d F Y') }}
+                                    </p>
+                                </div>
+                            </div>
+                            <div class="col-md-2 text-center">
+                                <div class="border-right border-gray-300 pr-3">
+                                    <h6 class="text-sm text-secondary mb-1">Time</h6>
+                                    <p class="text-lg font-weight-bold text-dark mb-0">
+                                        {{ \Carbon\Carbon::parse($schedule->presentation_time)->format('h:i A') }}
+                                    </p>
+                                </div>
+                            </div>
+                            <div class="col-md-4 text-center">
+                                <div class="border-right border-gray-300 pr-3">
+                                    <h6 class="text-sm text-secondary mb-1">Location</h6>
+                                    <p class="text-lg font-weight-bold text-dark mb-0">
+                                        {{ $schedule->location }}
+                                    </p>
+                                </div>
+                            </div>
+                            <div class="col-md-3 text-center">
+                                <div>
+                                    <h6 class="text-sm text-secondary mb-1">Notes</h6>
+                                    <p class="text-sm text-dark mb-0">
+                                        {{ $schedule->notes ?? 'No additional notes' }}
+                                    </p>
+                                </div>
+                            </div>
+                        </div>
+                    </div>
+                </div>
+            </div>
+        </div>
+        @else
+        <div class="row mb-4">
+            <div class="col-12">
+                <div class="card border shadow-xs">
+                    <div class="card-body text-center py-5">
+                        <svg width="48" height="48" viewBox="0 0 24 24" fill="none" stroke="currentColor" class="text-secondary mb-3">
+                            <path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M8 7V3m8 4V3m-9 8h10M5 21h14a2 2 0 002-2V7a2 2 0 00-2-2H5a2 2 0 00-2 2v12a2 2 0 002 2z" />
+                        </svg>
+                        <h6 class="text-secondary mb-2">No Presentation Scheduled Yet</h6>
+                        <p class="text-sm text-secondary mb-0">Your presentation schedule will be announced soon.</p>
+                    </div>
+                </div>
+            </div>
+        </div>
+        @endif
+
 <!-- Proposals table -->
         <div class="row mt-4">
             <div class="col-12">
@@ -327,7 +390,7 @@
             </div>
         </div>
 
-        <!-- Add Proposal Modal -->
+                <!-- Add Proposal Modal -->
         <div class="modal fade" id="addProposalModal" tabindex="-1" role="dialog" aria-labelledby="addProposalModalLabel" aria-hidden="true">
             <div class="modal-dialog modal-dialog-centered" role="document">
                 <div class="modal-content">
@@ -337,27 +400,28 @@
                             <span aria-hidden="true">&times;</span>
                         </button>
                     </div>
-                    <div class="modal-body">
-                        <form>
+                    <form action="{{ route('proposals.store', $team) }}" method="POST" enctype="multipart/form-data">
+                        @csrf
+                        <div class="modal-body">
                             <div class="mb-3">
                                 <label for="proposalTitle" class="form-label">Title</label>
-                                <input type="text" class="form-control" id="proposalTitle" placeholder="Enter proposal title" maxlength="40">
+                                <input type="text" class="form-control" id="proposalTitle" name="title" placeholder="Enter proposal title" maxlength="255" required>
                             </div>
                             <div class="mb-3">
                                 <label for="proposalSummary" class="form-label">Summary</label>
-                                <textarea class="form-control" id="proposalSummary" rows="3" placeholder="Brief description of the proposal"></textarea>
+                                <textarea class="form-control" id="proposalSummary" name="summary" rows="3" placeholder="Brief description of the proposal"></textarea>
                             </div>
                             <div class="mb-3">
                                 <label for="proposalFile" class="form-label">Choose File</label>
-                                <input type="file" class="form-control" id="proposalFile">
-                                <div class="form-text">Supported formats: PDF, DOC, DOCX, PPT, PPTX</div>
+                                <input type="file" class="form-control" id="proposalFile" name="file" required>
+                                <div class="form-text">Supported formats: PDF, DOC, DOCX, PPT, PPTX (Max: 10MB)</div>
                             </div>
-                        </form>
-                    </div>
-                    <div class="modal-footer">
-                        <button type="button" class="btn btn-white" data-bs-dismiss="modal">Cancel</button>
-                        <button type="button" class="btn btn-dark">Submit Proposal</button>
-                    </div>
+                        </div>
+                        <div class="modal-footer">
+                            <button type="button" class="btn btn-white" data-bs-dismiss="modal">Cancel</button>
+                            <button type="submit" class="btn btn-dark">Submit Proposal</button>
+                        </div>
+                    </form>
                 </div>
             </div>
         </div>

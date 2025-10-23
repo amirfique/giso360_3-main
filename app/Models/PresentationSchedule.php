@@ -5,31 +5,24 @@ namespace App\Models;
 use Illuminate\Database\Eloquent\Factories\HasFactory;
 use Illuminate\Database\Eloquent\Model;
 
-class Report extends Model
+class PresentationSchedule extends Model
 {
     use HasFactory;
 
     protected $fillable = [
-        'title',
-        'summary',
-        'file_path',
-        'original_file_name',
-        'status',
-        'user_id',
         'team_id',
-        'admin_note'
+        'presentation_date',
+        'presentation_time',
+        'location',
+        'notes'
     ];
 
     protected $casts = [
+        'presentation_date' => 'date',
+        'presentation_time' => 'datetime:H:i',
         'created_at' => 'datetime',
         'updated_at' => 'datetime',
     ];
-
-    // Relationship with User
-    public function user()
-    {
-        return $this->belongsTo(User::class);
-    }
 
     // Relationship with Team
     public function team()

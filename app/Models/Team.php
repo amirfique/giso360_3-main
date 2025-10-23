@@ -45,4 +45,9 @@ class Team extends Model
         return $this->hasMany(Expense::class);
     }
 
+    public function presentationSchedule()
+    {
+    return $this->hasOne(PresentationSchedule::class);
+    }
+
 }

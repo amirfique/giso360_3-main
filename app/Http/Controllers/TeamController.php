@@ -76,7 +76,10 @@ class TeamController extends Controller
         // Load proposals and reports with their user relationships
         $proposals = $team->proposals()->with('user')->latest()->get();
         $reports = $team->reports()->with('user')->latest()->get();
-        
-        return view('teams.show', compact('team', 'proposals', 'reports'));
+
+        // Load the presentation schedule for this team
+        $schedule = $team->presentationSchedule;
+
+        return view('teams.show', compact('team', 'proposals', 'reports', 'schedule'));
     }
 }

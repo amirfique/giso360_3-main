@@ -8,6 +8,7 @@ use App\Models\Proposal;
 use App\Models\Report;
 use App\Models\Expense;
 use Illuminate\Http\Request;
+use App\Models\PresentationSchedule;
 
 class AdminController extends Controller
 {
@@ -87,6 +88,18 @@ class AdminController extends Controller
         return redirect()->back()->with('success', 'Proposal status updated successfully!');
     }
 
+    // Update Proposal Note
+     public function updateProposalNote(Request $request, Proposal $proposal)
+    {
+        $request->validate([
+            'note' => 'nullable|string|max:1000'
+        ]);
+
+        $proposal->update(['admin_note' => $request->note]);
+
+        return redirect()->back()->with('success', 'Note updated successfully!');
+    }
+
     // Reports Management
     public function reports()
     {
@@ -119,6 +132,19 @@ class AdminController extends Controller
         return view('admin.expenses', compact('expenses'));
     }
 
+    // Update Report Note
+    public function updateReportNote(Request $request, Report $report)
+    {
+        $request->validate([
+            'note' => 'nullable|string|max:1000'
+        ]);
+
+        $report->update(['admin_note' => $request->note]);
+
+        return redirect()->back()->with('success', 'Note updated successfully!');
+    }
+
+
     // Update User Role
     public function updateUserRole(Request $request, User $user)
     {
@@ -147,5 +173,74 @@ class AdminController extends Controller
         $user->delete();
 
         return redirect()->back()->with('success', 'User deleted successfully!');
+    }
+
+    // Presentation Schedule Management
+    public function presentationSchedules(Request $request)
+    {
+        $query = Team::with(['presentationSchedule', 'proposals']);
+
+        // Search functionality
+        if ($request->has('search') && $request->search != '') {
+            $search = $request->search;
+            $query->where(function($q) use ($search) {
+                $q->where('name', 'like', "%{$search}%")
+                  ->orWhere('id', 'like', "%{$search}%");
+            });
+        }
+
+        // Filter by proposal status
+        if ($request->has('proposal_status') && $request->proposal_status != '') {
+            $query->whereHas('proposals', function($q) use ($request) {
+                $q->where('status', $request->proposal_status);
+            });
+        }
+
+        // Ordering
+        if ($request->has('sort')) {
+            switch ($request->sort) {
+                case 'latest':
+                    $query->latest();
+                    break;
+                case 'name':
+                    $query->orderBy('name');
+                    break;
+                case 'id':
+                    $query->orderBy('id');
+                    break;
+                default:
+                    $query->latest();
+            }
+        } else {
+            $query->latest();
+        }
+
+        $teams = $query->paginate(10);
+
+        return view('admin.presentation-schedules', compact('teams'));
+    }
+
+    // Update Presentation Schedule
+    public function updatePresentationSchedule(Request $request, Team $team)
+    {
+        $request->validate([
+            'presentation_date' => 'required|date',
+            'presentation_time' => 'required|date_format:H:i',
+            'location' => 'required|string|max:255',
+            'notes' => 'nullable|string|max:1000'
+        ]);
+
+        // Update or create presentation schedule
+        $team->presentationSchedule()->updateOrCreate(
+            ['team_id' => $team->id],
+            [
+                'presentation_date' => $request->presentation_date,
+                'presentation_time' => $request->presentation_time,
+                'location' => $request->location,
+                'notes' => $request->notes
+            ]
+        );
+
+        return redirect()->back()->with('success', 'Presentation schedule updated successfully!');
     }
 }

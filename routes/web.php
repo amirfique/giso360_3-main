@@ -12,6 +12,7 @@ use App\Http\Controllers\ProposalController;
 use App\Http\Controllers\ReportController;
 use App\Http\Controllers\FinanceController;
 use App\Http\Controllers\AdminController;
+use App\Http\Controllers\PresentationScheduleController;
 
 /*
 |--------------------------------------------------------------------------
@@ -101,6 +102,9 @@ Route::middleware(['auth'])->group(function () {
     Route::get('/laravel-examples/user-profile', [ProfileController::class, 'index'])->name('users.profile');
     Route::put('/laravel-examples/user-profile/update', [ProfileController::class, 'update'])->name('users.update');
     Route::get('/laravel-examples/users-management', [UserController::class, 'index'])->name('users-management');
+
+    // Presentation Schedule routes
+    Route::get('/presentation-schedules', [PresentationScheduleController::class, 'index'])->name('presentation-schedules.index');
 });
 
 // Admin Routes
@@ -119,14 +123,20 @@ Route::prefix('admin')->name('admin.')->middleware(['auth', 'admin'])->group(fun
     // Proposal Management
     Route::get('/proposals', [AdminController::class, 'proposals'])->name('proposals');
     Route::patch('/proposals/{proposal}/status', [AdminController::class, 'updateProposalStatus'])->name('proposals.updateStatus');
+    Route::patch('/proposals/{proposal}/note', [AdminController::class, 'updateProposalNote'])->name('proposals.updateNote');
     
     // Report Management
     Route::get('/reports', [AdminController::class, 'reports'])->name('reports');
     Route::patch('/reports/{report}/status', [AdminController::class, 'updateReportStatus'])->name('reports.updateStatus');
+    Route::patch('/reports/{report}/note', [AdminController::class, 'updateReportNote'])->name('reports.updateNote');
     
     // Expense Management
     Route::get('/expenses', [AdminController::class, 'expenses'])->name('expenses');
-});
+
+    // Presentation Schedule Management
+    Route::get('/presentation-schedules', [AdminController::class, 'presentationSchedules'])->name('presentation-schedules');
+    Route::patch('/presentation-schedules/{team}', [AdminController::class, 'updatePresentationSchedule'])->name('presentation-schedules.update');
+    });
 
 // Student Routes - Protected with student middleware
 Route::middleware(['auth', 'student'])->group(function () {

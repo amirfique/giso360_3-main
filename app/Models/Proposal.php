@@ -16,7 +16,8 @@ class Proposal extends Model
         'original_file_name',
         'status',
         'user_id',
-        'team_id'
+        'team_id',
+        'admin_note'
     ];
 
     protected $casts = [
