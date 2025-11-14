@@ -1,5 +1,5 @@
 <x-app-layout>
-    <div class="container-fluid py-4">
+    <div class="container-fluid py-4 px-5">
         @if (session('success'))
             <div class="alert alert-success alert-dismissible fade show" role="alert">
                 {{ session('success') }}
@@ -14,14 +14,17 @@
             </div>
         @endif
 
-                <!-- Welcome Message -->
-        <div class="row">
-            <div class="col-12 pb-4">
-                <div class="mb-md-0 mb-3">
-                    <h3 class="font-weight-bold mb-0">Ready for adventure, {{ Auth::user()->name }}?</h3>
+        <!-- Page Header -->
+            <div class="row mb-4">
+                <div class="col-12">
+                    <div class="card border shadow-xs">
+                        <div class="card-body p-4">
+                            <h1 class="h4 text-gradient text-primary mb-2">Team Management</h1>
+                            <p class="text-sm mb-0">Create or Join Team</p>
+                        </div>
+                    </div>
                 </div>
-            </div>
-        </div>
+            </div>               
 
 
         <div class="row">
@@ -113,7 +116,7 @@
                             <div class="row mx-2">
                                 @foreach($teams as $team)
                                     <div class="col-xl-3 col-lg-4 col-md-6 col-sm-12 mb-4">
-                                        <div class="card h-100">
+                                        <div class="card border h-100">
                                             <!-- Team Icon/Image -->
                                             <div class="card-img-top d-flex justify-content-center align-items-center bg-gradient-primary text-white p-4" 
                                                 style="height: 120px; border-radius: 0.375rem 0.375rem 0 0;">

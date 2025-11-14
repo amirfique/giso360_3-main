@@ -391,40 +391,479 @@
         </div>
 
                 <!-- Add Proposal Modal -->
-        <div class="modal fade" id="addProposalModal" tabindex="-1" role="dialog" aria-labelledby="addProposalModalLabel" aria-hidden="true">
-            <div class="modal-dialog modal-dialog-centered" role="document">
-                <div class="modal-content">
-                    <div class="modal-header">
-                        <h5 class="modal-title" id="addProposalModalLabel">Add New Proposal</h5>
-                        <button type="button" class="btn-close" data-bs-dismiss="modal" aria-label="Close">
-                            <span aria-hidden="true">&times;</span>
-                        </button>
+                <div class="modal fade" id="addProposalModal" tabindex="-1" role="dialog" aria-labelledby="addProposalModalLabel" aria-hidden="true">
+                <div class="modal-dialog modal-dialog-centered modal-lg" role="document">
+                    <div class="modal-content border-0 shadow-lg">
+                        <!-- Header -->
+                        <div class="modal-header bg-gradient-primary text-white">
+                            <div class="d-flex align-items-center">
+                                <div class="icon icon-shape bg-white bg-opacity-10 rounded-circle me-3">
+                                    <i class="fas fa-file-upload text-white"></i>
+                                </div>
+                                <div>
+                                    <h5 class="modal-title mb-0" id="addProposalModalLabel">Submit New Proposal</h5>
+                                    <p class="text-white text-xs mb-0 opacity-80">Fill in the details below to submit your proposal</p>
+                                </div>
+                            </div>
+                            <button type="button" class="btn-close btn-close-white" data-bs-dismiss="modal" aria-label="Close"></button>
+                        </div>
+
+                        <form action="{{ route('proposals.store', $team) }}" method="POST" enctype="multipart/form-data" id="proposalForm">
+                            @csrf
+                            <div class="modal-body p-4">
+                                <!-- Progress Steps -->
+                                <div class="steps-progress mb-4">
+                                    <div class="steps">
+                                        <div class="step active" data-step="1">
+                                            <div class="step-number">1</div>
+                                            <span class="step-label">Basic Info</span>
+                                        </div>
+                                        <div class="step" data-step="2">
+                                            <div class="step-number">2</div>
+                                            <span class="step-label">File Upload</span>
+                                        </div>
+                                        <div class="step" data-step="3">
+                                            <div class="step-number">3</div>
+                                            <span class="step-label">Review</span>
+                                        </div>
+                                    </div>
+                                </div>
+
+                                <!-- Step 1: Basic Information -->
+                                <div class="step-content" data-step="1">
+                                    <div class="mb-4">
+                                        <label for="proposalTitle" class="form-label fw-semibold text-dark mb-2">
+                                            Proposal Title <span class="text-danger">*</span>
+                                        </label>
+                                        <input type="text" class="form-control form-control-lg border-radius-lg" 
+                                            id="proposalTitle" name="title" 
+                                            placeholder="Enter a clear and descriptive title for your proposal" 
+                                            maxlength="255" required>
+                                        <div class="form-text text-end">
+                                            <span id="titleCount">0</span>/255 characters
+                                        </div>
+                                    </div>
+
+                                    <div class="mb-4">
+                                        <label for="proposalSummary" class="form-label fw-semibold text-dark mb-2">
+                                            Executive Summary
+                                        </label>
+                                        <textarea class="form-control border-radius-lg" id="proposalSummary" 
+                                                name="summary" rows="4" 
+                                                placeholder="Provide a brief overview of your proposal's objectives, methodology, and expected outcomes..."></textarea>
+                                        <div class="form-text text-end">
+                                            <span id="summaryCount">0</span> characters
+                                        </div>
+                                    </div>
+                                </div>
+
+                                <!-- Step 2: File Upload -->
+                                <div class="step-content d-none" data-step="2">
+                                    <div class="file-upload-area text-center p-4 border border-dashed border-radius-lg bg-gray-100">
+                                        <div class="upload-icon mb-3">
+                                            <i class="fas fa-cloud-upload-alt text-primary fa-3x opacity-60"></i>
+                                        </div>
+                                        <h6 class="mb-2">Upload Proposal File</h6>
+                                        <p class="text-sm text-muted mb-3">Drag & drop your file here or click to browse</p>
+                                        
+                                        <input type="file" class="d-none" id="proposalFile" name="file" required>
+                                        <button type="button" class="btn bg-gradient-primary mb-3" id="browseFileBtn">
+                                            <i class="fas fa-folder-open me-2"></i>Browse Files
+                                        </button>
+                                        
+                                        <div class="file-info d-none" id="fileInfo">
+                                            <div class="alert alert-success border-radius-lg p-3">
+                                                <div class="d-flex align-items-center">
+                                                    <i class="fas fa-check-circle text-success me-2"></i>
+                                                    <div class="flex-grow-1">
+                                                        <h6 class="mb-1" id="fileName">File selected</h6>
+                                                        <p class="mb-0 text-xs" id="fileSize">File size will appear here</p>
+                                                    </div>
+                                                    <button type="button" class="btn btn-sm btn-outline-danger" id="removeFileBtn">
+                                                        <i class="fas fa-times"></i>
+                                                    </button>
+                                                </div>
+                                            </div>
+                                        </div>
+                                        
+                                        <div class="supported-formats mt-3">
+                                            <p class="text-xs text-muted mb-1">Supported formats:</p>
+                                            <div class="d-flex justify-content-center gap-3">
+                                                <span class="badge badge-sm bg-gray-200 text-dark">PDF</span>
+                                                <span class="badge badge-sm bg-gray-200 text-dark">DOC</span>
+                                                <span class="badge badge-sm bg-gray-200 text-dark">DOCX</span>
+                                                <span class="badge badge-sm bg-gray-200 text-dark">PPT</span>
+                                                <span class="badge badge-sm bg-gray-200 text-dark">PPTX</span>
+                                            </div>
+                                            <p class="text-xs text-muted mt-2">Maximum file size: 10MB</p>
+                                        </div>
+                                    </div>
+                                </div>
+
+                                <!-- Step 3: Review -->
+                                <div class="step-content d-none" data-step="3">
+                                    <div class="review-section">
+                                        <h6 class="text-dark mb-3">Review Your Proposal</h6>
+                                        
+                                        <div class="card border shadow-xs mb-3">
+                                            <div class="card-body">
+                                                <div class="row">
+                                                    <div class="col-12">
+                                                        <h6 class="text-sm text-muted mb-1">Title</h6>
+                                                        <p class="text-dark font-weight-semibold" id="reviewTitle">-</p>
+                                                    </div>
+                                                    <div class="col-12 mt-3">
+                                                        <h6 class="text-sm text-muted mb-1">Summary</h6>
+                                                        <p class="text-dark" id="reviewSummary">-</p>
+                                                    </div>
+                                                    <div class="col-12 mt-3">
+                                                        <h6 class="text-sm text-muted mb-1">File</h6>
+                                                        <p class="text-dark font-weight-semibold" id="reviewFileName">-</p>
+                                                        <p class="text-xs text-muted mb-0" id="reviewFileSize">-</p>
+                                                    </div>
+                                                </div>
+                                            </div>
+                                        </div>
+                                        
+                                        <div class="alert alert-info border-radius-lg">
+                                            <div class="d-flex align-items-center">
+                                                <i class="fas fa-info-circle text-info me-2"></i>
+                                                <span class="text-sm">Please review all information before submitting. You can go back to make changes if needed.</span>
+                                            </div>
+                                        </div>
+                                    </div>
+                                </div>
+                            </div>
+
+                            <!-- Footer with Navigation -->
+                            <div class="modal-footer bg-gray-100 border-top">
+                                <div class="w-100 d-flex justify-content-between align-items-center">
+                                    <button type="button" class="btn btn-outline-secondary" id="prevStepBtn" style="display: none;">
+                                        <i class="fas fa-arrow-left me-2"></i>Previous
+                                    </button>
+                                    
+                                    <div class="d-flex gap-2">
+                                        <button type="button" class="btn btn-white" data-bs-dismiss="modal">
+                                            Cancel
+                                        </button>
+                                        <button type="button" class="btn bg-gradient-primary" id="nextStepBtn">
+                                            Next <i class="fas fa-arrow-right ms-2"></i>
+                                        </button>
+                                        <button type="submit" class="btn bg-gradient-success" id="submitBtn" style="display: none;">
+                                            <i class="fas fa-paper-plane me-2"></i>Submit Proposal
+                                        </button>
+                                    </div>
+                                </div>
+                            </div>
+                        </form>
                     </div>
-                    <form action="{{ route('proposals.store', $team) }}" method="POST" enctype="multipart/form-data">
-                        @csrf
-                        <div class="modal-body">
-                            <div class="mb-3">
-                                <label for="proposalTitle" class="form-label">Title</label>
-                                <input type="text" class="form-control" id="proposalTitle" name="title" placeholder="Enter proposal title" maxlength="255" required>
-                            </div>
-                            <div class="mb-3">
-                                <label for="proposalSummary" class="form-label">Summary</label>
-                                <textarea class="form-control" id="proposalSummary" name="summary" rows="3" placeholder="Brief description of the proposal"></textarea>
-                            </div>
-                            <div class="mb-3">
-                                <label for="proposalFile" class="form-label">Choose File</label>
-                                <input type="file" class="form-control" id="proposalFile" name="file" required>
-                                <div class="form-text">Supported formats: PDF, DOC, DOCX, PPT, PPTX (Max: 10MB)</div>
-                            </div>
-                        </div>
-                        <div class="modal-footer">
-                            <button type="button" class="btn btn-white" data-bs-dismiss="modal">Cancel</button>
-                            <button type="submit" class="btn btn-dark">Submit Proposal</button>
-                        </div>
-                    </form>
                 </div>
             </div>
-        </div>
+
+            <style>
+            .modal-content {
+                border-radius: 1rem;
+                overflow: hidden;
+            }
+
+            .modal-header {
+                border-bottom: none;
+                padding: 1.5rem;
+            }
+
+            .modal-header .icon {
+                width: 40px;
+                height: 40px;
+                display: flex;
+                align-items: center;
+                justify-content: center;
+            }
+
+            .steps-progress {
+                position: relative;
+            }
+
+            .steps {
+                display: flex;
+                justify-content: space-between;
+                position: relative;
+            }
+
+            .steps::before {
+                content: '';
+                position: absolute;
+                top: 15px;
+                left: 0;
+                right: 0;
+                height: 2px;
+                background-color: #e9ecef;
+                z-index: 1;
+            }
+
+            .step {
+                display: flex;
+                flex-direction: column;
+                align-items: center;
+                position: relative;
+                z-index: 2;
+            }
+
+            .step-number {
+                width: 32px;
+                height: 32px;
+                border-radius: 50%;
+                background-color: #e9ecef;
+                color: #6c757d;
+                display: flex;
+                align-items: center;
+                justify-content: center;
+                font-size: 0.875rem;
+                font-weight: 600;
+                margin-bottom: 0.5rem;
+                transition: all 0.3s ease;
+            }
+
+            .step.active .step-number {
+                background-color: #5e72e4;
+                color: white;
+                box-shadow: 0 4px 6px rgba(94, 114, 228, 0.3);
+            }
+
+            .step-label {
+                font-size: 0.75rem;
+                color: #6c757d;
+                font-weight: 500;
+            }
+
+            .step.active .step-label {
+                color: #5e72e4;
+                font-weight: 600;
+            }
+
+            .file-upload-area {
+                transition: all 0.3s ease;
+                cursor: pointer;
+            }
+
+            .file-upload-area:hover {
+                border-color: #5e72e4 !important;
+                background-color: rgba(94, 114, 228, 0.02) !important;
+            }
+
+            .file-upload-area.dragover {
+                border-color: #5e72e4 !important;
+                background-color: rgba(94, 114, 228, 0.05) !important;
+            }
+
+            .border-dashed {
+                border-style: dashed !important;
+            }
+
+            .bg-gray-100 {
+                background-color: #f8f9fa !important;
+            }
+
+            .border-radius-lg {
+                border-radius: 0.75rem !important;
+            }
+
+            .form-control-lg {
+                padding: 0.75rem 1rem;
+                font-size: 1rem;
+            }
+            </style>
+
+            <script>
+            document.addEventListener('DOMContentLoaded', function() {
+                let currentStep = 1;
+                const totalSteps = 3;
+                const form = document.getElementById('proposalForm');
+                const fileInput = document.getElementById('proposalFile');
+                const browseFileBtn = document.getElementById('browseFileBtn');
+                const removeFileBtn = document.getElementById('removeFileBtn');
+                const fileInfo = document.getElementById('fileInfo');
+                const uploadArea = document.querySelector('.file-upload-area');
+
+                // Character counters
+                const titleInput = document.getElementById('proposalTitle');
+                const summaryInput = document.getElementById('proposalSummary');
+                const titleCount = document.getElementById('titleCount');
+                const summaryCount = document.getElementById('summaryCount');
+
+                // Navigation buttons
+                const prevStepBtn = document.getElementById('prevStepBtn');
+                const nextStepBtn = document.getElementById('nextStepBtn');
+                const submitBtn = document.getElementById('submitBtn');
+
+                // Review elements
+                const reviewTitle = document.getElementById('reviewTitle');
+                const reviewSummary = document.getElementById('reviewSummary');
+                const reviewFileName = document.getElementById('reviewFileName');
+                const reviewFileSize = document.getElementById('reviewFileSize');
+
+                // Character counting
+                titleInput.addEventListener('input', function() {
+                    titleCount.textContent = this.value.length;
+                });
+
+                summaryInput.addEventListener('input', function() {
+                    summaryCount.textContent = this.value.length;
+                });
+
+                // File upload handling
+                browseFileBtn.addEventListener('click', function() {
+                    fileInput.click();
+                });
+
+                fileInput.addEventListener('change', function(e) {
+                    if (this.files.length > 0) {
+                        const file = this.files[0];
+                        updateFileInfo(file);
+                    }
+                });
+
+                // Drag and drop functionality
+                ['dragenter', 'dragover', 'dragleave', 'drop'].forEach(eventName => {
+                    uploadArea.addEventListener(eventName, preventDefaults, false);
+                });
+
+                function preventDefaults(e) {
+                    e.preventDefault();
+                    e.stopPropagation();
+                }
+
+                ['dragenter', 'dragover'].forEach(eventName => {
+                    uploadArea.addEventListener(eventName, highlight, false);
+                });
+
+                ['dragleave', 'drop'].forEach(eventName => {
+                    uploadArea.addEventListener(eventName, unhighlight, false);
+                });
+
+                function highlight() {
+                    uploadArea.classList.add('dragover');
+                }
+
+                function unhighlight() {
+                    uploadArea.classList.remove('dragover');
+                }
+
+                uploadArea.addEventListener('drop', function(e) {
+                    const dt = e.dataTransfer;
+                    const files = dt.files;
+                    fileInput.files = files;
+                    if (files.length > 0) {
+                        updateFileInfo(files[0]);
+                    }
+                });
+
+                function updateFileInfo(file) {
+                    const fileName = document.getElementById('fileName');
+                    const fileSize = document.getElementById('fileSize');
+                    
+                    fileName.textContent = file.name;
+                    fileSize.textContent = formatFileSize(file.size);
+                    fileInfo.classList.remove('d-none');
+                    
+                    // Update review section
+                    reviewFileName.textContent = file.name;
+                    reviewFileSize.textContent = formatFileSize(file.size);
+                }
+
+                function formatFileSize(bytes) {
+                    if (bytes === 0) return '0 Bytes';
+                    const k = 1024;
+                    const sizes = ['Bytes', 'KB', 'MB', 'GB'];
+                    const i = Math.floor(Math.log(bytes) / Math.log(k));
+                    return parseFloat((bytes / Math.pow(k, i)).toFixed(2)) + ' ' + sizes[i];
+                }
+
+                removeFileBtn.addEventListener('click', function() {
+                    fileInput.value = '';
+                    fileInfo.classList.add('d-none');
+                    reviewFileName.textContent = '-';
+                    reviewFileSize.textContent = '-';
+                });
+
+                // Step navigation
+                function updateStepNavigation() {
+                    // Update step indicators
+                    document.querySelectorAll('.step').forEach((step, index) => {
+                        if (index + 1 <= currentStep) {
+                            step.classList.add('active');
+                        } else {
+                            step.classList.remove('active');
+                        }
+                    });
+
+                    // Show/hide step content
+                    document.querySelectorAll('.step-content').forEach(content => {
+                        if (parseInt(content.dataset.step) === currentStep) {
+                            content.classList.remove('d-none');
+                        } else {
+                            content.classList.add('d-none');
+                        }
+                    });
+
+                    // Update navigation buttons
+                    prevStepBtn.style.display = currentStep > 1 ? 'block' : 'none';
+                    
+                    if (currentStep === totalSteps) {
+                        nextStepBtn.style.display = 'none';
+                        submitBtn.style.display = 'block';
+                        updateReviewSection();
+                    } else {
+                        nextStepBtn.style.display = 'block';
+                        submitBtn.style.display = 'none';
+                    }
+                }
+
+                function updateReviewSection() {
+                    reviewTitle.textContent = titleInput.value || '-';
+                    reviewSummary.textContent = summaryInput.value || '-';
+                }
+
+                function validateStep(step) {
+                    switch(step) {
+                        case 1:
+                            return titleInput.value.trim() !== '';
+                        case 2:
+                            return fileInput.files.length > 0;
+                        case 3:
+                            return true;
+                        default:
+                            return false;
+                    }
+                }
+
+                nextStepBtn.addEventListener('click', function() {
+                    if (validateStep(currentStep)) {
+                        currentStep++;
+                        updateStepNavigation();
+                    } else {
+                        // Show validation error
+                        const stepName = currentStep === 1 ? 'Basic Information' : 'File Upload';
+                        alert(`Please complete the ${stepName} step before proceeding.`);
+                    }
+                });
+
+                prevStepBtn.addEventListener('click', function() {
+                    currentStep--;
+                    updateStepNavigation();
+                });
+
+                // Form submission validation
+                form.addEventListener('submit', function(e) {
+                    if (!validateStep(1) || !validateStep(2)) {
+                        e.preventDefault();
+                        alert('Please complete all required fields before submitting.');
+                    }
+                });
+
+                // Initialize
+                updateStepNavigation();
+            });
+            </script>
 
       <!-- Reports table -->
         <div class="row mt-4">
@@ -589,40 +1028,481 @@
         </div>
 
         <!-- Add Report Modal -->
-        <div class="modal fade" id="addReportModal" tabindex="-1" role="dialog" aria-labelledby="addReportModalLabel" aria-hidden="true">
-            <div class="modal-dialog modal-dialog-centered" role="document">
-                <div class="modal-content">
-                    <div class="modal-header">
-                        <h5 class="modal-title" id="addReportModalLabel">Add New Report</h5>
-                        <button type="button" class="btn-close" data-bs-dismiss="modal" aria-label="Close">
-                            <span aria-hidden="true">&times;</span>
-                        </button>
-                    </div>
-                    <form action="{{ route('reports.store', $team) }}" method="POST" enctype="multipart/form-data">
-                        @csrf
-                        <div class="modal-body">
-                            <div class="mb-3">
-                                <label for="reportTitle" class="form-label">Title</label>
-                                <input type="text" class="form-control" id="reportTitle" name="title" placeholder="Enter report title" required>
+                <div class="modal fade" id="addReportModal" tabindex="-1" role="dialog" aria-labelledby="addReportModalLabel" aria-hidden="true">
+            <div class="modal-dialog modal-dialog-centered modal-lg" role="document">
+                <div class="modal-content border-0 shadow-lg">
+                    <!-- Header -->
+                    <div class="modal-header bg-gradient-info text-white">
+                        <div class="d-flex align-items-center">
+                            <div class="icon icon-shape bg-white bg-opacity-10 rounded-circle me-3">
+                                <i class="fas fa-chart-bar text-white"></i>
                             </div>
-                            <div class="mb-3">
-                                <label for="reportSummary" class="form-label">Summary</label>
-                                <textarea class="form-control" id="reportSummary" name="summary" rows="3" placeholder="Brief description of the report"></textarea>
-                            </div>
-                            <div class="mb-3">
-                                <label for="reportFile" class="form-label">Choose File</label>
-                                <input type="file" class="form-control" id="reportFile" name="file" required>
-                                <div class="form-text">Supported formats: PDF, DOC, DOCX, PPT, PPTX, XLS, XLSX (Max: 10MB)</div>
+                            <div>
+                                <h5 class="modal-title mb-0" id="addReportModalLabel">Submit New Report</h5>
+                                <p class="text-white text-xs mb-0 opacity-80">Fill in the details below to submit your report</p>
                             </div>
                         </div>
-                        <div class="modal-footer">
-                            <button type="button" class="btn btn-white" data-bs-dismiss="modal">Cancel</button>
-                            <button type="submit" class="btn btn-dark">Submit Report</button>
+                        <button type="button" class="btn-close btn-close-white" data-bs-dismiss="modal" aria-label="Close"></button>
+                    </div>
+
+                    <form action="{{ route('reports.store', $team) }}" method="POST" enctype="multipart/form-data" id="reportForm">
+                        @csrf
+                        <div class="modal-body p-4">
+                            <!-- Progress Steps -->
+                            <div class="steps-progress mb-4">
+                                <div class="steps">
+                                    <div class="step active" data-step="1">
+                                        <div class="step-number">1</div>
+                                        <span class="step-label">Basic Info</span>
+                                    </div>
+                                    <div class="step" data-step="2">
+                                        <div class="step-number">2</div>
+                                        <span class="step-label">File Upload</span>
+                                    </div>
+                                    <div class="step" data-step="3">
+                                        <div class="step-number">3</div>
+                                        <span class="step-label">Review</span>
+                                    </div>
+                                </div>
+                            </div>
+
+                            <!-- Step 1: Basic Information -->
+                            <div class="step-content" data-step="1">
+                                <div class="mb-4">
+                                    <label for="reportTitle" class="form-label fw-semibold text-dark mb-2">
+                                        Report Title <span class="text-danger">*</span>
+                                    </label>
+                                    <input type="text" class="form-control form-control-lg border-radius-lg" 
+                                        id="reportTitle" name="title" 
+                                        placeholder="Enter a clear and descriptive title for your report" 
+                                        maxlength="255" required>
+                                    <div class="form-text text-end">
+                                        <span id="reportTitleCount">0</span>/255 characters
+                                    </div>
+                                </div>
+
+                                <div class="mb-4">
+                                    <label for="reportSummary" class="form-label fw-semibold text-dark mb-2">
+                                        Executive Summary
+                                    </label>
+                                    <textarea class="form-control border-radius-lg" id="reportSummary" 
+                                            name="summary" rows="4" 
+                                            placeholder="Provide a brief overview of your report's findings, analysis, and conclusions..."></textarea>
+                                    <div class="form-text text-end">
+                                        <span id="reportSummaryCount">0</span> characters
+                                    </div>
+                                </div>
+                            </div>
+
+                            <!-- Step 2: File Upload -->
+                            <div class="step-content d-none" data-step="2">
+                                <div class="file-upload-area text-center p-4 border border-dashed border-radius-lg bg-gray-100">
+                                    <div class="upload-icon mb-3">
+                                        <i class="fas fa-cloud-upload-alt text-info fa-3x opacity-60"></i>
+                                    </div>
+                                    <h6 class="mb-2">Upload Report File</h6>
+                                    <p class="text-sm text-muted mb-3">Drag & drop your file here or click to browse</p>
+                                    
+                                    <input type="file" class="d-none" id="reportFile" name="file" required>
+                                    <button type="button" class="btn bg-gradient-info mb-3" id="browseReportFileBtn">
+                                        <i class="fas fa-folder-open me-2"></i>Browse Files
+                                    </button>
+                                    
+                                    <div class="file-info d-none" id="reportFileInfo">
+                                        <div class="alert alert-success border-radius-lg p-3">
+                                            <div class="d-flex align-items-center">
+                                                <i class="fas fa-check-circle text-success me-2"></i>
+                                                <div class="flex-grow-1">
+                                                    <h6 class="mb-1" id="reportFileName">File selected</h6>
+                                                    <p class="mb-0 text-xs" id="reportFileSize">File size will appear here</p>
+                                                </div>
+                                                <button type="button" class="btn btn-sm btn-outline-danger" id="removeReportFileBtn">
+                                                    <i class="fas fa-times"></i>
+                                                </button>
+                                            </div>
+                                        </div>
+                                    </div>
+                                    
+                                    <div class="supported-formats mt-3">
+                                        <p class="text-xs text-muted mb-1">Supported formats:</p>
+                                        <div class="d-flex justify-content-center gap-2 flex-wrap">
+                                            <span class="badge badge-sm bg-gray-200 text-dark">PDF</span>
+                                            <span class="badge badge-sm bg-gray-200 text-dark">DOC</span>
+                                            <span class="badge badge-sm bg-gray-200 text-dark">DOCX</span>
+                                            <span class="badge badge-sm bg-gray-200 text-dark">PPT</span>
+                                            <span class="badge badge-sm bg-gray-200 text-dark">PPTX</span>
+                                            <span class="badge badge-sm bg-gray-200 text-dark">XLS</span>
+                                            <span class="badge badge-sm bg-gray-200 text-dark">XLSX</span>
+                                        </div>
+                                        <p class="text-xs text-muted mt-2">Maximum file size: 10MB</p>
+                                    </div>
+                                </div>
+                            </div>
+
+                            <!-- Step 3: Review -->
+                            <div class="step-content d-none" data-step="3">
+                                <div class="review-section">
+                                    <h6 class="text-dark mb-3">Review Your Report</h6>
+                                    
+                                    <div class="card border shadow-xs mb-3">
+                                        <div class="card-body">
+                                            <div class="row">
+                                                <div class="col-12">
+                                                    <h6 class="text-sm text-muted mb-1">Title</h6>
+                                                    <p class="text-dark font-weight-semibold" id="reviewReportTitle">-</p>
+                                                </div>
+                                                <div class="col-12 mt-3">
+                                                    <h6 class="text-sm text-muted mb-1">Summary</h6>
+                                                    <p class="text-dark" id="reviewReportSummary">-</p>
+                                                </div>
+                                                <div class="col-12 mt-3">
+                                                    <h6 class="text-sm text-muted mb-1">File</h6>
+                                                    <p class="text-dark font-weight-semibold" id="reviewReportFileName">-</p>
+                                                    <p class="text-xs text-muted mb-0" id="reviewReportFileSize">-</p>
+                                                </div>
+                                            </div>
+                                        </div>
+                                    </div>
+                                    
+                                    <div class="alert alert-info border-radius-lg">
+                                        <div class="d-flex align-items-center">
+                                            <i class="fas fa-info-circle text-info me-2"></i>
+                                            <span class="text-sm">Please review all information before submitting. You can go back to make changes if needed.</span>
+                                        </div>
+                                    </div>
+                                </div>
+                            </div>
+                        </div>
+
+                        <!-- Footer with Navigation -->
+                        <div class="modal-footer bg-gray-100 border-top">
+                            <div class="w-100 d-flex justify-content-between align-items-center">
+                                <button type="button" class="btn btn-outline-secondary" id="prevReportStepBtn" style="display: none;">
+                                    <i class="fas fa-arrow-left me-2"></i>Previous
+                                </button>
+                                
+                                <div class="d-flex gap-2">
+                                    <button type="button" class="btn btn-white" data-bs-dismiss="modal">
+                                        Cancel
+                                    </button>
+                                    <button type="button" class="btn bg-gradient-info" id="nextReportStepBtn">
+                                        Next <i class="fas fa-arrow-right ms-2"></i>
+                                    </button>
+                                    <button type="submit" class="btn bg-gradient-success" id="submitReportBtn" style="display: none;">
+                                        <i class="fas fa-paper-plane me-2"></i>Submit Report
+                                    </button>
+                                </div>
+                            </div>
                         </div>
                     </form>
                 </div>
             </div>
         </div>
+
+        <style>
+        .modal-content {
+            border-radius: 1rem;
+            overflow: hidden;
+        }
+
+        .modal-header {
+            border-bottom: none;
+            padding: 1.5rem;
+        }
+
+        .modal-header .icon {
+            width: 40px;
+            height: 40px;
+            display: flex;
+            align-items: center;
+            justify-content: center;
+        }
+
+        .steps-progress {
+            position: relative;
+        }
+
+        .steps {
+            display: flex;
+            justify-content: space-between;
+            position: relative;
+        }
+
+        .steps::before {
+            content: '';
+            position: absolute;
+            top: 15px;
+            left: 0;
+            right: 0;
+            height: 2px;
+            background-color: #e9ecef;
+            z-index: 1;
+        }
+
+        .step {
+            display: flex;
+            flex-direction: column;
+            align-items: center;
+            position: relative;
+            z-index: 2;
+        }
+
+        .step-number {
+            width: 32px;
+            height: 32px;
+            border-radius: 50%;
+            background-color: #e9ecef;
+            color: #6c757d;
+            display: flex;
+            align-items: center;
+            justify-content: center;
+            font-size: 0.875rem;
+            font-weight: 600;
+            margin-bottom: 0.5rem;
+            transition: all 0.3s ease;
+        }
+
+        .step.active .step-number {
+            background-color: #11cdef;
+            color: white;
+            box-shadow: 0 4px 6px rgba(17, 205, 239, 0.3);
+        }
+
+        .step-label {
+            font-size: 0.75rem;
+            color: #6c757d;
+            font-weight: 500;
+        }
+
+        .step.active .step-label {
+            color: #11cdef;
+            font-weight: 600;
+        }
+
+        .file-upload-area {
+            transition: all 0.3s ease;
+            cursor: pointer;
+        }
+
+        .file-upload-area:hover {
+            border-color: #11cdef !important;
+            background-color: rgba(17, 205, 239, 0.02) !important;
+        }
+
+        .file-upload-area.dragover {
+            border-color: #11cdef !important;
+            background-color: rgba(17, 205, 239, 0.05) !important;
+        }
+
+        .border-dashed {
+            border-style: dashed !important;
+        }
+
+        .bg-gray-100 {
+            background-color: #f8f9fa !important;
+        }
+
+        .border-radius-lg {
+            border-radius: 0.75rem !important;
+        }
+
+        .form-control-lg {
+            padding: 0.75rem 1rem;
+            font-size: 1rem;
+        }
+        </style>
+
+        <script>
+        document.addEventListener('DOMContentLoaded', function() {
+            let currentReportStep = 1;
+            const totalReportSteps = 3;
+            const reportForm = document.getElementById('reportForm');
+            const reportFileInput = document.getElementById('reportFile');
+            const browseReportFileBtn = document.getElementById('browseReportFileBtn');
+            const removeReportFileBtn = document.getElementById('removeReportFileBtn');
+            const reportFileInfo = document.getElementById('reportFileInfo');
+            const reportUploadArea = document.querySelector('#addReportModal .file-upload-area');
+
+            // Character counters
+            const reportTitleInput = document.getElementById('reportTitle');
+            const reportSummaryInput = document.getElementById('reportSummary');
+            const reportTitleCount = document.getElementById('reportTitleCount');
+            const reportSummaryCount = document.getElementById('reportSummaryCount');
+
+            // Navigation buttons
+            const prevReportStepBtn = document.getElementById('prevReportStepBtn');
+            const nextReportStepBtn = document.getElementById('nextReportStepBtn');
+            const submitReportBtn = document.getElementById('submitReportBtn');
+
+            // Review elements
+            const reviewReportTitle = document.getElementById('reviewReportTitle');
+            const reviewReportSummary = document.getElementById('reviewReportSummary');
+            const reviewReportFileName = document.getElementById('reviewReportFileName');
+            const reviewReportFileSize = document.getElementById('reviewReportFileSize');
+
+            // Character counting
+            reportTitleInput.addEventListener('input', function() {
+                reportTitleCount.textContent = this.value.length;
+            });
+
+            reportSummaryInput.addEventListener('input', function() {
+                reportSummaryCount.textContent = this.value.length;
+            });
+
+            // File upload handling
+            browseReportFileBtn.addEventListener('click', function() {
+                reportFileInput.click();
+            });
+
+            reportFileInput.addEventListener('change', function(e) {
+                if (this.files.length > 0) {
+                    const file = this.files[0];
+                    updateReportFileInfo(file);
+                }
+            });
+
+            // Drag and drop functionality
+            ['dragenter', 'dragover', 'dragleave', 'drop'].forEach(eventName => {
+                reportUploadArea.addEventListener(eventName, preventDefaults, false);
+            });
+
+            function preventDefaults(e) {
+                e.preventDefault();
+                e.stopPropagation();
+            }
+
+            ['dragenter', 'dragover'].forEach(eventName => {
+                reportUploadArea.addEventListener(eventName, highlight, false);
+            });
+
+            ['dragleave', 'drop'].forEach(eventName => {
+                reportUploadArea.addEventListener(eventName, unhighlight, false);
+            });
+
+            function highlight() {
+                reportUploadArea.classList.add('dragover');
+            }
+
+            function unhighlight() {
+                reportUploadArea.classList.remove('dragover');
+            }
+
+            reportUploadArea.addEventListener('drop', function(e) {
+                const dt = e.dataTransfer;
+                const files = dt.files;
+                reportFileInput.files = files;
+                if (files.length > 0) {
+                    updateReportFileInfo(files[0]);
+                }
+            });
+
+            function updateReportFileInfo(file) {
+                const reportFileName = document.getElementById('reportFileName');
+                const reportFileSize = document.getElementById('reportFileSize');
+                
+                reportFileName.textContent = file.name;
+                reportFileSize.textContent = formatFileSize(file.size);
+                reportFileInfo.classList.remove('d-none');
+                
+                // Update review section
+                reviewReportFileName.textContent = file.name;
+                reviewReportFileSize.textContent = formatFileSize(file.size);
+            }
+
+            function formatFileSize(bytes) {
+                if (bytes === 0) return '0 Bytes';
+                const k = 1024;
+                const sizes = ['Bytes', 'KB', 'MB', 'GB'];
+                const i = Math.floor(Math.log(bytes) / Math.log(k));
+                return parseFloat((bytes / Math.pow(k, i)).toFixed(2)) + ' ' + sizes[i];
+            }
+
+            removeReportFileBtn.addEventListener('click', function() {
+                reportFileInput.value = '';
+                reportFileInfo.classList.add('d-none');
+                reviewReportFileName.textContent = '-';
+                reviewReportFileSize.textContent = '-';
+            });
+
+            // Step navigation
+            function updateReportStepNavigation() {
+                // Update step indicators
+                document.querySelectorAll('#addReportModal .step').forEach((step, index) => {
+                    if (index + 1 <= currentReportStep) {
+                        step.classList.add('active');
+                    } else {
+                        step.classList.remove('active');
+                    }
+                });
+
+                // Show/hide step content
+                document.querySelectorAll('#addReportModal .step-content').forEach(content => {
+                    if (parseInt(content.dataset.step) === currentReportStep) {
+                        content.classList.remove('d-none');
+                    } else {
+                        content.classList.add('d-none');
+                    }
+                });
+
+                // Update navigation buttons
+                prevReportStepBtn.style.display = currentReportStep > 1 ? 'block' : 'none';
+                
+                if (currentReportStep === totalReportSteps) {
+                    nextReportStepBtn.style.display = 'none';
+                    submitReportBtn.style.display = 'block';
+                    updateReportReviewSection();
+                } else {
+                    nextReportStepBtn.style.display = 'block';
+                    submitReportBtn.style.display = 'none';
+                }
+            }
+
+            function updateReportReviewSection() {
+                reviewReportTitle.textContent = reportTitleInput.value || '-';
+                reviewReportSummary.textContent = reportSummaryInput.value || '-';
+            }
+
+            function validateReportStep(step) {
+                switch(step) {
+                    case 1:
+                        return reportTitleInput.value.trim() !== '';
+                    case 2:
+                        return reportFileInput.files.length > 0;
+                    case 3:
+                        return true;
+                    default:
+                        return false;
+                }
+            }
+
+            nextReportStepBtn.addEventListener('click', function() {
+                if (validateReportStep(currentReportStep)) {
+                    currentReportStep++;
+                    updateReportStepNavigation();
+                } else {
+                    // Show validation error
+                    const stepName = currentReportStep === 1 ? 'Basic Information' : 'File Upload';
+                    alert(`Please complete the ${stepName} step before proceeding.`);
+                }
+            });
+
+            prevReportStepBtn.addEventListener('click', function() {
+                currentReportStep--;
+                updateReportStepNavigation();
+            });
+
+            // Form submission validation
+            reportForm.addEventListener('submit', function(e) {
+                if (!validateReportStep(1) || !validateReportStep(2)) {
+                    e.preventDefault();
+                    alert('Please complete all required fields before submitting.');
+                }
+            });
+
+            // Initialize
+            updateReportStepNavigation();
+        });
+        </script>
 
                 <!-- Finance Section Link -->
         <div class="row mt-4">

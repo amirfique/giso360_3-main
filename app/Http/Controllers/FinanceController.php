@@ -11,7 +11,8 @@ class FinanceController extends Controller
 {
     // Show finance page for a team
     public function show(Team $team)
-    {
+    {   
+
         // Check if user is a member of the team
         if (!$team->members()->where('user_id', auth()->id())->exists()) {
             abort(403, 'You are not a member of this team.');

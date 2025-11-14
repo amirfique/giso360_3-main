@@ -1,10 +1,10 @@
-
 <!DOCTYPE html>
 <html lang="en">
 
 <head>
     <meta charset="utf-8" />
     <meta name="viewport" content="width=device-width, initial-scale=1, shrink-to-fit=no">
+    <meta name="csrf-token" content="{{ csrf_token() }}">
     @if (config('app.is_demo'))
         <title itemprop="name">
             Corporate UI Dashboard Laravel by Creative Tim & UPDIVISION
@@ -19,7 +19,7 @@
         <meta name="twitter:image"
             content="https://s3.amazonaws.com/creativetim_bucket/products/737/original/corporate-ui-dashboard-laravel.jpg?1695288974" />
         <meta name="twitter:url" content="https://www.creative-tim.com/live/corporate-ui-dashboard-laravel" />
-        <meta name="description" content=""Fullstack tool for building Laravel apps with hundreds of UI components
+        <meta name="description" content="Fullstack tool for building Laravel apps with hundreds of UI components
             and ready-made CRUDs">
         <meta name="keywords"
             content="creative tim, updivision, html dashboard, laravel, api, html css dashboard laravel,  Corporate UI Dashboard Laravel,  Corporate UI Laravel,  Corporate Dashboard Laravel, UI Dashboard Laravel, Laravel admin, laravel dashboard, Laravel dashboard, laravel admin, web dashboard, bootstrap 5 dashboard laravel, bootstrap 5, css3 dashboard, bootstrap 5 admin laravel, frontend, responsive bootstrap 5 dashboard, corporate dashboard laravel,  Corporate UI Dashboard Laravel">
@@ -41,16 +41,18 @@
     <title>
         Corporate UI by Creative Tim & UPDIVISION
     </title>
-    <!--     Fonts and icons     -->
-    <link
-        href="https://fonts.googleapis.com/css?family=Open+Sans:300,400,600,700|Noto+Sans:300,400,500,600,700,800|PT+Mono:300,400,500,600,700"
-        rel="stylesheet" />
+
+    <meta name="csrf-token" content="{{ csrf_token() }}">
+
+     <!--     Fonts and icons     -->
+    <link href="https://fonts.googleapis.com/css?family=Open+Sans:300,400,600,700|Noto+Sans:300,400,500,600,700,800|PT+Mono:300,400,500,600,700" rel="stylesheet" />
     <!-- Nucleo Icons -->
     <link href="{{ asset('assets/css/nucleo-icons.css') }}" rel="stylesheet" />
     <link href="{{ asset('assets/css/nucleo-svg.css') }}" rel="stylesheet" />
     <!-- Font Awesome Icons -->
     <script src="https://kit.fontawesome.com/349ee9c857.js" crossorigin="anonymous"></script>
     <link href="{{ asset('assets/css/nucleo-svg.css') }}" rel="stylesheet" />
+    <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.5.0/css/all.min.css">
     <!-- CSS Files -->
     <link id="pagestyle" href="{{ asset('assets/css/corporate-ui-dashboard.css?v=1.0.0') }}" rel="stylesheet" />
     
@@ -73,10 +75,8 @@
     @endif
 
     <main class="main-content position-relative max-height-vh-100 h-100 border-radius-lg">
-        <!-- Navigation -->
         <x-app.navbar />
         
-        <!-- Content -->
         <div class="container-fluid py-4">
             @isset($header)
                 <div class="mb-4">
@@ -87,7 +87,10 @@
             {{ $slot }}
         </div>
     </main>
-    <!--   Core JS Files   -->
+
+    <x-chatbot/>
+
+    
     <script src="{{ asset('assets/js/core/popper.min.js') }}"></script>
     <script src="{{ asset('assets/js/core/bootstrap.min.js') }}"></script>
     <script src="{{ asset('assets/js/plugins/perfect-scrollbar.min.js') }}"></script>
@@ -360,8 +363,8 @@
     </script>
     @stack('scripts')
     
-    <!-- Control Center for Corporate UI Dashboard: parallax effects, scripts for the example pages etc -->
     <script src="{{ asset('assets/js/corporate-ui-dashboard.min.js?v=1.0.0') }}"></script>
-</body>
+
+    </body>
 
 </html>

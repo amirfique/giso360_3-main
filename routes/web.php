@@ -13,6 +13,8 @@ use App\Http\Controllers\ReportController;
 use App\Http\Controllers\FinanceController;
 use App\Http\Controllers\AdminController;
 use App\Http\Controllers\PresentationScheduleController;
+use App\Http\Controllers\DashboardController;
+use App\Http\Controllers\ChatbotController;
 
 /*
 |--------------------------------------------------------------------------
@@ -72,17 +74,11 @@ Route::middleware(['auth'])->group(function () {
         if (auth()->user()->isAdmin()) {
             return redirect()->route('admin.dashboard');
         }
-        return redirect()->route('teams.index');
+        return redirect()->route('dashboard'); // CHANGED: Redirect to dashboard instead of teams.index
     });
 
     // Dashboard - shows appropriate content based on role
-    Route::get('/dashboard', function () {
-        if (auth()->user()->isAdmin()) {
-            return redirect()->route('admin.dashboard');
-        }
-        // For students, show the regular dashboard
-        return view('dashboard');
-    })->name('dashboard');
+    Route::get('/dashboard', [DashboardController::class, 'index'])->name('dashboard'); // CHANGED: Use controller
 
     // Tables page - accessible to both
     Route::get('/tables', function () {
@@ -105,6 +101,9 @@ Route::middleware(['auth'])->group(function () {
 
     // Presentation Schedule routes
     Route::get('/presentation-schedules', [PresentationScheduleController::class, 'index'])->name('presentation-schedules.index');
+
+    // <<< 2. ADD THIS BLOCK FOR THE CHATBOT >>>
+    Route::post('/ask-chatbot', [ChatbotController::class, 'handleQuery'])->name('chatbot.query');
 });
 
 // Admin Routes
@@ -136,7 +135,7 @@ Route::prefix('admin')->name('admin.')->middleware(['auth', 'admin'])->group(fun
     // Presentation Schedule Management
     Route::get('/presentation-schedules', [AdminController::class, 'presentationSchedules'])->name('presentation-schedules');
     Route::patch('/presentation-schedules/{team}', [AdminController::class, 'updatePresentationSchedule'])->name('presentation-schedules.update');
-    });
+});
 
 // Student Routes - Protected with student middleware
 Route::middleware(['auth', 'student'])->group(function () {
@@ -145,6 +144,9 @@ Route::middleware(['auth', 'student'])->group(function () {
     Route::post('/teams', [TeamController::class, 'store'])->name('teams.store');
     Route::post('/teams/join', [TeamController::class, 'join'])->name('teams.join');
     Route::get('/teams/{team:slug}', [TeamController::class, 'show'])->name('teams.show');
+
+    // Team Dashboard Route - ADD THIS
+    Route::get('/teams/{team}/dashboard', [DashboardController::class, 'teamDashboard'])->name('teams.dashboard');
 
     // Proposals routes
     Route::post('/teams/{team}/proposals', [ProposalController::class, 'store'])->name('proposals.store');
@@ -165,4 +167,5 @@ Route::middleware(['auth', 'student'])->group(function () {
     Route::patch('/expenses/{expense}/status', [FinanceController::class, 'updateStatus'])->name('expenses.updateStatus');
     Route::delete('/expenses/{expense}', [FinanceController::class, 'destroy'])->name('expenses.destroy');
     Route::patch('/teams/{team}/budget', [FinanceController::class, 'updateBudget'])->name('teams.updateBudget');
+
 });
