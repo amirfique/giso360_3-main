@@ -95,9 +95,8 @@ Route::middleware(['auth'])->group(function () {
         return view('account-pages.profile');
     })->name('profile');
 
-    Route::get('/laravel-examples/user-profile', [ProfileController::class, 'index'])->name('users.profile');
-    Route::put('/laravel-examples/user-profile/update', [ProfileController::class, 'update'])->name('users.update');
-    Route::get('/laravel-examples/users-management', [UserController::class, 'index'])->name('users-management');
+    Route::get('/profile', [ProfileController::class, 'show'])->name('profile');
+    Route::patch('/profile', [ProfileController::class, 'update'])->name('profile.update');
 
     // Presentation Schedule routes
     Route::get('/presentation-schedules', [PresentationScheduleController::class, 'index'])->name('presentation-schedules.index');
@@ -123,6 +122,7 @@ Route::prefix('admin')->name('admin.')->middleware(['auth', 'admin'])->group(fun
     Route::get('/proposals', [AdminController::class, 'proposals'])->name('proposals');
     Route::patch('/proposals/{proposal}/status', [AdminController::class, 'updateProposalStatus'])->name('proposals.updateStatus');
     Route::patch('/proposals/{proposal}/note', [AdminController::class, 'updateProposalNote'])->name('proposals.updateNote');
+    Route::get('/proposals/{proposal}/download', [ProposalController::class, 'download'])->name('proposals.download');
     
     // Report Management
     Route::get('/reports', [AdminController::class, 'reports'])->name('reports');
@@ -144,6 +144,8 @@ Route::middleware(['auth', 'student'])->group(function () {
     Route::post('/teams', [TeamController::class, 'store'])->name('teams.store');
     Route::post('/teams/join', [TeamController::class, 'join'])->name('teams.join');
     Route::get('/teams/{team:slug}', [TeamController::class, 'show'])->name('teams.show');
+    // Add this inside the student routes group
+    Route::patch('/teams/{team}/members/{user}/role', [TeamController::class, 'updateMemberRole'])->name('teams.members.updateRole');
 
     // Team Dashboard Route - ADD THIS
     Route::get('/teams/{team}/dashboard', [DashboardController::class, 'teamDashboard'])->name('teams.dashboard');

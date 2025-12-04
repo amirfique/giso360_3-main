@@ -2,46 +2,48 @@
 
 namespace App\Http\Controllers;
 
-use App\Models\User;
 use Illuminate\Http\Request;
-use Illuminate\Support\Facades\Auth;
+use Illuminate\Support\Facades\Storage;
+use Illuminate\Validation\Rule;
 
 class ProfileController extends Controller
 {
-    public function index()
+    public function show()
     {
-        $user = User::find(Auth::id());
+        $user = auth()->user();
+        
+        // Requirement 4: How many Giso Teams I'm in
+        $teamCount = $user->teams()->count();
 
-        return view('laravel-examples.user-profile', compact('user'));
+        return view('account-pages.profile', compact('user', 'teamCount'));
     }
 
     public function update(Request $request)
     {
-        if (config('app.is_demo') && in_array(Auth::id(), [1])) {
-            return back()->with('error', "You are in a demo version. You are not allowed to change the email for default users.");
-        }
+        $user = auth()->user();
 
         $request->validate([
-            'name' => 'required|min:3|max:255',
-            'email' => 'required|email|max:255|unique:users,email,' . Auth::id(),
-            'location' => 'max:255',
-            'phone' => 'numeric|digits:10',
-            'about' => 'max:255',
-        ], [
-            'name.required' => 'Name is required',
-            'email.required' => 'Email is required',
+            'name' => ['required', 'string', 'max:255'],
+            'email' => ['required', 'email', 'max:255', Rule::unique('users')->ignore($user->id)],
+            'avatar' => ['nullable', 'image', 'max:2048'], // Max 2MB
         ]);
 
-        $user = User::find(Auth::id());
+        // Handle Profile Picture Upload
+        if ($request->hasFile('avatar')) {
+            // Delete old avatar if exists
+            if ($user->avatar && Storage::disk('public')->exists($user->avatar)) {
+                Storage::disk('public')->delete($user->avatar);
+            }
 
-        $user->update([
-            'name' => $request->name,
-            'email' => $request->email,
-            'location' => $request->location,
-            'phone' => $request->phone,
-            'about' => $request->about,
-        ]);
+            // Secure upload (hash name automatically)
+            $path = $request->file('avatar')->store('avatars', 'public');
+            $user->avatar = $path;
+        }
 
-        return back()->with('success', 'Profile updated successfully.');
+        $user->name = $request->name;
+        $user->email = $request->email;
+        $user->save();
+
+        return redirect()->route('profile')->with('success', 'Profile updated successfully.');
     }
 }

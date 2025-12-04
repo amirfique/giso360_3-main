@@ -15,53 +15,73 @@
         @endif
 
         <!-- Page Header -->
-            <div class="row mb-4">
-                <div class="col-12">
-                    <div class="card border shadow-xs">
-                        <div class="card-body p-4">
-                            <h1 class="h4 text-gradient text-primary mb-2">Team Management</h1>
-                            <p class="text-sm mb-0">Create or Join Team</p>
-                        </div>
+        <div class="row">
+            <div class="col-12">
+                <div class="card card-background card-background-after-none align-items-start mt-4 mb-5">
+                    <div class="full-background"
+                        style="background-image: url('../assets/img/header-blue-purple.jpg')"></div>
+                    <div class="card-body text-start p-4 w-100">
+                        <h3 class="text-white my-3">Team Management</h3>
+                        <p class="mb-4 mt-2 font-weight-semibold">
+                            Create or Join and Manage your Team
+                        </p>
+                        <img src="../assets/img/team management 3d.png" alt="3d-cube"
+                            class="position-absolute top-0 end-1 w-25 max-width-200 mt-n6 d-sm-block d-none" />
                     </div>
                 </div>
-            </div>               
-
+            </div>
+        </div>
+        
 
         <div class="row">
-            <!-- Create Team Card -->
-            <div class="col-md-6 mb-4 ">
-                <div class="card shadow-xs border h-100">
-                    <div class="card-header pb-0">
-                        <h6>Create New Team</h6>
+            <!-- Create Team Card - Enhanced -->
+            <div class="col-md-6 mb-4">
+                <div class="card shadow-lg border-0 h-100">
+                    <div class="card-header bg-gradient-primary text-white pb-3 pt-4">
+                        <div class="d-flex align-items-center">
+                            <div class="icon icon-shape bg-white shadow text-center border-radius-md me-3">
+                                <i class="fas fa-plus text-primary text-lg"></i>
+                            </div>
+                            <div>
+                                <h5 class="mb-0 text-white">Create New Team</h5>
+                                <p class="text-sm opacity-8 mb-0">Start your own team and invite others</p>
+                            </div>
+                        </div>
                     </div>
-                    <div class="card-body">
+                    <div class="card-body p-4">
                         <form action="{{ route('teams.store') }}" method="POST">
                             @csrf
                             <div class="mb-3">
-                                <label for="name" class="form-label">Team name</label>
-                                <input type="text" 
-                                       name="name" 
-                                       id="name"
-                                       class="form-control @error('name') is-invalid @enderror" 
-                                       placeholder="eg. GISO Tokyo ISA 2026"
-                                       value="{{ old('name') }}">
+                                <label for="name" class="form-label fw-bold">Team Name</label>
+                                <div class="input-group input-group-static">
+                                    <input type="text" 
+                                           name="name" 
+                                           id="name"
+                                           class="form-control @error('name') is-invalid @enderror" 
+                                           placeholder="e.g., GISO Tokyo ISA 2026"
+                                           value="{{ old('name') }}">
+                                </div>
                                 @error('name')
-                                    <div class="invalid-feedback">{{ $message }}</div>
+                                    <div class="text-danger text-sm mt-1">{{ $message }}</div>
                                 @enderror
                             </div>
 
-                            <div class="mb-3">
-                                <label for="description" class="form-label">Description</label>
-                                <textarea name="description" 
-                                          id="description"
-                                          class="form-control @error('description') is-invalid @enderror" 
-                                          placeholder="Short description">{{ old('description') }}</textarea>
+                            <div class="mb-4">
+                                <label for="description" class="form-label fw-bold">Description</label>
+                                <div class="input-group input-group-static">
+                                    <textarea name="description" 
+                                              id="description"
+                                              class="form-control @error('description') is-invalid @enderror" 
+                                              placeholder="Tell others about your team's purpose"
+                                              rows="3">{{ old('description') }}</textarea>
+                                </div>
                                 @error('description')
-                                    <div class="invalid-feedback">{{ $message }}</div>
+                                    <div class="text-danger text-sm mt-1">{{ $message }}</div>
                                 @enderror
                             </div>
 
-                            <button type="submit" class="btn btn-primary">
+                            <button type="submit" class="btn btn-lg btn-primary w-100 d-flex align-items-center justify-content-center">
+                                <i class="fas fa-rocket me-2"></i>
                                 Create Team
                             </button>
                         </form>
@@ -69,31 +89,50 @@
                 </div>
             </div>
 
-            <!-- Join Team Card -->
+            <!-- Join Team Card - Enhanced -->
             <div class="col-md-6 mb-4">
-                <div class="card shadow-xs border h-100">
-                    <div class="card-header pb-0">
-                        <h6>Join Team</h6>
+                <div class="card shadow-lg border-0 h-100">
+                    <div class="card-header bg-gradient-primary text-white pb-3 pt-4">
+                        <div class="d-flex align-items-center">
+                            <div class="icon icon-shape bg-white shadow text-center border-radius-md me-3">
+                                <i class="fas fa-user-plus text-primary text-lg"></i>
+                            </div>
+                            <div>
+                                <h5 class="mb-0 text-white">Join Existing Team</h5>
+                                <p class="text-sm opacity-8 mb-0">Enter code to join a team</p>
+                            </div>
+                        </div>
                     </div>
-                    <div class="card-body">
-                        <form action="{{ route('teams.join') }}" method="POST">
+                    <div class="card-body p-4 d-flex flex-column">
+                        <form action="{{ route('teams.join') }}" method="POST" class="flex-grow-1 d-flex flex-column">
                             @csrf
-                            <div class="mb-3">
-                                <label for="code" class="form-label">Enter join code</label>
-                                <div class="input-group">
+                            <div class="mb-4">
+                                <label for="code" class="form-label fw-bold">Team Invitation Code</label>
+                                <div class="input-group input-group-lg">
+                                    <span class="input-group-text bg-gray-200 border-0">
+                                        <i class="fas fa-key text-dark"></i>
+                                    </span>
                                     <input type="text"
                                            name="code"
                                            id="code"
-                                           class="form-control text-uppercase @error('code') is-invalid @enderror"
+                                           class="form-control text-uppercase text-center @error('code') is-invalid @enderror"
                                            placeholder="ABC123"
                                            value="{{ old('code') }}"
-                                           style="letter-spacing: 2px; font-weight: bold;">
-                                    <button type="submit" class="btn btn-primary">Join</button>
+                                           style="letter-spacing: 3px; font-weight: bold; font-size: 1.1rem;">
                                 </div>
                                 @error('code')
-                                    <div class="invalid-feedback d-block">{{ $message }}</div>
+                                    <div class="text-danger text-sm mt-1">{{ $message }}</div>
                                 @enderror
+                                <div class="form-text mt-2">
+                                    <i class="fas fa-info-circle me-1"></i>
+                                    Ask your team administrator for the invitation code
+                                </div>
                             </div>
+                            
+                            <button type="submit" class="btn btn-lg btn-primary w-100 mt-auto d-flex align-items-center justify-content-center">
+                                <i class="fas fa-sign-in-alt me-2"></i>
+                                Join Team
+                            </button>
                         </form>
                     </div>
                 </div>

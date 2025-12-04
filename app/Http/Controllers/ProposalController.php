@@ -6,6 +6,7 @@ use App\Models\Proposal;
 use App\Models\Team;
 use Illuminate\Http\Request;
 use Illuminate\Support\Facades\Storage;
+use Illuminate\Support\Facades\Auth;
 
 class ProposalController extends Controller
 {
@@ -52,7 +53,13 @@ class ProposalController extends Controller
     public function download(Proposal $proposal)
     {
         // Check if user has permission to download
-        if (!auth()->user()->teams->contains($proposal->team_id)) {
+        // Allow team members, team owners, and admins
+        $user = auth()->user();
+        $isTeamMember = $user->teams->contains($proposal->team_id);
+        $isTeamOwner = $proposal->team->owner_id === $user->id;
+        $isAdmin = $user->isAdmin(); // Assuming you have an isAdmin() method on your User model
+        
+        if (!$isTeamMember && !$isTeamOwner && !$isAdmin) {
             abort(403, 'Unauthorized action.');
         }
 
@@ -73,7 +80,7 @@ class ProposalController extends Controller
         ]);
 
         // Add authorization check here (only team owner/admin can update status)
-        if (auth()->id() !== $proposal->team->owner_id) {
+        if (!auth()->user()->isAdmin() && auth()->id() !== $proposal->team->owner_id) {
             abort(403, 'Unauthorized action.');
         }
 
@@ -82,10 +89,27 @@ class ProposalController extends Controller
         return redirect()->back()->with('success', 'Proposal status updated successfully!');
     }
 
+    // Update proposal note (for admin)
+    public function updateNote(Request $request, Proposal $proposal)
+    {
+        $request->validate([
+            'note' => 'nullable|string|max:1000'
+        ]);
+
+        // Only admins can add notes
+        if (!auth()->user()->isAdmin()) {
+            abort(403, 'Unauthorized action.');
+        }
+
+        $proposal->update(['admin_note' => $request->note]);
+
+        return redirect()->back()->with('success', 'Proposal note updated successfully!');
+    }
+
     // Delete proposal
     public function destroy(Proposal $proposal)
     {
-        // Check if user is the owner of the proposal or team owner
+        // Check if user is owner of proposal or team owner
         if (auth()->id() !== $proposal->user_id && auth()->id() !== $proposal->team->owner_id) {
             abort(403, 'Unauthorized action.');
         }

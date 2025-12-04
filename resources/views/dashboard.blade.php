@@ -1,521 +1,799 @@
 <x-app-layout>
-    <div class="container-fluid py-4 px-5">
-        <div class="row">
-            <div class="col-md-12">
-                <div class="d-md-flex align-items-center mb-3 mx-2">
-                    <div class="mb-md-0 mb-3">
-                        <h3 class="font-weight-bold mb-0">Hello, {{ Auth::user()->name ?? 'Student' }}</h3>
-                        <p class="mb-0">Welcome to your GISO 360 Dashboard!</p>
-                    </div>
-                    <button type="button"
-                        class="btn btn-sm btn-white btn-icon d-flex align-items-center mb-0 ms-md-auto mb-sm-0 mb-2 me-2">
-                        <span class="btn-inner--icon">
-                            <span class="p-1 bg-success rounded-circle d-flex ms-auto me-2">
-                                <span class="visually-hidden">New</span>
-                            </span>
-                        </span>
-                        <span class="btn-inner--text">Messages</span>
-                    </button>
-                    <button type="button" class="btn btn-sm btn-dark btn-icon d-flex align-items-center mb-0">
-                        <span class="btn-inner--icon">
-                            <svg width="16" height="16" xmlns="http://www.w3.org/2000/svg" fill="none"
-                                viewBox="0 0 24 24" stroke-width="1.5" stroke="currentColor" class="d-block me-2">
-                                <path stroke-linecap="round" stroke-linejoin="round"
-                                    d="M16.023 9.348h4.992v-.001M2.985 19.644v-4.992m0 0h4.992m-4.993 0l3.181 3.183a8.25 8.25 0 0013.803-3.7M4.031 9.865a8.25 8.25 0 0113.803-3.7l3.181 3.182m0-4.991v4.99" />
-                            </svg>
-                        </span>
-                        <span class="btn-inner--text">Sync</span>
-                    </button>
-                </div>
-            </div>
-        </div>
-        <hr class="my-0">
-        
-        <!-- Swiper -->
-        <div class="row">
-            <div class="position-relative overflow-hidden">
-                <div class="swiper mySwiper mt-4 mb-2">
-                    <div class="swiper-wrapper">
-                        <div class="swiper-slide">
-                            <div>
-                                <div
-                                    class="card card-background shadow-none border-radius-xl card-background-after-none align-items-start mb-0">
-                                    <div class="full-background bg-cover"
-                                        style="background-image: url('../assets/img/img-2.jpg')"></div>
-                                    <div class="card-body text-start px-3 py-0 w-100">
-                                        <div class="row mt-12">
-                                            <div class="col-sm-3 mt-auto">
-                                                <h4 class="text-dark font-weight-bolder">#1</h4>
-                                                <p class="text-dark opacity-6 text-xs font-weight-bolder mb-0">Name
-                                                </p>
-                                                <h5 class="text-dark font-weight-bolder">Secured</h5>
-                                            </div>
-                                            <div class="col-sm-3 ms-auto mt-auto">
-                                                <p class="text-dark opacity-6 text-xs font-weight-bolder mb-0">
-                                                    Category</p>
-                                                <h5 class="text-dark font-weight-bolder">Banking</h5>
-                                            </div>
-                                        </div>
-                                    </div>
+        <div class="container-fluid py-4 px-5">
+            <div class="row">
+                <div class="col-md-12">
+                    <div class="dashboard-header position-relative border rounded-3 p-4 mb-4">
+                        <div class="row align-items-center" style="z-index: 2;">
+                            <!-- Greeting Section - Left Side -->
+                            <div class="col-md-9 col-12">
+                            <div class="greeting-section animate-rise my-6">
+                                    <h2 class="font-weight-bold mb-0">Hello, {{ Auth::user()->name ?? 'Student' }}</h2>
+                                    <h3 class="font-weight-bold mb-0">Welcome to your GISO 360 Dashboard!</h3>
                                 </div>
                             </div>
                         </div>
-                        <div class="swiper-slide">
-                            <div
-                                class="card card-background shadow-none border-radius-xl card-background-after-none align-items-start mb-0">
-                                <div class="full-background bg-cover"
-                                    style="background-image: url('../assets/img/img-1.jpg')"></div>
-                                <div class="card-body text-start px-3 py-0 w-100">
-                                    <div class="row mt-12">
-                                        <div class="col-sm-3 mt-auto">
-                                            <h4 class="text-dark font-weight-bolder">#2</h4>
-                                            <p class="text-dark opacity-6 text-xs font-weight-bolder mb-0">Name</p>
-                                            <h5 class="text-dark font-weight-bolder">Cyber</h5>
-                                        </div>
-                                        <div class="col-sm-3 ms-auto mt-auto">
-                                            <p class="text-dark opacity-6 text-xs font-weight-bolder mb-0">Category
-                                            </p>
-                                            <h5 class="text-dark font-weight-bolder">Security</h5>
-                                        </div>
-                                    </div>
-                                </div>
-                            </div>
+                        <div class="image-container animate-rise-delay me-5">
+                            <img src="{{ asset('assets/img/travel header.png') }}" 
+                                alt="Travel Header" 
+                                class="header-image img-fluid">
                         </div>
-                        <div class="swiper-slide">
-                            <div
-                                class="card card-background shadow-none border-radius-xl card-background-after-none align-items-start mb-0">
-                                <div class="full-background bg-cover"
-                                    style="background-image: url('../assets/img/img-3.jpg')"></div>
-                                <div class="card-body text-start px-3 py-0 w-100">
-                                    <div class="row mt-12">
-                                        <div class="col-sm-3 mt-auto">
-                                            <h4 class="text-dark font-weight-bolder">#3</h4>
-                                            <p class="text-dark opacity-6 text-xs font-weight-bolder mb-0">Name</p>
-                                            <h5 class="text-dark font-weight-bolder">Alpha</h5>
-                                        </div>
-                                        <div class="col-sm-3 ms-auto mt-auto">
-                                            <p class="text-dark opacity-6 text-xs font-weight-bolder mb-0">Category
-                                            </p>
-                                            <h5 class="text-dark font-weight-bolder">Blockchain</h5>
-                                        </div>
-                                    </div>
-                                </div>
-                            </div>
-                        </div>
-                        <div class="swiper-slide">
-                            <div
-                                class="card card-background shadow-none border-radius-xl card-background-after-none align-items-start mb-0">
-                                <div class="full-background bg-cover"
-                                    style="background-image: url('../assets/img/img-4.jpg')"></div>
-                                <div class="card-body text-start px-3 py-0 w-100">
-                                    <div class="row mt-12">
-                                        <div class="col-sm-3 mt-auto">
-                                            <h4 class="text-dark font-weight-bolder">#4</h4>
-                                            <p class="text-dark opacity-6 text-xs font-weight-bolder mb-0">Name</p>
-                                            <h5 class="text-dark font-weight-bolder">Beta</h5>
-                                        </div>
-                                        <div class="col-sm-3 ms-auto mt-auto">
-                                            <p class="text-dark opacity-6 text-xs font-weight-bolder mb-0">Category
-                                            </p>
-                                            <h5 class="text-dark font-weight-bolder">Web3</h5>
-                                        </div>
-                                    </div>
-                                </div>
-                            </div>
-                        </div>
-                        <div class="swiper-slide">
-                            <div
-                                class="card card-background shadow-none border-radius-xl card-background-after-none align-items-start mb-0">
-                                <div class="full-background bg-cover"
-                                    style="background-image: url('../assets/img/img-5.jpg')"></div>
-                                <div class="card-body text-start px-3 py-0 w-100">
-                                    <div class="row mt-12">
-                                        <div class="col-sm-3 mt-auto">
-                                            <h4 class="text-dark font-weight-bolder">#5</h4>
-                                            <p class="text-dark opacity-6 text-xs font-weight-bolder mb-0">Name</p>
-                                            <h5 class="text-dark font-weight-bolder">Gama</h5>
-                                        </div>
-                                        <div class="col-sm-3 ms-auto mt-auto">
-                                            <p class="text-dark opacity-6 text-xs font-weight-bolder mb-0">Category
-                                            </p>
-                                            <h5 class="text-dark font-weight-bolder">Design</h5>
-                                        </div>
-                                    </div>
-                                </div>
-                            </div>
-                        </div>
-                        <div class="swiper-slide">
-                            <div
-                                class="card card-background shadow-none border-radius-xl card-background-after-none align-items-start mb-0">
-                                <div class="full-background bg-cover"
-                                    style="background-image: url('../assets/img/img-1.jpg')"></div>
-                                <div class="card-body text-start px-3 py-0 w-100">
-                                    <div class="row mt-12">
-                                        <div class="col-sm-3 mt-auto">
-                                            <h4 class="text-dark font-weight-bolder">#6</h4>
-                                            <p class="text-dark opacity-6 text-xs font-weight-bolder mb-0">Name</p>
-                                            <h5 class="text-dark font-weight-bolder">Rompro</h5>
-                                        </div>
-                                        <div class="col-sm-3 ms-auto mt-auto">
-                                            <p class="text-dark opacity-6 text-xs font-weight-bolder mb-0">Category
-                                            </p>
-                                            <h5 class="text-dark font-weight-bolder">Security</h5>
-                                        </div>
-                                    </div>
-                                </div>
-                            </div>
-                        </div>
-                    </div>
-                </div>
-                <div class="swiper-button-prev"></div>
-                <div class="swiper-button-next"></div>
-            </div>
-        </div>
-        <!-- End of Swiper -->
-
-
-        <!-- Quick Actions & Teams Section -->
-        
-                <!-- Quick Actions -->
-        <div class="card mb-4">
-            <div class="card-header pb-2">
-                <div class="d-flex justify-content-between align-items-center">
-                    <h5 class="mb-0">Quick Actions</h5>
-                    <span class="text-sm text-muted">Get things done faster</span>
-                </div>
-            </div>
-            <div class="card-body p-3">
-                <div class="row g-3">
-                    <div class="col-xl-3 col-md-6">
-                        <a href="{{ route('teams.index') }}" class="card card-action h-100">
-                            <div class="card-body p-3 d-flex flex-column align-items-center">
-                                <div class="icon-container mb-3">
-                                    <div class="icon-circle bg-gradient-primary shadow-primary">
-                                        <i class="fas fa-plus text-white"></i>
-                                    </div>
-                                </div>
-                                <h6 class="mb-1">Create Team</h6>
-                                <p class="text-xs text-muted text-center mb-0">Start new project</p>
-                            </div>
-                        </a>
-                    </div>
-                    <div class="col-xl-3 col-md-6">
-                        <a href="{{ route('teams.index') }}" class="card card-action h-100">
-                            <div class="card-body p-3 d-flex flex-column align-items-center">
-                                <div class="icon-container mb-3">
-                                    <div class="icon-circle bg-gradient-success shadow-success">
-                                        <i class="fas fa-users text-white"></i>
-                                    </div>
-                                </div>
-                                <h6 class="mb-1">My Teams</h6>
-                                <p class="text-xs text-muted text-center mb-0">Manage teams</p>
-                            </div>
-                        </a>
-                    </div>
-                    <div class="col-xl-3 col-md-6">
-                        <a href="{{ route('presentation-schedules.index') }}" class="card card-action h-100">
-                            <div class="card-body p-3 d-flex flex-column align-items-center">
-                                <div class="icon-container mb-3">
-                                    <div class="icon-circle bg-gradient-info shadow-info">
-                                        <i class="fas fa-calendar-alt text-white"></i>
-                                    </div>
-                                </div>
-                                <h6 class="mb-1">Schedule</h6>
-                                <p class="text-xs text-muted text-center mb-0">View presentations</p>
-                            </div>
-                        </a>
-                    </div>
-                    <div class="col-xl-3 col-md-6">
-                        <a href="#" class="card card-action h-100">
-                            <div class="card-body p-3 d-flex flex-column align-items-center">
-                                <div class="icon-container mb-3">
-                                    <div class="icon-circle bg-gradient-warning shadow-warning">
-                                        <i class="fas fa-file-upload text-white"></i>
-                                    </div>
-                                </div>
-                                <h6 class="mb-1">Submit</h6>
-                                <p class="text-xs text-muted text-center mb-0">Proposals & Reports</p>
-                            </div>
-                        </a>
                     </div>
                 </div>
             </div>
-        </div>
 
-                <!-- My Teams Section -->
-                <div class="card">
-                    <div class="card-header pb-0">
-                        <div class="d-flex justify-content-between align-items-center">
-                            <div>
-                                <h5 class="mb-1">My GISO Teams</h5>
-                                <p class="text-sm text-muted mb-0">Manage your teams and track progress</p>
-                            </div>
-                            <a href="{{ route('teams.index') }}" class="btn btn-sm bg-gradient-primary mb-0">
-                                <i class="fas fa-eye me-1"></i> View All
-                            </a>
-                        </div>
-                    </div>
-                    <div class="card-body p-3">
-                        @if($teams->count() > 0)
-                            <div class="table-responsive">
-                                <table class="table table-hover align-items-center">
-                                    <thead class="bg-gray-100">
-                                        <tr>
-                                            <th class="text-uppercase text-secondary text-xs font-weight-bolder opacity-7 ps-3">Team</th>
-                                            <th class="text-uppercase text-secondary text-xs font-weight-bolder opacity-7 text-center">Status</th>
-                                            <th class="text-uppercase text-secondary text-xs font-weight-bolder opacity-7 text-center">Members</th>
-                                            <th class="text-uppercase text-secondary text-xs font-weight-bolder opacity-7 text-center">Progress</th>
-                                            <th class="text-uppercase text-secondary text-xs font-weight-bolder opacity-7 text-center">Actions</th>
-                                        </tr>
-                                    </thead>
-                                    <tbody>
-                                        @foreach($teams as $team)
-                                        <tr class="border-bottom">
-                                            <td>
-                                                <div class="d-flex align-items-center px-2 py-2">
-                                                    <div class="team-avatar me-3">
-                                                        <div class="avatar bg-gradient-primary shadow-sm rounded-circle d-flex align-items-center justify-content-center">
-                                                            <i class="fas fa-users text-white text-sm"></i>
-                                                        </div>
-                                                    </div>
-                                                    <div class="d-flex flex-column">
-                                                        <h6 class="mb-0 text-sm font-weight-semibold">{{ $team->name }}</h6>
-                                                        <p class="text-xs text-muted mb-0">{{ Str::limit($team->description, 40) ?: 'No description provided' }}</p>
-                                                    </div>
-                                                </div>
-                                            </td>
-                                            <td class="text-center">
-                                                <span class="badge badge-sm badge-pill 
-                                                    {{ $team->latest_proposal_status === 'approved' ? 'bg-gradient-success' : 
-                                                    ($team->latest_proposal_status === 'pending' ? 'bg-gradient-warning' : 
-                                                    ($team->latest_proposal_status === 'rejected' ? 'bg-gradient-danger' : 
-                                                    ($team->latest_proposal_status === 'under_review' ? 'bg-gradient-info' : 'bg-gradient-secondary'))) }}">
-                                                    @if($team->latest_proposal_status === 'not_submitted')
-                                                        <i class="fas fa-clock me-1"></i> No Proposal
-                                                    @elseif($team->latest_proposal_status === 'pending')
-                                                        <i class="fas fa-hourglass-half me-1"></i> Pending
-                                                    @elseif($team->latest_proposal_status === 'approved')
-                                                        <i class="fas fa-check me-1"></i> Approved
-                                                    @elseif($team->latest_proposal_status === 'rejected')
-                                                        <i class="fas fa-times me-1"></i> Rejected
-                                                    @elseif($team->latest_proposal_status === 'under_review')
-                                                        <i class="fas fa-search me-1"></i> Under Review
-                                                    @else
-                                                        {{ ucfirst($team->latest_proposal_status) }}
-                                                    @endif
-                                                </span>
-                                            </td>
-                                            <td class="text-center">
-                                                <div class="d-flex flex-column align-items-center">
-                                                    <span class="text-sm font-weight-bold">{{ $team->members_count }}</span>
-                                                    <span class="text-xs text-muted">members</span>
-                                                </div>
-                                            </td>
-                                            <td>
-                                                <div class="progress-wrapper">
-                                                    <div class="d-flex justify-content-between mb-1">
-                                                        <span class="text-xs font-weight-semibold">Project Progress</span>
-                                                        <span class="text-xs font-weight-bold">{{ $team->progress_percentage }}%</span>
-                                                    </div>
-                                                    <div class="progress" style="height: 6px;">
-                                                        <div class="progress-bar 
-                                                            {{ $team->progress_percentage < 25 ? 'bg-gradient-danger' : 
-                                                            ($team->progress_percentage < 50 ? 'bg-gradient-warning' : 
-                                                            ($team->progress_percentage < 75 ? 'bg-gradient-info' : 'bg-gradient-success')) }}" 
-                                                            role="progressbar" 
-                                                            aria-valuenow="{{ $team->progress_percentage }}" 
-                                                            aria-valuemin="0" 
-                                                            aria-valuemax="100" 
-                                                            style="width: {{ $team->progress_percentage }}%;">
-                                                        </div>
-                                                    </div>
-                                                </div>
-                                            </td>
-                                            <td class="text-center">
-                                                <div class="action-buttons">
-                                                    <a href="{{ route('teams.show', $team) }}" 
-                                                    class="btn btn-sm bg-gradient-info text-white mb-0 me-1"
-                                                    data-bs-toggle="tooltip" 
-                                                    title="View Team Details">
-                                                        <i class="fas fa-eye"></i>
-                                                    </a>
-                                                    <a href="#" 
-                                                    class="btn btn-sm bg-gradient-primary text-white mb-0"
-                                                    data-bs-toggle="tooltip" 
-                                                    title="Quick Actions">
-                                                        <i class="fas fa-ellipsis-h"></i>
-                                                    </a>
-                                                </div>
-                                            </td>
-                                        </tr>
-                                        @endforeach
-                                    </tbody>
-                                </table>
-                            </div>
-                        @else
-                            <div class="text-center py-6">
-                                <div class="empty-state-icon mb-4">
-                                    <div class="icon icon-shape bg-gradient-secondary shadow text-center rounded-circle mx-auto d-flex align-items-center justify-content-center" 
-                                        style="width: 100px; height: 100px;">
-                                        <i class="fas fa-users text-white text-2xl opacity-10"></i>
-                                    </div>
-                                </div>
-                                <h5 class="mb-2">No teams yet</h5>
-                                <p class="text-muted mb-4">Join or create a team to get started with your GISO project</p>
-                                <div class="d-flex justify-content-center gap-3">
-                                    <a href="{{ route('teams.create') }}" class="btn bg-gradient-primary mb-0">
-                                        <i class="fas fa-plus me-2"></i>Create Team
-                                    </a>
-                                    <a href="{{ route('teams.index') }}" class="btn btn-outline-primary mb-0">
-                                        <i class="fas fa-search me-2"></i>Find Teams
-                                    </a>
-                                </div>
-                            </div>
-                        @endif
-                    </div>
-                </div>
-
-                <style>
-                .card {
-                    border: none;
-                    box-shadow: 0 4px 6px -1px rgba(0, 0, 0, 0.1), 0 2px 4px -1px rgba(0, 0, 0, 0.06);
-                    border-radius: 0.75rem;
+            <style>
+                .dashboard-header {
+                    background-color: #ffffff;
+                    border-color: #e0e0e0 !important;
+                    box-shadow: 0 4px 6px rgba(0, 0, 0, 0.05);
+                    transition: all 0.3s ease;
                 }
 
-                .card-header {
-                    border-bottom: 1px solid #e9ecef;
-                    background-color: transparent;
+                .dashboard-header:hover {
+                    box-shadow: 0 6px 12px rgba(0, 0, 0, 0.1);
                 }
-
-                .team-avatar .avatar {
-                    width: 48px;
-                    height: 48px;
+                
+                .image-container {
+                    position: absolute;
+                    top: -50px;
+                    right: -30px;
+                    z-index: 1;
+                    max-width: 60%;
                 }
-
-                .table-hover tbody tr:hover {
-                    background-color: rgba(94, 114, 228, 0.03);
-                }
-
-                .bg-gray-100 {
-                    background-color: #f8f9fa !important;
-                }
-
-                .border-bottom {
-                    border-bottom: 1px solid #e9ecef !important;
-                }
-
-                .font-weight-semibold {
-                    font-weight: 600;
-                }
-
-                .progress {
-                    border-radius: 10px;
-                    overflow: hidden;
-                }
-
-                .progress-bar {
-                    border-radius: 10px;
-                }
-
-                .action-buttons .btn {
-                    border-radius: 0.5rem;
-                    width: 36px;
-                    height: 36px;
-                    display: inline-flex;
-                    align-items: center;
-                    justify-content: center;
-                    padding: 0;
-                }
-
-                .empty-state-icon .icon {
+                
+                .header-image {
+                    width: 100%;
+                    height: auto;
+                    max-height: 400px;
+                    object-fit: cover;
+                    border-radius: 20px;
                     transition: transform 0.3s ease;
                 }
+                
+                /* Rise Animation */
+                .animate-rise {
+                    opacity: 0;
+                    transform: translateY(30px);
+                    animation: rise 0.8s ease forwards;
+                }
+                
+                .animate-rise-delay {
+                    opacity: 0;
+                    transform: translateY(30px);
+                    animation: rise 0.8s ease 0.3s forwards;
+                }
+                
+                @keyframes rise {
+                    0% {
+                        opacity: 0;
+                        transform: translateY(30px);
+                    }
+                    100% {
+                        opacity: 1;
+                        transform: translateY(0);
+                    }
+                }
+                
+                /* Add text shadow for better readability */
+                .greeting-section h3,
+                .greeting-section p {
+                    text-shadow: 0 2px 4px rgba(255, 255, 255, 0.8);
+                }
+                
+                /* Responsive adjustments */
+                @media (max-width: 992px) {
+                    .image-container {
+                        top: -30px;
+                        right: -20px;
+                        max-width: 70%;
+                    }
+                    
+                    .header-image {
+                        max-height: 300px;
+                    }
+                }
+                
+                @media (max-width: 768px) {
+                    .dashboard-header {
+                        min-height: 250px;
+                    }
+                    
+                    .image-container {
+                        position: relative;
+                        top: 0;
+                        right: 0;
+                        max-width: 100%;
+                        margin-top: 20px;
+                    }
+                    
+                    .header-image {
+                        max-height: 250px;
+                    }
+                }
+                
+                @media (max-width: 576px) {
+                    .header-image {
+                        max-height: 200px;
+                    }
+                }
+            </style>
+        </div>
+        
 
-                .empty-state-icon:hover .icon {
+
+
+        <!-- News Section Header -->
+        <div class="row mb-4">
+            <div class="col-12">
+                <div class="d-flex justify-content-center">
+                    <div>
+                        <h3 class="font-weight-bold mb-0">What is on the news today?</h3>
+                    </div>
+                </div>
+            </div>
+        </div>
+        <!-- Swiper -->
+
+            
+            <!-- Your specified CSS files -->
+            <link href="https://fonts.googleapis.com/css?family=Open+Sans:300,400,600,700|Noto+Sans:300,400,500,600,700,800|PT+Mono:300,400,500,600,700" rel="stylesheet" />
+            <link href="{{ asset('assets/css/nucleo-icons.css') }}" rel="stylesheet" />
+            <link href="{{ asset('assets/css/nucleo-svg.css') }}" rel="stylesheet" />
+            <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.5.0/css/all.min.css">
+            <link id="pagestyle" href="{{ asset('assets/css/corporate-ui-dashboard.css?v=1.0.0') }}" rel="stylesheet" />
+            
+            <!-- Font Awesome -->
+            <script src="https://kit.fontawesome.com/349ee9c857.js" crossorigin="anonymous"></script>
+            
+            <!-- Bootstrap CSS (still needed for carousel) -->
+            <link href="https://cdn.jsdelivr.net/npm/bootstrap@4.6.0/dist/css/bootstrap.min.css" rel="stylesheet">
+            
+            <style>
+                /* Custom styles using your theme */
+                .carousel-container {
+                    max-width: 900px;
+                    margin: 40px auto;
+                    position: relative;
+                }
+
+                .news-carousel {
+                    border-radius: 12px;
+                    overflow: hidden;
+                    box-shadow: 0 10px 30px rgba(0, 0, 0, 0.15);
+                    transition: all 0.3s ease;
+                    cursor: pointer;
+                }
+
+                .news-carousel:hover {
+                    transform: translateY(-5px);
+                    box-shadow: 0 15px 40px rgba(0, 0, 0, 0.2);
+                }
+
+                /* Fixed image size for all slides */
+                .carousel-image-container {
+                    width: 100%;
+                    height: 350px;
+                    overflow: hidden;
+                    position: relative;
+                }
+
+                .carousel-image-container img {
+                    width: 100%;
+                    height: 100%;
+                    object-fit: cover;
+                    object-position: center;
+                    transition: transform 0.5s ease;
+                }
+
+                .carousel-item:hover .carousel-image-container img {
                     transform: scale(1.05);
                 }
 
-                .text-2xl {
-                    font-size: 1.5rem;
+                /* Caption styling */
+                .carousel-caption-custom {
+                    position: absolute;
+                    bottom: 0;
+                    left: 0;
+                    right: 0;
+                    padding: 30px 25px 20px;
+                    background: linear-gradient(transparent, rgba(0, 0, 0, 0.85));
+                    color: white;
+                    text-align: left;
+                    z-index: 2;
                 }
 
-                .btn {
-                    border-radius: 0.5rem;
-                    font-weight: 600;
-                    transition: all 0.2s ease;
+                .carousel-caption-custom h4 {
+                    font-family: 'Noto Sans', sans-serif;
+                    font-weight: 700;
+                    font-size: 1.4rem;
+                    margin-bottom: 8px;
+                    color: #fff;
                 }
 
-                .btn:hover {
-                    transform: translateY(-1px);
-                    box-shadow: 0 4px 6px rgba(0, 0, 0, 0.1);
+                .carousel-caption-custom h5 {
+                    font-family: 'Open Sans', sans-serif;
+                    font-weight: 400;
+                    font-size: 0.95rem;
+                    margin-bottom: 0;
+                    opacity: 0.9;
+                    color: #f0f0f0;
                 }
-                </style>
 
-                <script>
-                // Initialize tooltips if using Bootstrap 5
-                document.addEventListener('DOMContentLoaded', function() {
-                    var tooltipTriggerList = [].slice.call(document.querySelectorAll('[data-bs-toggle="tooltip"]'))
-                    var tooltipList = tooltipTriggerList.map(function (tooltipTriggerEl) {
-                        return new bootstrap.Tooltip(tooltipTriggerEl)
-                    })
+                /* Indicators */
+                .carousel-indicators-custom {
+                    position: absolute;
+                    bottom: 15px;
+                    left: 0;
+                    right: 0;
+                    display: flex;
+                    justify-content: center;
+                    padding: 0;
+                    margin: 0;
+                    list-style: none;
+                    z-index: 3;
+                }
+
+                .carousel-indicators-custom li {
+                    width: 10px;
+                    height: 10px;
+                    margin: 0 6px;
+                    background-color: rgba(255, 255, 255, 0.5);
+                    border-radius: 50%;
+                    cursor: pointer;
+                    transition: all 0.3s ease;
+                    border: none;
+                }
+
+                .carousel-indicators-custom li.active {
+                    background-color: #fff;
+                    transform: scale(1.3);
+                    box-shadow: 0 0 10px rgba(255, 255, 255, 0.5);
+                }
+
+                /* Navigation controls */
+                .carousel-control-custom {
+                    position: absolute;
+                    top: 50%;
+                    transform: translateY(-50%);
+                    width: 45px;
+                    height: 45px;
+                    background: rgba(0, 0, 0, 0.6);
+                    border-radius: 50%;
+                    display: flex;
+                    align-items: center;
+                    justify-content: center;
+                    opacity: 0;
+                    transition: all 0.3s ease;
+                    z-index: 3;
+                    cursor: pointer;
+                }
+
+                .news-carousel:hover .carousel-control-custom {
+                    opacity: 1;
+                }
+
+                .carousel-control-custom:hover {
+                    background: rgba(0, 0, 0, 0.8);
+                }
+
+                .carousel-control-prev-custom {
+                    left: 20px;
+                }
+
+                .carousel-control-next-custom {
+                    right: 20px;
+                }
+
+                .carousel-control-custom i {
+                    color: white;
+                    font-size: 20px;
+                }
+
+                /* Slide number indicator */
+                .slide-counter {
+                    position: absolute;
+                    top: 20px;
+                    right: 20px;
+                    background: rgba(0, 0, 0, 0.6);
+                    color: white;
+                    padding: 5px 12px;
+                    border-radius: 20px;
+                    font-family: 'PT Mono', monospace;
+                    font-size: 0.8rem;
+                    z-index: 3;
+                }
+
+                /* Responsive adjustments */
+                @media (max-width: 992px) {
+                    .carousel-container {
+                        max-width: 95%;
+                    }
+                    
+                    .carousel-image-container {
+                        height: 300px;
+                    }
+                }
+
+                @media (max-width: 768px) {
+                    .carousel-image-container {
+                        height: 250px;
+                    }
+                    
+                    .carousel-caption-custom {
+                        padding: 20px 15px 15px;
+                    }
+                    
+                    .carousel-caption-custom h4 {
+                        font-size: 1.2rem;
+                    }
+                    
+                    .carousel-caption-custom h5 {
+                        font-size: 0.85rem;
+                    }
+                    
+                    .carousel-control-custom {
+                        width: 40px;
+                        height: 40px;
+                        opacity: 0.7;
+                    }
+                }
+
+                @media (max-width: 576px) {
+                    .carousel-image-container {
+                        height: 220px;
+                    }
+                    
+                    .carousel-caption-custom h4 {
+                        font-size: 1.1rem;
+                    }
+                    
+                    .carousel-caption-custom h5 {
+                        font-size: 0.8rem;
+                    }
+                    
+                    .carousel-control-custom {
+                        width: 35px;
+                        height: 35px;
+                    }
+                }
+            </style>
+        </head>
+        <body>
+            <div class="container-fluid px-3 px-md-5">
+                <div class="carousel-container">
+                    <div class="news-carousel" id="newsCarousel">
+                        <!-- Indicators -->
+                        <ol class="carousel-indicators-custom">
+                            <li class="active" data-target="#newsCarousel" data-slide-to="0"></li>
+                            <li data-target="#newsCarousel" data-slide-to="1"></li>
+                            <li data-target="#newsCarousel" data-slide-to="2"></li>
+                            <li data-target="#newsCarousel" data-slide-to="3"></li>
+                            <li data-target="#newsCarousel" data-slide-to="4"></li>
+                            <li data-target="#newsCarousel" data-slide-to="5"></li>
+                        </ol>
+
+                        <!-- Carousel Items -->
+                        <div class="carousel-inner">
+                            <!-- News Item 1 -->
+                            <div class="carousel-item active" onclick="window.open('https://www.usim.edu.my/news/giso-ayo-nang-indonesia-mahasiswa-usim-bina-ukhuwah-dan-inovasi-global/', '_blank')">
+                                <div class="carousel-image-container">
+                                    <img src="https://www.usim.edu.my/wp-content/uploads/2025/10/06_GISO-INDONESIA-UNIVERSITAS-SUNAN-KALIJAGA-YOGYAKARTA-Copy.jpg" alt="GISO AYO NANG INDONESIA">
+                                </div>
+                                <div class="carousel-caption-custom">
+                                    <h4>#1 GISO AYO NANG INDONESIA</h4>
+                                    <h5>Mahasiswa USIM Bina Ukhuwah dan Inovasi Global</h5>
+                                </div>
+                                <div class="slide-counter">1/6</div>
+                            </div>
+                            
+                            <!-- News Item 2 -->
+                            <div class="carousel-item" onclick="window.open('https://www.usim.edu.my/news/giso-melbourne-2025-mahasiswa-usim-mendalami-kehidupan-islam-minoriti-di-australia/', '_blank')">
+                                <div class="carousel-image-container">
+                                    <img src="https://www.usim.edu.my/wp-content/uploads/2025/08/WhatsApp-Image-2025-08-25-at-3.04.58-PM.jpeg" alt="GISO Melbourne">
+                                </div>
+                                <div class="carousel-caption-custom">
+                                    <h4>#2 GISO Melbourne</h4>
+                                    <h5>Mahasiswa USIM Mendalami Kehidupan Islam Minoriti di Australia</h5>
+                                </div>
+                                <div class="slide-counter">2/6</div>
+                            </div>
+                            
+                            <!-- News Item 3 -->
+                            <div class="carousel-item" onclick="window.open('https://www.usim.edu.my/news/pengembaraan-giso-usim-gps-perkukuh-jalinan-antarabangsa-di-universitas-muhammadiyah-makassar/', '_blank')">
+                                <div class="carousel-image-container">
+                                    <img src="https://www.usim.edu.my/wp-content/uploads/2024/09/IMG_9056-Copy.jpg" alt="GISO USIM GPS">
+                                </div>
+                                <div class="carousel-caption-custom">
+                                    <h4>#3 GISO USIM GPS</h4>
+                                    <h5>Pengembaraan GISO USIM GPS Perkukuh Jalinan Antarabangsa</h5>
+                                </div>
+                                <div class="slide-counter">3/6</div>
+                            </div>
+                            
+                            <!-- News Item 4 -->
+                            <div class="carousel-item" onclick="window.open('https://www.usim.edu.my/news/campus-news/giso-jalinan-kasih-bukit-tinggi-indonesia-membina-mahasiswa-usim-cakna-budaya-dan-budi/', '_blank')">
+                                <div class="carousel-image-container">
+                                    <img src="https://www.usim.edu.my/wp-content/uploads/2023/09/MG_6901-Copy.jpg" alt="GISO Bukit Tinggi Indonesia">
+                                </div>
+                                <div class="carousel-caption-custom">
+                                    <h4>#4 GISO Bukit Tinggi Indonesia</h4>
+                                    <h5>Jalinan Kasih Membina Mahasiswa USIM Cakna Budaya dan Budi</h5>
+                                </div>
+                                <div class="slide-counter">4/6</div>
+                            </div>
+                            
+                            <!-- News Item 5 -->
+                            <div class="carousel-item" onclick="window.open('https://www.usim.edu.my/news/giso-davao-dekati-perkampungan-komuniti-islam/', '_blank')">
+                                <div class="carousel-image-container">
+                                    <img src="https://www.usim.edu.my/wp-content/uploads/2020/02/82911298_774993989655121_1059695223652745216_o-e1580713775611.jpg" alt="GISO Davao">
+                                </div>
+                                <div class="carousel-caption-custom">
+                                    <h4>#5 GISO Davao</h4>
+                                    <h5>Dekati Perkampungan Komuniti Islam</h5>
+                                </div>
+                                <div class="slide-counter">5/6</div>
+                            </div>
+                            
+                            <!-- News Item 6 -->
+                            <div class="carousel-item" onclick="window.open('https://www.usim.edu.my/news/giso-syria-come-2-0-mission-accomplished/', '_blank')">
+                                <div class="carousel-image-container">
+                                    <img src="https://www.usim.edu.my/wp-content/uploads/2017/02/5-Copy-1.jpg" alt="GISO Syria">
+                                </div>
+                                <div class="carousel-caption-custom">
+                                    <h4>#6 GISO Syria</h4>
+                                    <h5>Come 2.0 Mission Accomplished</h5>
+                                </div>
+                                <div class="slide-counter">6/6</div>
+                            </div>
+                        </div>
+
+                        <!-- Navigation Controls -->
+                        <div class="carousel-control-prev-custom carousel-control-custom" role="button" data-slide="prev">
+                            <i class="fas fa-chevron-left"></i>
+                        </div>
+                        <div class="carousel-control-next-custom carousel-control-custom" role="button" data-slide="next">
+                            <i class="fas fa-chevron-right"></i>
+                        </div>
+                    </div>
+                </div>
+            </div>
+
+            <!-- JavaScript -->
+            <script src="https://code.jquery.com/jquery-3.6.0.min.js"></script>
+            <script src="https://cdn.jsdelivr.net/npm/bootstrap@4.6.0/dist/js/bootstrap.bundle.min.js"></script>
+            
+            <script>
+                $(document).ready(function() {
+                    // Initialize carousel with custom settings
+                    $('#newsCarousel').carousel({
+                        interval: 4000, // 4 seconds between slides
+                        pause: 'hover',
+                        wrap: true
+                    });
+
+                    // Update indicators and counter on slide
+                    $('#newsCarousel').on('slide.bs.carousel', function(e) {
+                        var $active = $(this).find('.carousel-item.active');
+                        var index = $active.index() + 1;
+                        
+                        // Update indicators
+                        $(this).find('.carousel-indicators-custom li').removeClass('active');
+                        $(this).find('.carousel-indicators-custom li').eq(e.to).addClass('active');
+                        
+                        // Update all slide counters
+                        $('.carousel-item .slide-counter').each(function(i) {
+                            $(this).text((i + 1) + '/6');
+                        });
+                    });
+
+                    // Custom navigation controls
+                    $('.carousel-control-prev-custom').click(function() {
+                        $('#newsCarousel').carousel('prev');
+                    });
+
+                    $('.carousel-control-next-custom').click(function() {
+                        $('#newsCarousel').carousel('next');
+                    });
+
+                    // Indicator click
+                    $('.carousel-indicators-custom li').click(function() {
+                        var slideTo = $(this).data('slide-to');
+                        $('#newsCarousel').carousel(slideTo);
+                    });
+
+                    // Ensure all images have the same dimensions
+                    function adjustCarouselImages() {
+                        $('.carousel-image-container').each(function() {
+                            var $this = $(this);
+                            var currentHeight = $this.height();
+                            $this.height(currentHeight);
+                            
+                            var $img = $this.find('img');
+                            $img.css({
+                                'width': '100%',
+                                'height': '100%',
+                                'object-fit': 'cover',
+                                'object-position': 'center'
+                            });
+                        });
+                    }
+
+                    // Adjust on load and window resize
+                    adjustCarouselImages();
+                    $(window).resize(adjustCarouselImages);
                 });
-                </script>
-    </div>
-    
-            <!-- Right Column - Progress, Deadlines, Activities -->
+            </script>
+        <!-- End of Carousel -->
 
 
-    <style>
-        .card-action {
-            border: 1px solid transparent;
-            transition: all 0.3s ease;
-            border-radius: 0.75rem;
-            background-color: #fff;
+        <!-- Quick Actions Section -->
+        <div class="container-fluid px-0">
+            <div class="quick-actions-section px-4 px-md-5">
+                <div class="d-flex justify-content-between align-items-center mb-4">
+                    <div>
+                        <h5 class="fw-bold mb-1">Quick Actions</h5>
+                        <p class="text-sm text-muted mb-0">Access frequently used features</p>
+                    </div>
+                </div>
+
+                <div class="row g-3">
+                    <!-- Create Team -->
+                    <div class="col-xl-3 col-md-6">
+                        <a href="{{ route('teams.index') }}" class="quick-action-card d-block p-4 border-0 rounded-lg">
+                            <div class="action-icon mb-3">
+                                <div class="icon-wrapper bg-gradient-primary">
+                                    <i class="fas fa-plus"></i>
+                                </div>
+                            </div>
+                            <h6 class="fw-semibold mb-2">Create Team</h6>
+                            <p class="text-sm text-muted mb-0">Start a new project team</p>
+                            <div class="action-arrow mt-3">
+                                <i class="fas fa-arrow-right text-primary"></i>
+                            </div>
+                        </a>
+                    </div>
+
+                    <!-- My Teams -->
+                    <div class="col-xl-3 col-md-6">
+                        <a href="{{ route('teams.index') }}" class="quick-action-card d-block p-4 border-0 rounded-lg">
+                            <div class="action-icon mb-3">
+                                <div class="icon-wrapper bg-gradient-success">
+                                    <i class="fas fa-users"></i>
+                                </div>
+                            </div>
+                            <h6 class="fw-semibold mb-2">My Teams</h6>
+                            <p class="text-sm text-muted mb-0">Manage your teams</p>
+                            <div class="action-arrow mt-3">
+                                <i class="fas fa-arrow-right text-success"></i>
+                            </div>
+                        </a>
+                    </div>
+
+                    <!-- Schedule -->
+                    <div class="col-xl-3 col-md-6">
+                        <a href="{{ route('presentation-schedules.index') }}" class="quick-action-card d-block p-4 border-0 rounded-lg">
+                            <div class="action-icon mb-3">
+                                <div class="icon-wrapper bg-gradient-info">
+                                    <i class="fas fa-calendar-alt"></i>
+                                </div>
+                            </div>
+                            <h6 class="fw-semibold mb-2">Schedule</h6>
+                            <p class="text-sm text-muted mb-0">View presentations</p>
+                            <div class="action-arrow mt-3">
+                                <i class="fas fa-arrow-right text-info"></i>
+                            </div>
+                        </a>
+                    </div>
+
+                    <!-- Submit -->
+                    <div class="col-xl-3 col-md-6">
+                        <a href="#" class="quick-action-card d-block p-4 border-0 rounded-lg">
+                            <div class="action-icon mb-3">
+                                <div class="icon-wrapper bg-gradient-warning">
+                                    <i class="fas fa-file-upload"></i>
+                                </div>
+                            </div>
+                            <h6 class="fw-semibold mb-2">Submit</h6>
+                            <p class="text-sm text-muted mb-0">Proposals & Reports</p>
+                            <div class="action-arrow mt-3">
+                                <i class="fas fa-arrow-right text-warning"></i>
+                            </div>
+                        </a>
+                    </div>
+                </div>
+            </div>
+        </div>
+
+        <style>
+        /* Quick Actions Section */
+        .quick-actions-section {
+            background: linear-gradient(135deg, #f8f9fa 0%, #ffffff 100%);
+            padding: 2rem 0 3rem;
+            margin-bottom: 2rem;
         }
 
-        .card-action:hover {
-            border-color: rgba(94, 114, 228, 0.2);
-            transform: translateY(-4px);
-            box-shadow: 0 8px 20px rgba(0, 0, 0, 0.1);
-            text-decoration: none;
-        }
-
-        .icon-container {
+        /* Quick Action Card */
+        .quick-action-card {
+            background: white;
+            border: 1px solid rgba(0, 0, 0, 0.05);
+            box-shadow: 0 2px 12px rgba(0, 0, 0, 0.04);
+            transition: all 0.3s cubic-bezier(0.4, 0, 0.2, 1);
             position: relative;
+            overflow: hidden;
+            height: 100%;
         }
 
-        .icon-circle {
-            width: 70px;
-            height: 70px;
-            border-radius: 50%;
+        .quick-action-card:hover {
+            transform: translateY(-4px);
+            box-shadow: 0 12px 24px rgba(0, 0, 0, 0.08);
+            border-color: transparent;
+        }
+
+        .quick-action-card:hover .action-arrow {
+            transform: translateX(5px);
+        }
+
+        .quick-action-card:before {
+            content: '';
+            position: absolute;
+            top: 0;
+            left: 0;
+            width: 100%;
+            height: 4px;
+            background: transparent;
+            transition: all 0.3s ease;
+        }
+
+        .quick-action-card:hover:before {
+            background: linear-gradient(90deg, var(--gradient-color) 0%, rgba(255,255,255,0) 100%);
+        }
+
+        /* Icon Wrapper */
+        .icon-wrapper {
+            width: 56px;
+            height: 56px;
+            border-radius: 16px;
             display: flex;
             align-items: center;
             justify-content: center;
             transition: all 0.3s ease;
+            position: relative;
+            overflow: hidden;
         }
 
-        .card-action:hover .icon-circle {
-            transform: scale(1.1);
+        .icon-wrapper:before {
+            content: '';
+            position: absolute;
+            top: 0;
+            left: 0;
+            width: 100%;
+            height: 100%;
+            background: rgba(255, 255, 255, 0.1);
+            opacity: 0;
+            transition: opacity 0.3s ease;
         }
 
-        .card-action h6 {
+        .quick-action-card:hover .icon-wrapper:before {
+            opacity: 1;
+        }
+
+        .icon-wrapper i {
+            font-size: 1.25rem;
+            color: white;
+            position: relative;
+            z-index: 1;
+        }
+
+        /* Gradient Backgrounds */
+        .bg-gradient-primary {
+            --gradient-color: #667eea;
+            background: linear-gradient(135deg, #667eea 0%, #764ba2 100%);
+        }
+
+        .bg-gradient-success {
+            --gradient-color: #13B497;
+            background: linear-gradient(135deg, #13B497 0%, #11967d 100%);
+        }
+
+        .bg-gradient-info {
+            --gradient-color: #4FACFE;
+            background: linear-gradient(135deg, #4FACFE 0%, #00c6ff 100%);
+        }
+
+        .bg-gradient-warning {
+            --gradient-color: #F2994A;
+            background: linear-gradient(135deg, #F2994A 0%, #F2C94C 100%);
+        }
+
+        /* Action Arrow */
+        .action-arrow {
+            display: inline-flex;
+            align-items: center;
+            justify-content: center;
+            width: 32px;
+            height: 32px;
+            border-radius: 50%;
+            background: rgba(0, 0, 0, 0.02);
+            transition: all 0.3s ease;
+        }
+
+        .action-arrow i {
+            font-size: 0.875rem;
+        }
+
+        /* Typography */
+        h5, h6 {
+            font-family: 'Noto Sans', sans-serif;
+        }
+
+        h5 {
             font-weight: 600;
-            color: #344767;
+            color: #1a1a1a;
         }
 
-        .card-action p {
-            line-height: 1.4;
+        h6 {
+            font-weight: 500;
+            color: #2d3748;
         }
 
-        .card-header h5 {
-            font-weight: 600;
-            color: #344767;
+        .text-sm {
+            font-size: 0.875rem;
         }
 
-        .text-muted {
-            color: #6c757d !important;
+        /* Responsive Design */
+        @media (max-width: 992px) {
+            .quick-actions-section {
+                padding: 1.5rem 0 2.5rem;
+            }
+            
+            .quick-action-card {
+                padding: 1.5rem !important;
+            }
+            
+            .icon-wrapper {
+                width: 48px;
+                height: 48px;
+            }
+            
+            .icon-wrapper i {
+                font-size: 1.125rem;
+            }
+        }
+
+        @media (max-width: 768px) {
+            .quick-actions-section {
+                padding: 1rem 0 2rem;
+            }
+            
+            .row.g-3 {
+                row-gap: 1rem !important;
+            }
+            
+            .quick-action-card {
+                padding: 1.25rem !important;
+            }
+        }
+
+        @media (max-width: 576px) {
+            .quick-actions-section {
+                padding: 0.75rem 0 1.5rem;
+            }
+            
+            .quick-action-card {
+                margin-bottom: 0.5rem;
+            }
+            
+            .icon-wrapper {
+                width: 44px;
+                height: 44px;
+                border-radius: 12px;
+            }
+            
+            .icon-wrapper i {
+                font-size: 1rem;
+            }
         }
         </style>
 
-
+        
 </x-app-layout>

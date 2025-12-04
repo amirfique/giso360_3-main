@@ -12,17 +12,21 @@
             </div>
             @endif
 
-            <!-- Page Header -->
             <div class="row mb-4">
                 <div class="col-12">
-                    <div class="card border shadow-xs">
+                    <div class="card border-0 shadow-sm bg-gradient-primary">
                         <div class="card-body p-4">
-                            <h1 class="h4 text-gradient text-primary mb-2">Presentation Schedule Management</h1>
-                            <p class="text-sm mb-0">Manage presentation schedules for all GISO teams</p>
+                            <div class="d-flex align-items-center justify-content-between">
+                                <div>
+                                    <h1 class="h4 text-white mb-2">Presentation Schedule Management</h1>
+                                    <p class="text-white-80 mb-0">Manage presentation schedules for all GISO teams</p>
+                                </div>
+                            </div>
                         </div>
                     </div>
                 </div>
             </div>
+
             <!-- Presentation Schedules Table -->
             <div class="row">
                 <div class="col-12">
@@ -212,5 +216,202 @@
                 });
             });
         </script>
+
+        <style>
+    :root {
+        --primary-gradient: linear-gradient(135deg, #667eea 0%, #764ba2 100%);
+        --success-gradient: linear-gradient(135deg, #13B497 0%, #1BCFB4 100%);
+        --warning-gradient: linear-gradient(135deg, #F2994A 0%, #F2C94C 100%);
+        --info-gradient: linear-gradient(135deg, #4FACFE 0%, #00F2FE 100%);
+        --danger-gradient: linear-gradient(135deg, #F53844 0%, #FF6B6B 100%);
+    }
+    
+    body {
+        background-color: #f8f9fa;
+    }
+    
+    .card {
+        border-radius: 0.75rem;
+        transition: all 0.3s ease;
+        border: none;
+    }
+    
+    .shadow-sm {
+        box-shadow: 0 0.125rem 0.25rem rgba(0, 0, 0, 0.075) !important;
+    }
+    
+    .icon {
+        width: 48px;
+        height: 48px;
+        display: flex;
+        align-items: center;
+        justify-content: center;
+    }
+    
+    .icon-sm {
+        width: 32px;
+        height: 32px;
+    }
+    
+    .text-gradient {
+        background: var(--primary-gradient);
+        -webkit-background-clip: text;
+        -webkit-text-fill-color: transparent;
+        background-clip: text;
+    }
+    
+    .bg-gradient-primary {
+        background: var(--primary-gradient);
+    }
+    
+    .bg-gradient-success {
+        background: var(--success-gradient);
+    }
+    
+    .bg-gradient-warning {
+        background: var(--warning-gradient);
+    }
+    
+    .bg-gradient-info {
+        background: var(--info-gradient);
+    }
+    
+    .bg-gradient-danger {
+        background: var(--danger-gradient);
+    }
+    
+    .badge {
+        font-weight: 500;
+        padding: 0.5em 0.75em;
+        border-radius: 0.375rem;
+    }
+    
+    .card-header {
+        background-color: transparent;
+        border-bottom: 1px solid #f0f2f5;
+    }
+    
+    .text-white-70 {
+        color: rgba(255, 255, 255, 0.7) !important;
+    }
+    
+    .text-white-80 {
+        color: rgba(255, 255, 255, 0.8) !important;
+    }
+    
+    .table {
+        margin-bottom: 0;
+    }
+    
+    .table thead th {
+        border-bottom: 1px solid #f0f2f5;
+        padding: 0.75rem;
+    }
+    
+    .table td {
+        padding: 0.75rem;
+        vertical-align: middle;
+    }
+    
+    .hover-row {
+        transition: all 0.2s ease;
+    }
+    
+    .hover-row:hover {
+        background-color: rgba(94, 114, 228, 0.04);
+    }
+    
+    .form-control, .form-select {
+        border-radius: 0.375rem;
+        border: 1px solid #d2d6da;
+        transition: all 0.2s ease;
+    }
+    
+    .form-control:focus, .form-select:focus {
+        border-color: #667eea;
+        box-shadow: 0 0 0 0.2rem rgba(102, 126, 234, 0.25);
+    }
+    
+    .btn {
+        font-weight: 500;
+        letter-spacing: 0.5px;
+        border-radius: 0.375rem;
+        transition: all 0.3s ease;
+    }
+    
+    .btn:hover {
+        transform: translateY(-2px);
+    }
+    
+    .btn-outline-primary {
+        border-color: #667eea;
+        color: #667eea;
+    }
+    
+    .btn-outline-primary:hover {
+        background-color: #667eea;
+        border-color: #667eea;
+        color: white;
+    }
+    
+    .input-group-outline {
+        position: relative;
+    }
+    
+    .input-group-outline .form-control {
+        background: transparent;
+        border: none;
+        border-bottom: 1px solid #d2d6da;
+        border-radius: 0;
+        padding: 0;
+        transition: all 0.2s ease;
+    }
+    
+    .input-group-outline .form-control:focus {
+        border-bottom: 1px solid #667eea;
+        box-shadow: none;
+    }
+    
+    .input-group-outline .form-label {
+        position: absolute;
+        top: 0;
+        left: 0;
+        transition: all 0.2s ease;
+        pointer-events: none;
+        color: #adb5bd;
+    }
+    
+    .input-group-outline .form-control:focus + .form-label,
+    .input-group-outline .form-control:not(:placeholder-shown) + .form-label {
+        font-size: 0.8rem;
+        transform: translateY(-25px);
+        color: #667eea;
+    }
+    
+    .pagination-wrapper {
+        display: flex;
+        align-items: center;
+    }
+    
+    .toast {
+        min-width: 300px;
+    }
+    
+    /* Animation for cards */
+    .card {
+        animation: fadeInUp 0.5s ease;
+    }
+    
+    @keyframes fadeInUp {
+        from {
+            opacity: 0;
+            transform: translateY(20px);
+        }
+        to {
+            opacity: 1;
+            transform: translateY(0);
+        }
+    }
+    </style>
     </main>
 </x-app-layout>

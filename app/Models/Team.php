@@ -26,6 +26,7 @@ class Team extends Model
     public function members()
     {
         return $this->belongsToMany(User::class, 'team_user')
+                    ->withPivot('role')  // Added this line to include role from pivot table
                     ->withTimestamps();
     }
 
@@ -39,7 +40,6 @@ class Team extends Model
         return $this->hasMany(Report::class);
     }
 
-   
     public function expenses()
     {
         return $this->hasMany(Expense::class);
@@ -47,7 +47,6 @@ class Team extends Model
 
     public function presentationSchedule()
     {
-    return $this->hasOne(PresentationSchedule::class);
+        return $this->hasOne(PresentationSchedule::class);
     }
-
 }

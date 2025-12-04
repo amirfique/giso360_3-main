@@ -82,4 +82,27 @@ class TeamController extends Controller
 
         return view('teams.show', compact('team', 'proposals', 'reports', 'schedule'));
     }
+
+    /**
+     * Update the role of a team member
+     */
+    public function updateMemberRole(Request $request, Team $team, User $user)
+    {
+        // Verify the current user is the team owner
+        if (Auth::id() !== $team->owner_id) {
+            abort(403, 'Only the team owner can update member roles.');
+        }
+        
+        // Validate the request
+        $request->validate([
+            'role' => 'required|in:director,co-director,secretary,treasurer,member',
+        ]);
+        
+        // Update the member's role in the pivot table
+        $team->members()->updateExistingPivot($user->id, [
+            'role' => $request->role
+        ]);
+        
+        return redirect()->back()->with('success', 'Member role updated successfully!');
+    }
 }
