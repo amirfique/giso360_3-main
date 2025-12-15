@@ -1,22 +1,17 @@
 <x-app-layout>
-    <div class="container-fluid py-4">
-        <!-- Profile Header -->
-        <div class="row mb-4">
+    <div class="container-fluid py-4 px-5">
+        <!-- Page Header -->
+        <div class="row">
             <div class="col-12">
-                <div class="card border-0 shadow-xs overflow-hidden">
-                    <div class="card-header bg-gradient-primary p-5 position-relative">
-                        <div class="bg-pattern bg-white opacity-2"></div>
-                        <div class="row align-items-center position-relative">
-                            <div class="col-md-8">
-                                <h3 class="text-white mb-1">My Profile</h3>
-                                <p class="text-white opacity-8 mb-0">Manage your personal information and account settings</p>
-                            </div>
-                            <div class="col-md-4 text-end">
-                                <div class="icon icon-shape bg-white bg-opacity-10 shadow text-center rounded-circle d-inline-flex align-items-center justify-content-center">
-                                    <i class="fas fa-user-cog text-white"></i>
-                                </div>
-                            </div>
-                        </div>
+                <div class="card card-background card-background-after-none align-items-start mt-4 mb-5">
+                    <div class="full-background" style="background-image: url('{{ asset('assets/img/header-blue-purple.jpg') }}')"></div>
+                    <div class="card-body text-start p-4 w-100">
+                        <h3 class="text-white my-3">My Profile</h3>
+                        <p class="mb-4 mt-2 font-weight-semibold">
+                            Manage your personal information and account settings
+                        </p>
+                        <img src="{{ asset('assets/img/profile-management 3d.png') }}" alt="profile management"
+                            class="position-absolute top-0 end-0 w-25 max-width-200 mt-n4 d-sm-block d-none" />
                     </div>
                 </div>
             </div>
@@ -25,8 +20,19 @@
         <div class="row">
             <!-- Main Content Area -->
             <div class="col-12">
-                <div class="card border-0 shadow-xs">
-                    <div class="card-body p-4">
+                <div class="simple-card">
+                    <div class="card-header-simple">
+                        <div class="d-flex align-items-center">
+                            <div class="card-icon">
+                                <i class="fas fa-user-cog"></i>
+                            </div>
+                            <div>
+                                <h5 class="mb-0">Profile Information</h5>
+                                <p class="text-sm opacity-8 mb-0">Update your personal details and avatar</p>
+                            </div>
+                        </div>
+                    </div>
+                    <div class="card-body-simple">
                         @if (session('success'))
                             <div class="alert alert-success border-radius-lg d-flex align-items-center mb-4" role="alert">
                                 <i class="fas fa-check-circle me-2"></i>
@@ -61,7 +67,7 @@
                                             <div class="avatar-upload">
                                                 <div class="avatar-edit">
                                                     <input type="file" name="avatar" id="avatarUpload" accept=".png, .jpg, .jpeg" class="d-none">
-                                                    <label for="avatarUpload" class="btn btn-sm bg-gradient-primary shadow-primary mb-0 position-absolute bottom-0 end-0 rounded-circle">
+                                                    <label for="avatarUpload" class="btn-primary-simple position-absolute bottom-0 end-0 rounded-circle" style="width: 40px; height: 40px; padding: 0; display: flex; align-items: center; justify-content: center;">
                                                         <i class="fas fa-camera text-white"></i>
                                                     </label>
                                                 </div>
@@ -72,7 +78,7 @@
                                                         </div>
                                                     @else
                                                         <div id="imagePreview" 
-                                                             style="background-image: url('https://ui-avatars.com/api/?name={{ urlencode(auth()->user()->name) }}&background=5e72e4&color=ffffff&size=150');">
+                                                             style="background-image: url('https://ui-avatars.com/api/?name={{ urlencode(auth()->user()->name) }}&background=774dd3&color=ffffff&size=150');">
                                                         </div>
                                                     @endif
                                                 </div>
@@ -81,26 +87,10 @@
                                         <p class="text-sm text-muted mt-2">Click the camera icon to update your profile photo</p>
                                     </div>
 
-                                    <!-- Team Stats Card -->
-                                    <div class="card border-0 shadow-xs bg-gray-100">
-                                        <div class="card-body text-center p-4">
-                                            <div class="icon icon-shape bg-gradient-primary shadow-primary text-center rounded-circle mx-auto mb-3">
-                                                <i class="fas fa-users text-white"></i>
-                                            </div>
-                                            <h2 class="text-primary mb-1">{{ $teamCount }}</h2>
-                                            <h6 class="text-dark mb-3">GISO Teams</h6>
-                                            <p class="text-sm text-muted mb-0">
-                                                Number of teams you are currently a member of
-                                            </p>
-                                        </div>
-                                    </div>
-
                                     <!-- Account Info -->
-                                    <div class="card border-0 shadow-xs mt-4">
-                                        <div class="card-header bg-transparent">
-                                            <h6 class="mb-0">Account Information</h6>
-                                        </div>
+                                    <div class="simple-card" style="background: rgba(100, 116, 139, 0.05); border-color: rgba(100, 116, 139, 0.2);">
                                         <div class="card-body">
+                                            <h6 class="mb-3 text-dark fw-bold">Account Information</h6>
                                             <div class="d-flex justify-content-between align-items-center mb-3">
                                                 <span class="text-sm text-muted">Member Since</span>
                                                 <span class="text-sm fw-bold text-dark">
@@ -133,11 +123,14 @@
                                             <label for="name" class="form-label text-dark fw-bold mb-2">
                                                 <i class="fas fa-user me-2 text-primary"></i>Username
                                             </label>
-                                            <div class="input-group input-group-outline">
+                                            <div class="input-group">
+                                                <span class="input-group-text">
+                                                    <i class="fas fa-user text-primary"></i>
+                                                </span>
                                                 <input type="text" 
                                                        name="name" 
                                                        id="name"
-                                                       class="form-control border-radius-lg" 
+                                                       class="form-control @error('name') is-invalid @enderror" 
                                                        value="{{ old('name', auth()->user()->name) }}"
                                                        placeholder="Enter your username">
                                             </div>
@@ -153,11 +146,14 @@
                                             <label for="email" class="form-label text-dark fw-bold mb-2">
                                                 <i class="fas fa-envelope me-2 text-primary"></i>Email Address
                                             </label>
-                                            <div class="input-group input-group-outline">
+                                            <div class="input-group">
+                                                <span class="input-group-text">
+                                                    <i class="fas fa-envelope text-primary"></i>
+                                                </span>
                                                 <input type="email" 
                                                        name="email" 
                                                        id="email"
-                                                       class="form-control border-radius-lg" 
+                                                       class="form-control @error('email') is-invalid @enderror" 
                                                        value="{{ old('email', auth()->user()->email) }}"
                                                        placeholder="Enter your email address">
                                             </div>
@@ -170,10 +166,10 @@
 
                                         <!-- Action Buttons -->
                                         <div class="d-flex justify-content-between align-items-center mt-5 pt-4 border-top">
-                                            <a href="{{ route('dashboard') }}" class="btn btn-outline-secondary">
+                                            <a href="{{ route('dashboard') }}" class="btn-white-simple">
                                                 <i class="fas fa-arrow-left me-2"></i>Back to Dashboard
                                             </a>
-                                            <button type="submit" class="btn bg-gradient-primary">
+                                            <button type="submit" class="btn-primary-simple">
                                                 <i class="fas fa-save me-2"></i>Save Changes
                                             </button>
                                         </div>
@@ -188,40 +184,163 @@
     </div>
 
     <style>
-    .card {
-        border-radius: 0.75rem;
+    /* Color Variables */
+    :root {
+        --primary: #774dd3;
+        --secondary: #64748b;
+        --white: #FFFFFF;
+        --dark: #1E293B;
+        --light-bg: rgba(255, 255, 255, 0.8);
+        --border-color: rgba(100, 116, 139, 0.5);
+        --border-dark: rgba(30, 41, 59, 0.6);
+        --success: #10b981;
+        --warning: #f59e0b;
+        --danger: #ef4444;
+        --info: #3b82f6;
     }
-    
-    .shadow-xs {
-        box-shadow: 0 4px 6px -1px rgba(0, 0, 0, 0.1), 0 2px 4px -1px rgba(0, 0, 0, 0.06) !important;
+
+    /* Simple Card Styles */
+    .simple-card {
+        background: var(--light-bg);
+        backdrop-filter: blur(10px);
+        border-radius: 12px;
+        border: 2px solid var(--border-color);
+        box-shadow: 0 4px 20px rgba(0, 0, 0, 0.08);
+        overflow: hidden;
+        height: 100%;
+        transition: transform 0.2s ease;
     }
-    
-    .border-radius-lg {
-        border-radius: 0.75rem !important;
+
+    .card-header-simple {
+        background: linear-gradient(135deg, rgba(119, 77, 211, 0.1) 0%, rgba(119, 77, 211, 0.1) 100%);
+        padding: 1.5rem;
+        border-bottom: 2px solid var(--border-color);
     }
-    
+
+    .card-header-simple p {
+        color: var(--secondary);
+        font-size: 0.9rem;
+    }
+
+    .card-icon {
+        width: 50px;
+        height: 50px;
+        border-radius: 10px;
+        background: var(--primary);
+        color: var(--white);
+        display: flex;
+        align-items: center;
+        justify-content: center;
+        margin-right: 1rem;
+        font-size: 1.2rem;
+    }
+
+    .card-body-simple {
+        padding: 1.5rem;
+    }
+
+    /* Form Styles */
+    .form-label {
+        color: var(--dark);
+        font-weight: 600;
+        margin-bottom: 0.5rem;
+    }
+
+    .form-control {
+        background: var(--white);
+        border: 2px solid var(--border-color);
+        border-radius: 8px;
+        padding: 0.75rem;
+        color: var(--dark);
+        transition: border-color 0.2s ease;
+    }
+
+    .form-control:focus {
+        border-color: var(--primary);
+        box-shadow: 0 0 0 3px rgba(119, 77, 211, 0.1);
+        outline: none;
+    }
+
+    .input-group-text {
+        background: var(--white);
+        border: 2px solid var(--border-color);
+        border-right: none;
+        color: var(--primary);
+    }
+
+    .input-group .form-control {
+        border-left: none;
+    }
+
+    .input-group:focus-within .input-group-text {
+        border-color: var(--primary);
+    }
+
+    /* Button Styles */
+    .btn-primary-simple {
+        background: var(--primary);
+        border: 2px solid var(--primary);
+        border-radius: 8px;
+        padding: 0.75rem 1.5rem;
+        color: var(--white);
+        font-weight: 600;
+        display: inline-flex;
+        align-items: center;
+        justify-content: center;
+        cursor: pointer;
+        transition: all 0.2s ease;
+        text-decoration: none;
+    }
+
+    .btn-primary-simple:hover {
+        background: #6439b3;
+        border-color: #6439b3;
+        color: var(--white);
+    }
+
+    .btn-white-simple {
+        background: var(--white);
+        border: 2px solid var(--border-color);
+        border-radius: 8px;
+        padding: 0.75rem 1.5rem;
+        color: var(--dark);
+        font-weight: 600;
+        display: inline-flex;
+        align-items: center;
+        justify-content: center;
+        cursor: pointer;
+        transition: all 0.2s ease;
+        text-decoration: none;
+    }
+
+    .btn-white-simple:hover {
+        background: #f8fafc;
+        border-color: var(--border-dark);
+    }
+
+    /* Avatar Styles */
     .avatar-upload {
         position: relative;
         max-width: 150px;
         margin: 0 auto;
     }
-    
+
     .avatar-edit {
         position: absolute;
         right: 0;
         bottom: 0;
         z-index: 1;
     }
-    
+
     .avatar-preview {
         width: 150px;
         height: 150px;
         border-radius: 50%;
-        border: 4px solid #fff;
+        border: 4px solid var(--white);
         box-shadow: 0 4px 20px rgba(0, 0, 0, 0.1);
         overflow: hidden;
     }
-    
+
     .avatar-preview div {
         width: 100%;
         height: 100%;
@@ -230,40 +349,46 @@
         background-repeat: no-repeat;
         background-position: center;
     }
-    
-    .input-group-outline .form-control {
-        border: 1px solid #d2d6da;
-        background: transparent;
-        transition: all 0.2s ease;
+
+    /* Card Background Styles */
+    .card-background {
+        position: relative;
+        overflow: hidden;
     }
     
-    .input-group-outline .form-control:focus {
-        border-color: #5e72e4;
-        box-shadow: 0 0 0 2px rgba(94, 114, 228, 0.1);
-    }
-    
-    .bg-pattern {
+    .full-background {
         position: absolute;
         top: 0;
         left: 0;
-        right: 0;
-        bottom: 0;
-        opacity: 0.1;
-        background: url("data:image/svg+xml,%3Csvg width='20' height='20' viewBox='0 0 20 20' xmlns='http://www.w3.org/2000/svg'%3E%3Cg fill='%23ffffff' fill-opacity='0.2' fill-rule='evenodd'%3E%3Ccircle cx='3' cy='3' r='3'/%3E%3Ccircle cx='13' cy='13' r='3'/%3E%3C/g%3E%3C/svg%3E");
+        width: 100%;
+        height: 100%;
+        background-size: cover;
+        background-position: center;
+        z-index: 0;
     }
     
-    .bg-gray-100 {
-        background-color: #f8f9fa !important;
+    .card-background .card-body {
+        position: relative;
+        z-index: 1;
     }
     
-    .icon {
-        width: 40px;
-        height: 40px;
-        display: flex;
+    .card-background-after-none::after {
+        display: none;
+    }
+
+    /* Additional Styles */
+    .border-radius-lg {
+        border-radius: 0.75rem !important;
+    }
+
+    .icon-shape {
+        width: 2.5rem;
+        height: 2.5rem;
+        display: inline-flex;
         align-items: center;
         justify-content: center;
     }
-    
+
     .ps-lg-4 {
         padding-left: 1.5rem;
     }

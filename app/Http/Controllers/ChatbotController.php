@@ -69,7 +69,7 @@ class ChatbotController extends Controller
             // 5. Call the Gemini API using Laravel's Http Client
             
             // <<< THIS IS THE ONLY LINE THAT CHANGED >>>
-            $apiUrl = 'https://generativelanguage.googleapis.com/v1beta/models/gemini-2.0-flash:generateContent?key=' . $apiKey;
+            $apiUrl = 'https://generativelanguage.googleapis.com/v1beta/models/gemini-2.5-flash:generateContent?key=' . $apiKey;
 
             $response = Http::post($apiUrl, [
                 'contents' => [

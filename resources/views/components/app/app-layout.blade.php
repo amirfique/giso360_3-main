@@ -16,61 +16,64 @@
     <link href="{{ asset('assets/css/nucleo-svg.css') }}" rel="stylesheet" />
     <!-- Font Awesome Icons -->
     <script src="https://kit.fontawesome.com/349ee9c857.js" crossorigin="anonymous"></script>
-    <link href="{{ asset('assets/css/nucleo-svg.css') }}" rel="stylesheet" />
     <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.5.0/css/all.min.css">
     <!-- CSS Files -->
     <link id="pagestyle" href="{{ asset('assets/css/corporate-ui-dashboard.css?v=1.0.0') }}" rel="stylesheet" />
 
-
-    
     @stack('styles')
-
 </head>
 
-    <body class="g-sidenav-show  bg-gray-100">
+<body class="g-sidenav-show  bg-gray-100">
+    <x-app.sidebar />
 
-        <x-app.sidebar />
-
-            <main class="main-content position-relative max-height-vh-100 h-100 border-radius-lg">
-                <x-app.navbar />
-                
-                <div class="container-fluid py-4">
-                    @isset($header)
-                        <div class="mb-4">
-                            {{ $header }}
-                        </div>
-                    @endisset
-
-                    {{ $slot }}
+    <main class="main-content position-relative max-height-vh-100 h-100 border-radius-lg">
+        <x-app.navbar />
+        
+        <div class="container-fluid py-4">
+            @isset($header)
+                <div class="mb-4">
+                    {{ $header }}
                 </div>
-            </main>
+            @endisset
 
-        <x-chatbot/>
+            {{ $slot }}
+        </div>
+    </main>
 
+    <x-chatbot/>
+
+    <!-- jQuery (required for Bootstrap) -->
+    <script src="https://code.jquery.com/jquery-3.6.0.min.js"></script>
     
-        <script src="{{ asset('assets/js/core/popper.min.js') }}"></script>
-        <script src="{{ asset('assets/js/core/bootstrap.min.js') }}"></script>
-        <script src="{{ asset('assets/js/plugins/perfect-scrollbar.min.js') }}"></script>
-        <script src="{{ asset('assets/js/plugins/smooth-scrollbar.min.js') }}"></script>
-        <script src="{{ asset('assets/js/plugins/chartjs.min.js') }}"></script>
-        <script src="{{ asset('assets/js/plugins/swiper-bundle.min.js') }}" type="text/javascript"></script>
+    <!-- Bootstrap Core JavaScript -->
+    <script src="{{ asset('assets/js/core/popper.min.js') }}"></script>
+    <script src="{{ asset('assets/js/core/bootstrap.min.js') }}"></script>
     
-        <script>
-            if (document.getElementsByClassName('mySwiper')) {
-                var swiper = new Swiper(".mySwiper", {
-                    effect: "cards",
-                    grabCursor: true,
-                    initialSlide: 1,
-                    navigation: {
-                        nextEl: '.swiper-button-next',
-                        prevEl: '.swiper-button-prev',
-                    },
-                });
-            };
+    <!-- Additional Plugins -->
+    <script src="{{ asset('assets/js/plugins/perfect-scrollbar.min.js') }}"></script>
+    <script src="{{ asset('assets/js/plugins/smooth-scrollbar.min.js') }}"></script>
+    <script src="{{ asset('assets/js/plugins/chartjs.min.js') }}"></script>
+    <script src="{{ asset('assets/js/plugins/swiper-bundle.min.js') }}" type="text/javascript"></script>
 
+    <!-- Custom Scripts -->
+    <script>
+        // Initialize Swiper
+        if (document.getElementsByClassName('mySwiper')) {
+            var swiper = new Swiper(".mySwiper", {
+                effect: "cards",
+                grabCursor: true,
+                initialSlide: 1,
+                navigation: {
+                    nextEl: '.swiper-button-next',
+                    prevEl: '.swiper-button-prev',
+                },
+            });
+        }
 
-            var ctx = document.getElementById("chart-bars").getContext("2d");
-
+        // Initialize Chart.js Bar Chart
+        var ctx = document.getElementById("chart-bars");
+        if (ctx) {
+            ctx = ctx.getContext("2d");
             new Chart(ctx, {
                 type: "bar",
                 data: {
@@ -158,10 +161,12 @@
                     },
                 },
             });
+        }
 
-
-            var ctx2 = document.getElementById("chart-line").getContext("2d");
-
+        // Initialize Chart.js Line Chart
+        var ctx2 = document.getElementById("chart-line");
+        if (ctx2) {
+            ctx2 = ctx2.getContext("2d");
             var gradientStroke1 = ctx2.createLinearGradient(0, 230, 0, 50);
 
             gradientStroke1.addColorStop(1, 'rgba(45,168,255,0.2)');
@@ -308,20 +313,59 @@
                     },
                 },
             });
-        </script>
-        <script>
-            var win = navigator.platform.indexOf('Win') > -1;
-            if (win && document.querySelector('#sidenav-scrollbar')) {
-                var options = {
-                    damping: '0.5'
-                }
-                Scrollbar.init(document.querySelector('#sidenav-scrollbar'), options);
+        }
+
+        // Initialize scrollbar
+        var win = navigator.platform.indexOf('Win') > -1;
+        if (win && document.querySelector('#sidenav-scrollbar')) {
+            var options = {
+                damping: '0.5'
             }
-        </script>
-        @stack('scripts')
+            Scrollbar.init(document.querySelector('#sidenav-scrollbar'), options);
+        }
+        
+        // Initialize all tooltips
+        var tooltipTriggerList = [].slice.call(document.querySelectorAll('[data-bs-toggle="tooltip"]'))
+        var tooltipList = tooltipTriggerList.map(function (tooltipTriggerEl) {
+            return new bootstrap.Tooltip(tooltipTriggerEl)
+        });
+        
+        // Initialize all modals
+        var modalTriggerList = [].slice.call(document.querySelectorAll('[data-bs-toggle="modal"]'))
+        var modalList = modalTriggerList.map(function (modalTriggerEl) {
+            return new bootstrap.Modal(modalTriggerEl)
+        });
+    </script>
     
-        <script src="{{ asset('assets/js/corporate-ui-dashboard.min.js?v=1.0.0') }}"></script>
-
-    </body>
-
+    @stack('scripts')
+    
+    <!-- Dashboard JavaScript -->
+    <script src="{{ asset('assets/js/corporate-ui-dashboard.min.js?v=1.0.0') }}"></script>
+    
+    <!-- Modal Initialization Script -->
+    <script>
+        document.addEventListener('DOMContentLoaded', function() {
+            // Handle any dynamically added modals
+            function initializeModals() {
+                var newModalTriggerList = [].slice.call(document.querySelectorAll('[data-bs-toggle="modal"]:not(.initialized)'))
+                newModalTriggerList.forEach(function (modalTriggerEl) {
+                    modalTriggerEl.classList.add('initialized');
+                    new bootstrap.Modal(modalTriggerEl);
+                });
+            }
+            
+            // Initialize modals after any AJAX calls or DOM changes
+            if (typeof MutationObserver !== 'undefined') {
+                var observer = new MutationObserver(function(mutations) {
+                    initializeModals();
+                });
+                
+                observer.observe(document.body, {
+                    childList: true,
+                    subtree: true
+                });
+            }
+        });
+    </script>
+</body>
 </html>

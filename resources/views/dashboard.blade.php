@@ -2,18 +2,18 @@
         <div class="container-fluid py-4 px-5">
             <div class="row">
                 <div class="col-md-12">
-                    <div class="dashboard-header position-relative border rounded-3 p-4 mb-4">
+                    <div class="dashboard-header-actions position-relative border rounded-3 p-4 mb-6">
                         <div class="row align-items-center" style="z-index: 2;">
                             <!-- Greeting Section - Left Side -->
                             <div class="col-md-9 col-12">
                             <div class="greeting-section animate-rise my-6">
-                                    <h2 class="font-weight-bold mb-0">Hello, {{ Auth::user()->name ?? 'Student' }}</h2>
+                                    <h1 class="font-weight-bold mb-0">Hello, {{ Auth::user()->name ?? 'Student' }}</h1>
                                     <h3 class="font-weight-bold mb-0">Welcome to your GISO 360 Dashboard!</h3>
                                 </div>
                             </div>
                         </div>
-                        <div class="image-container animate-rise-delay me-5">
-                            <img src="{{ asset('assets/img/travel header.png') }}" 
+                        <div class="image-container animate-rise-delay me-5 mr-5">
+                            <img src="{{ asset('assets/img/travel header 2.png') }}" 
                                 alt="Travel Header" 
                                 class="header-image img-fluid">
                         </div>
@@ -22,31 +22,131 @@
             </div>
 
             <style>
-                .dashboard-header {
-                    background-color: #ffffff;
-                    border-color: #e0e0e0 !important;
-                    box-shadow: 0 4px 6px rgba(0, 0, 0, 0.05);
-                    transition: all 0.3s ease;
+            .dashboard-header-actions {
+                background: rgba(255, 255, 255, 0.18);
+                border-radius: 16px;
+                box-shadow: 0 4px 30px rgba(0, 0, 0, 0.1);
+                backdrop-filter: blur(6.3px);
+                -webkit-backdrop-filter: blur(6.3px);
+                border: 1px solid rgba(255, 255, 255, 0.3); /* Slightly adjusted from pure white for subtlety */
+                transition: all 0.3s cubic-bezier(0.25, 0.46, 0.45, 0.94);
+                position: relative;
+                overflow: hidden;
+            }
+
+            /* Add subtle highlight effect */
+            .dashboard-header-actions::before {
+                content: '';
+                position: absolute;
+                top: 0;
+                left: 0;
+                right: 0;
+                height: 1px;
+                background: linear-gradient(
+                    90deg,
+                    rgba(255, 255, 255, 0) 0%,
+                    rgba(255, 255, 255, 0.5) 50%,
+                    rgba(255, 255, 255, 0) 100%
+                );
+                z-index: 1;
+            }
+
+            .dashboard-header-actions:hover {
+                background: rgba(255, 255, 255, 0.25);
+                box-shadow: 0 8px 40px rgba(0, 0, 0, 0.15);
+                backdrop-filter: blur(10px);
+                -webkit-backdrop-filter: blur(10px);
+                border: 1px solid rgba(255, 255, 255, 0.4);
+                transform: translateY(-2px) scale(1.005);
+            }
+
+            /* Add a subtle colored tint */
+            .dashboard-header-actions::after {
+                content: '';
+                position: absolute;
+                top: 0;
+                left: 0;
+                right: 0;
+                bottom: 0;
+                background: linear-gradient(
+                    135deg, 
+                    rgba(59, 130, 246, 0.03) 0%, 
+                    rgba(168, 85, 247, 0.03) 100%
+                );
+                z-index: -1;
+                border-radius: inherit;
+                opacity: 0;
+                transition: opacity 0.4s cubic-bezier(0.25, 0.46, 0.45, 0.94);
+            }
+
+            .dashboard-header-actions:hover::after {
+                opacity: 1;
+            }
+
+            /* Add a subtle inner shadow for depth */
+            .dashboard-header-actions:active {
+                transform: translateY(0) scale(0.998);
+                box-shadow: 0 4px 30px rgba(0, 0, 0, 0.1);
+                background: rgba(255, 255, 255, 0.22);
+            }
+
+                .dashboard-header-actions:hover {
+                    background: rgba(255, 255, 255, 0.78);
+                    backdrop-filter: blur(25px) saturate(190%);
+                    -webkit-backdrop-filter: blur(25px) saturate(190%);
+                    box-shadow: 
+                        0 12px 40px rgba(0, 0, 0, 0.12),
+                        inset 0 1px 0 rgba(255, 255, 255, 0.95),
+                        inset 0 -1px 0 rgba(255, 255, 255, 0.3);
+                    transform: translateY(-2px) scale(1.005);
                 }
 
-                .dashboard-header:hover {
-                    box-shadow: 0 6px 12px rgba(0, 0, 0, 0.1);
+                /* Add a more subtle colored tint */
+                .dashboard-header-actions::after {
+                    content: '';
+                    position: absolute;
+                    top: 0;
+                    left: 0;
+                    right: 0;
+                    bottom: 0;
+                    background: linear-gradient(
+                        135deg, 
+                        rgba(59, 130, 246, 0.03) 0%, 
+                        rgba(168, 85, 247, 0.03) 100%
+                    );
+                    z-index: -1;
+                    border-radius: inherit;
+                    opacity: 0;
+                    transition: opacity 0.4s cubic-bezier(0.25, 0.46, 0.45, 0.94);
+                }
+
+                .dashboard-header-actions:hover::after {
+                    opacity: 1;
+                }
+
+                /* Add a subtle inner shadow for depth */
+                .dashboard-header-actions:active {
+                    transform: translateY(0) scale(0.998);
+                    box-shadow: 
+                        0 5px 20px rgba(0, 0, 0, 0.1),
+                        inset 0 1px 2px rgba(0, 0, 0, 0.08),
+                        inset 0 -1px 0 rgba(255, 255, 255, 0.3);
                 }
                 
                 .image-container {
                     position: absolute;
-                    top: -50px;
-                    right: -30px;
+                    top: -50px; /* Reduced from -50px */
+                    right: -30px; /* Reduced from -30px */
                     z-index: 1;
-                    max-width: 60%;
+                    max-width: 60%; /* Reduced from 60% */
                 }
-                
+
                 .header-image {
                     width: 100%;
                     height: auto;
-                    max-height: 400px;
+                    max-height: 400px; /* Reduced from 400px */
                     object-fit: cover;
-                    border-radius: 20px;
+                    border-radius: 20px; /* Reduced from 20px */
                     transition: transform 0.3s ease;
                 }
                 
@@ -80,42 +180,6 @@
                     text-shadow: 0 2px 4px rgba(255, 255, 255, 0.8);
                 }
                 
-                /* Responsive adjustments */
-                @media (max-width: 992px) {
-                    .image-container {
-                        top: -30px;
-                        right: -20px;
-                        max-width: 70%;
-                    }
-                    
-                    .header-image {
-                        max-height: 300px;
-                    }
-                }
-                
-                @media (max-width: 768px) {
-                    .dashboard-header {
-                        min-height: 250px;
-                    }
-                    
-                    .image-container {
-                        position: relative;
-                        top: 0;
-                        right: 0;
-                        max-width: 100%;
-                        margin-top: 20px;
-                    }
-                    
-                    .header-image {
-                        max-height: 250px;
-                    }
-                }
-                
-                @media (max-width: 576px) {
-                    .header-image {
-                        max-height: 200px;
-                    }
-                }
             </style>
         </div>
         
@@ -359,7 +423,7 @@
             </style>
         </head>
         <body>
-            <div class="container-fluid px-3 px-md-5">
+            <div class="container-fluid px-3 px-md-5 mb-5">
                 <div class="carousel-container">
                     <div class="news-carousel" id="newsCarousel">
                         <!-- Indicators -->
@@ -526,185 +590,7 @@
         <!-- End of Carousel -->
 
 
-        <!-- Quick Actions Section -->
-        <div class="container-fluid px-0">
-            <div class="quick-actions-section px-4 px-md-5">
-                <div class="d-flex justify-content-between align-items-center mb-4">
-                    <div>
-                        <h5 class="fw-bold mb-1">Quick Actions</h5>
-                        <p class="text-sm text-muted mb-0">Access frequently used features</p>
-                    </div>
-                </div>
-
-                <div class="row g-3">
-                    <!-- Create Team -->
-                    <div class="col-xl-3 col-md-6">
-                        <a href="{{ route('teams.index') }}" class="quick-action-card d-block p-4 border-0 rounded-lg">
-                            <div class="action-icon mb-3">
-                                <div class="icon-wrapper bg-gradient-primary">
-                                    <i class="fas fa-plus"></i>
-                                </div>
-                            </div>
-                            <h6 class="fw-semibold mb-2">Create Team</h6>
-                            <p class="text-sm text-muted mb-0">Start a new project team</p>
-                            <div class="action-arrow mt-3">
-                                <i class="fas fa-arrow-right text-primary"></i>
-                            </div>
-                        </a>
-                    </div>
-
-                    <!-- My Teams -->
-                    <div class="col-xl-3 col-md-6">
-                        <a href="{{ route('teams.index') }}" class="quick-action-card d-block p-4 border-0 rounded-lg">
-                            <div class="action-icon mb-3">
-                                <div class="icon-wrapper bg-gradient-success">
-                                    <i class="fas fa-users"></i>
-                                </div>
-                            </div>
-                            <h6 class="fw-semibold mb-2">My Teams</h6>
-                            <p class="text-sm text-muted mb-0">Manage your teams</p>
-                            <div class="action-arrow mt-3">
-                                <i class="fas fa-arrow-right text-success"></i>
-                            </div>
-                        </a>
-                    </div>
-
-                    <!-- Schedule -->
-                    <div class="col-xl-3 col-md-6">
-                        <a href="{{ route('presentation-schedules.index') }}" class="quick-action-card d-block p-4 border-0 rounded-lg">
-                            <div class="action-icon mb-3">
-                                <div class="icon-wrapper bg-gradient-info">
-                                    <i class="fas fa-calendar-alt"></i>
-                                </div>
-                            </div>
-                            <h6 class="fw-semibold mb-2">Schedule</h6>
-                            <p class="text-sm text-muted mb-0">View presentations</p>
-                            <div class="action-arrow mt-3">
-                                <i class="fas fa-arrow-right text-info"></i>
-                            </div>
-                        </a>
-                    </div>
-
-                    <!-- Submit -->
-                    <div class="col-xl-3 col-md-6">
-                        <a href="#" class="quick-action-card d-block p-4 border-0 rounded-lg">
-                            <div class="action-icon mb-3">
-                                <div class="icon-wrapper bg-gradient-warning">
-                                    <i class="fas fa-file-upload"></i>
-                                </div>
-                            </div>
-                            <h6 class="fw-semibold mb-2">Submit</h6>
-                            <p class="text-sm text-muted mb-0">Proposals & Reports</p>
-                            <div class="action-arrow mt-3">
-                                <i class="fas fa-arrow-right text-warning"></i>
-                            </div>
-                        </a>
-                    </div>
-                </div>
-            </div>
-        </div>
-
         <style>
-        /* Quick Actions Section */
-        .quick-actions-section {
-            background: linear-gradient(135deg, #f8f9fa 0%, #ffffff 100%);
-            padding: 2rem 0 3rem;
-            margin-bottom: 2rem;
-        }
-
-        /* Quick Action Card */
-        .quick-action-card {
-            background: white;
-            border: 1px solid rgba(0, 0, 0, 0.05);
-            box-shadow: 0 2px 12px rgba(0, 0, 0, 0.04);
-            transition: all 0.3s cubic-bezier(0.4, 0, 0.2, 1);
-            position: relative;
-            overflow: hidden;
-            height: 100%;
-        }
-
-        .quick-action-card:hover {
-            transform: translateY(-4px);
-            box-shadow: 0 12px 24px rgba(0, 0, 0, 0.08);
-            border-color: transparent;
-        }
-
-        .quick-action-card:hover .action-arrow {
-            transform: translateX(5px);
-        }
-
-        .quick-action-card:before {
-            content: '';
-            position: absolute;
-            top: 0;
-            left: 0;
-            width: 100%;
-            height: 4px;
-            background: transparent;
-            transition: all 0.3s ease;
-        }
-
-        .quick-action-card:hover:before {
-            background: linear-gradient(90deg, var(--gradient-color) 0%, rgba(255,255,255,0) 100%);
-        }
-
-        /* Icon Wrapper */
-        .icon-wrapper {
-            width: 56px;
-            height: 56px;
-            border-radius: 16px;
-            display: flex;
-            align-items: center;
-            justify-content: center;
-            transition: all 0.3s ease;
-            position: relative;
-            overflow: hidden;
-        }
-
-        .icon-wrapper:before {
-            content: '';
-            position: absolute;
-            top: 0;
-            left: 0;
-            width: 100%;
-            height: 100%;
-            background: rgba(255, 255, 255, 0.1);
-            opacity: 0;
-            transition: opacity 0.3s ease;
-        }
-
-        .quick-action-card:hover .icon-wrapper:before {
-            opacity: 1;
-        }
-
-        .icon-wrapper i {
-            font-size: 1.25rem;
-            color: white;
-            position: relative;
-            z-index: 1;
-        }
-
-        /* Gradient Backgrounds */
-        .bg-gradient-primary {
-            --gradient-color: #667eea;
-            background: linear-gradient(135deg, #667eea 0%, #764ba2 100%);
-        }
-
-        .bg-gradient-success {
-            --gradient-color: #13B497;
-            background: linear-gradient(135deg, #13B497 0%, #11967d 100%);
-        }
-
-        .bg-gradient-info {
-            --gradient-color: #4FACFE;
-            background: linear-gradient(135deg, #4FACFE 0%, #00c6ff 100%);
-        }
-
-        .bg-gradient-warning {
-            --gradient-color: #F2994A;
-            background: linear-gradient(135deg, #F2994A 0%, #F2C94C 100%);
-        }
-
         /* Action Arrow */
         .action-arrow {
             display: inline-flex;
@@ -794,6 +680,139 @@
             }
         }
         </style>
+
+
+        <style>
+        .clickable-container {
+            cursor: pointer;
+            transition: opacity 0.3s;
+        }
+
+        .clickable-container:hover {
+            opacity: 0.8;
+        }
+        </style>
+
+
+
+        <div class="row mb-4">
+            <div class="col-12 mb-4">
+                <div class="d-flex justify-content-center">
+                    <div>
+                        <h3 class="font-weight-bold mb-0">Quick Actions</h3>
+                    </div>
+                </div>
+            </div>
+        </div>
+
+        <div class="row px-5">
+            <!-- Column 1: Create Team -->
+            <div class="col-md-6 mb-4 px-3">
+                <div class="clickable-container" onclick="window.location.href='{{ route('teams.index') }}'">
+                    <div class="dashboard-header-actions position-relative border rounded-3 p-4 h-100">
+                        <div class="row align-items-center" style="z-index: 2;">
+                            <!-- Greeting Section - Left Side -->
+                            <div class="col-md-9 col-12">
+                                <div class="greeting-section animate-rise my-6">
+                                    <h2 class="font-weight-bold ms-3 mb-0">Create your team</h2>
+                                </div>
+                            </div>
+                        </div>
+                        <div class="image-container-actions animate-rise-delay">
+                            <img src="{{ asset('assets/img/create team dashboard.png') }}" 
+                                alt="Create Team Image" 
+                                class="header-image img-fluid">
+                        </div>
+                    </div>
+                </div>
+            </div>
+
+            <!-- Column 2: My Teams -->
+            <div class="col-md-6 mb-4 px-3">
+                <div class="clickable-container" onclick="window.location.href='{{ route('teams.index') }}'">
+                    <div class="dashboard-header-actions position-relative border rounded-3 p-4 h-100">
+                        <div class="row align-items-center" style="z-index: 2;">
+                            <!-- Greeting Section - Left Side -->
+                            <div class="col-md-9 col-12">
+                                <div class="greeting-section animate-rise my-6">
+                                    <h2 class="font-weight-bold ms-3 mb-0">My Teams</h2>
+                                </div>
+                            </div>
+                        </div>
+                        <div class="image-container-actions animate-rise-delay me-5">
+                            <img src="{{ asset('assets/img/my team dashboard.png') }}" 
+                                alt="My Teams Image" 
+                                class="header-image img-fluid">
+                        </div>
+                    </div>
+                </div>
+            </div>
+        </div>
+
+        <div class="row px-5">
+            <!-- Column 1: Create Team -->
+            <div class="col-md-6 mb-4 px-3">
+                <div class="clickable-container" onclick="window.location.href='{{ route('presentation-schedules.index') }}'">
+                    <div class="dashboard-header-actions position-relative border rounded-3 p-4 h-100">
+                        <div class="row align-items-center" style="z-index: 2;">
+                            <!-- Greeting Section - Left Side -->
+                            <div class="col-md-9 col-12">
+                                <div class="greeting-section animate-rise my-6">
+                                    <h2 class="font-weight-bold ms-3 mb-0">Presentation Schedules</h2>
+                                </div>
+                            </div>
+                        </div>
+                        <div class="image-container-actions animate-rise-delay">
+                            <img src="{{ asset('assets/img/schedule-management 3d 2.png') }}" 
+                                alt="Create Team Image" 
+                                class="header-image img-fluid">
+                        </div>
+                    </div>
+                </div>
+            </div>
+
+            <!-- Column 2: My Teams -->
+            <div class="col-md-6 mb-4 px-3">
+                <div class="clickable-container" onclick="window.location.href='{{ route('teams.index') }}'">
+                    <div class="dashboard-header-actions position-relative border rounded-3 p-4 h-100">
+                        <div class="row align-items-center" style="z-index: 2;">
+                            <!-- Greeting Section - Left Side -->
+                            <div class="col-md-9 col-12">
+                                <div class="greeting-section animate-rise my-6">
+                                    <h2 class="font-weight-bold ms-3 mb-0">My Profile</h2>
+                                </div>
+                            </div>
+                        </div>
+                        <div class="image-container-actions animate-rise-delay me-5">
+                            <img src="{{ asset('assets/img/my profile.png') }}" 
+                                alt="My Teams Image" 
+                                class="header-image img-fluid">
+                        </div>
+                    </div>
+                </div>
+            </div>
+        </div>
+
+
+        <style>
+                .image-container-actions {
+                    position: absolute;
+                    top: -20px; /* Reduced from -50px */
+                    right: -10px; /* Reduced from -30px */
+                    z-index: 1;
+                    max-width: 40%; /* Reduced from 60% */
+                }
+
+                .header-image-actions {
+                    width: 100%;
+                    height: auto;
+                    max-height: 200px; /* Reduced from 400px */
+                    object-fit: cover;
+                    border-radius: 10px; /* Reduced from 20px */
+                    transition: transform 0.3s ease;
+                }
+        </style>
+
 
         
 </x-app-layout>
