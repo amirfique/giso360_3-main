@@ -7,6 +7,8 @@ use App\Models\User;
 use Illuminate\Http\Request;
 use Illuminate\Support\Facades\Auth;
 use Illuminate\Support\Str;
+use Illuminate\Support\Facades\Storage;
+use Intervention\Image\Facades\Image;
 
 class TeamController extends Controller
 {
@@ -104,5 +106,41 @@ class TeamController extends Controller
         ]);
         
         return redirect()->back()->with('success', 'Member role updated successfully!');
+    }
+
+
+
+    public function updateTeamImage(Request $request, Team $team)
+    {
+        // Verify the current user is the team owner
+        if (Auth::id() !== $team->owner_id) {
+            abort(403, 'Only the team owner can update the team profile picture.');
+        }
+        
+        $request->validate([
+            'team_image' => 'nullable|image|max:2048', // Max 2MB
+        ]);
+        
+        // Handle image removal
+        if ($request->has('remove_image') && $team->team_image) {
+            Storage::disk('public')->delete($team->team_image);
+            $team->team_image = null;
+        }
+        
+        // Handle new image upload
+        if ($request->hasFile('team_image')) {
+            // Delete old image if exists
+            if ($team->team_image && Storage::disk('public')->exists($team->team_image)) {
+                Storage::disk('public')->delete($team->team_image);
+            }
+            
+            // Upload new image
+            $path = $request->file('team_image')->store('team_images', 'public');
+            $team->team_image = $path;
+        }
+        
+        $team->save();
+        
+        return redirect()->back()->with('success', 'Team profile picture updated successfully!');
     }
 }

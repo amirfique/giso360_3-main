@@ -33,12 +33,6 @@
                                         <p class="text-sm opacity-8 mb-0">View schedules for all GISO teams</p>
                                     </div>
                                 </div>
-                                <div class="d-flex">
-                                    <button type="button" class="btn-white-simple me-2" id="exportBtn">
-                                        <i class="fas fa-download me-2"></i>
-                                        Export
-                                    </button>
-                                </div>
                             </div>
                             <!-- Search Bar moved here -->
                             <div class="search-container mt-3">

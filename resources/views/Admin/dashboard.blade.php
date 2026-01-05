@@ -4,7 +4,7 @@
             <!-- Page Header -->
             <div class="row mb-4">
                 <div class="col-12">
-                    <div class="card border-0 shadow-sm bg-gradient-primary">
+                    <div class="card border shadow-xs bg-gradient-primary">
                         <div class="card-body p-4">
                             <div class="d-flex align-items-center justify-content-between">
                                 <div>
@@ -27,7 +27,7 @@
             <!-- Statistics Cards -->
             <div class="row mb-4">
                 <div class="col-xl-3 col-sm-6 mb-4">
-                    <div class="card border-0 shadow-sm h-100 overflow-hidden">
+                    <div class="card border shadow-xs h-100 overflow-hidden">
                         <div class="card-body p-4 position-relative">
                             <div class="position-absolute top-0 end-0 p-2">
                                 <div class="icon icon-shape bg-gradient-primary shadow-primary text-center rounded-circle opacity-10">
@@ -51,14 +51,11 @@
                                 </div>
                             </div>
                         </div>
-                        <div class="progress" style="height: 4px;">
-                            <div class="progress-bar bg-gradient-primary" role="progressbar" style="width: 65%" aria-valuenow="65" aria-valuemin="0" aria-valuemax="100"></div>
-                        </div>
                     </div>
                 </div>
 
                 <div class="col-xl-3 col-sm-6 mb-4">
-                    <div class="card border-0 shadow-sm h-100 overflow-hidden">
+                    <div class="card border shadow-xs h-100 overflow-hidden">
                         <div class="card-body p-4 position-relative">
                             <div class="position-absolute top-0 end-0 p-2">
                                 <div class="icon icon-shape bg-gradient-success shadow-success text-center rounded-circle opacity-10">
@@ -73,14 +70,11 @@
                                 <span class="text-muted text-sm">Active teams in system</span>
                             </div>
                         </div>
-                        <div class="progress" style="height: 4px;">
-                            <div class="progress-bar bg-gradient-success" role="progressbar" style="width: 45%" aria-valuenow="45" aria-valuemin="0" aria-valuemax="100"></div>
-                        </div>
                     </div>
                 </div>
 
                 <div class="col-xl-3 col-sm-6 mb-4">
-                    <div class="card border-0 shadow-sm h-100 overflow-hidden">
+                    <div class="card border shadow-xs h-100 overflow-hidden">
                         <div class="card-body p-4 position-relative">
                             <div class="position-absolute top-0 end-0 p-2">
                                 <div class="icon icon-shape bg-gradient-warning shadow-warning text-center rounded-circle opacity-10">
@@ -98,14 +92,11 @@
                                 </span>
                             </div>
                         </div>
-                        <div class="progress" style="height: 4px;">
-                            <div class="progress-bar bg-gradient-warning" role="progressbar" style="width: 75%" aria-valuenow="75" aria-valuemin="0" aria-valuemax="100"></div>
-                        </div>
                     </div>
                 </div>
 
                 <div class="col-xl-3 col-sm-6 mb-4">
-                    <div class="card border-0 shadow-sm h-100 overflow-hidden">
+                    <div class="card border shadow-xs h-100 overflow-hidden">
                         <div class="card-body p-4 position-relative">
                             <div class="position-absolute top-0 end-0 p-2">
                                 <div class="icon icon-shape bg-gradient-info shadow-info text-center rounded-circle opacity-10">
@@ -123,59 +114,24 @@
                                 </span>
                             </div>
                         </div>
-                        <div class="progress" style="height: 4px;">
-                            <div class="progress-bar bg-gradient-info" role="progressbar" style="width: 55%" aria-valuenow="55" aria-valuemin="0" aria-valuemax="100"></div>
-                        </div>
                     </div>
                 </div>
             </div>
 
-            <!-- Quick Actions & System Status -->
+            <!-- Quick Actions -->
             <div class="row mb-4">
-                <!-- Quick Actions -->
-                <div class="col-lg-8 mb-4">
-                    <div class="card border-0 shadow-sm h-100">
+                <div class="col-12">
+                    <div class="card border shadow-xs">
                         <div class="card-header bg-white border-0 pb-3">
                             <div class="d-flex align-items-center justify-content-between">
                                 <div>
                                     <h5 class="mb-1">Quick Actions</h5>
                                     <p class="text-sm text-muted mb-0">Frequently used administrative tasks</p>
                                 </div>
-                                <div class="dropdown">
-                                    <button class="btn btn-sm btn-outline-secondary dropdown-toggle" type="button" data-bs-toggle="dropdown">
-                                        <i class="fas fa-cog me-1"></i> Options
-                                    </button>
-                                    <ul class="dropdown-menu">
-                                        <li><a class="dropdown-item" href="#"><i class="fas fa-sync me-2"></i>Refresh Data</a></li>
-                                        <li><a class="dropdown-item" href="#"><i class="fas fa-download me-2"></i>Export Report</a></li>
-                                    </ul>
-                                </div>
                             </div>
                         </div>
                         <div class="card-body">
                             <div class="row g-3">
-                                <div class="col-md-3 col-6">
-                                    <a href="{{ route('admin.users') }}" class="card action-card border-0 shadow-sm text-decoration-none h-100">
-                                        <div class="card-body text-center p-4">
-                                            <div class="icon icon-shape bg-gradient-primary shadow-primary rounded-circle mx-auto mb-3">
-                                                <i class="fas fa-users text-white"></i>
-                                            </div>
-                                            <h6 class="mb-2 text-dark">Manage Users</h6>
-                                            <p class="text-xs text-muted mb-0">User accounts & permissions</p>
-                                        </div>
-                                    </a>
-                                </div>
-                                <div class="col-md-3 col-6">
-                                    <a href="{{ route('admin.teams') }}" class="card action-card border-0 shadow-sm text-decoration-none h-100">
-                                        <div class="card-body text-center p-4">
-                                            <div class="icon icon-shape bg-gradient-success shadow-success rounded-circle mx-auto mb-3">
-                                                <i class="fas fa-people-group text-white"></i>
-                                            </div>
-                                            <h6 class="mb-2 text-dark">Manage Teams</h6>
-                                            <p class="text-xs text-muted mb-0">Team configurations</p>
-                                        </div>
-                                    </a>
-                                </div>
                                 <div class="col-md-3 col-6">
                                     <a href="{{ route('admin.proposals') }}" class="card action-card border-0 shadow-sm text-decoration-none h-100">
                                         <div class="card-body text-center p-4">
@@ -183,9 +139,6 @@
                                                 <i class="fas fa-file-alt text-white"></i>
                                             </div>
                                             <h6 class="mb-2 text-dark">Review Proposals</h6>
-                                            <p class="text-xs text-muted mb-0">
-                                                {{ $stats['pending_proposals'] }} pending
-                                            </p>
                                         </div>
                                     </a>
                                 </div>
@@ -196,73 +149,18 @@
                                                 <i class="fas fa-chart-bar text-white"></i>
                                             </div>
                                             <h6 class="mb-2 text-dark">Review Reports</h6>
-                                            <p class="text-xs text-muted mb-0">
-                                                {{ $stats['pending_reports'] }} pending
-                                            </p>
                                         </div>
                                     </a>
                                 </div>
-                            </div>
-                        </div>
-                    </div>
-                </div>
-
-                <!-- System Status -->
-                <div class="col-lg-4 mb-4">
-                    <div class="card border-0 shadow-sm h-100">
-                        <div class="card-header bg-white border-0 pb-3">
-                            <h5 class="mb-1">System Status</h5>
-                            <p class="text-sm text-muted mb-0">Current system performance metrics</p>
-                        </div>
-                        <div class="card-body">
-                            <div class="status-item mb-4">
-                                <div class="d-flex justify-content-between align-items-center mb-2">
-                                    <span class="text-sm font-weight-semibold">
-                                        <i class="fas fa-database text-primary me-2"></i>
-                                        Storage Usage
-                                    </span>
-                                    <span class="badge bg-success">Normal</span>
-                                </div>
-                                <div class="progress" style="height: 8px;">
-                                    <div class="progress-bar bg-gradient-primary" role="progressbar" style="width: 25%" aria-valuenow="25" aria-valuemin="0" aria-valuemax="100"></div>
-                                </div>
-                                <div class="d-flex justify-content-between mt-1">
-                                    <span class="text-xs text-muted">2.5 GB / 10 GB</span>
-                                    <span class="text-xs text-muted">25%</span>
-                                </div>
-                            </div>
-
-                            <div class="status-item mb-4">
-                                <div class="d-flex justify-content-between align-items-center mb-2">
-                                    <span class="text-sm font-weight-semibold">
-                                        <i class="fas fa-microchip text-success me-2"></i>
-                                        System Load
-                                    </span>
-                                    <span class="badge bg-success">Low</span>
-                                </div>
-                                <div class="progress" style="height: 8px;">
-                                    <div class="progress-bar bg-gradient-success" role="progressbar" style="width: 15%" aria-valuenow="15" aria-valuemin="0" aria-valuemax="100"></div>
-                                </div>
-                                <div class="d-flex justify-content-between mt-1">
-                                    <span class="text-xs text-muted">Optimal Performance</span>
-                                    <span class="text-xs text-muted">15%</span>
-                                </div>
-                            </div>
-
-                            <div class="status-item">
-                                <div class="d-flex justify-content-between align-items-center mb-2">
-                                    <span class="text-sm font-weight-semibold">
-                                        <i class="fas fa-user-check text-info me-2"></i>
-                                        Active Sessions
-                                    </span>
-                                    <span class="badge bg-info">{{ $stats['total_users'] > 0 ? ceil($stats['total_users'] * 0.1) : 0 }} Active</span>
-                                </div>
-                                <div class="progress" style="height: 8px;">
-                                    <div class="progress-bar bg-gradient-info" role="progressbar" style="width: 10%" aria-valuenow="10" aria-valuemin="0" aria-valuemax="100"></div>
-                                </div>
-                                <div class="d-flex justify-content-between mt-1">
-                                    <span class="text-xs text-muted">Real-time users</span>
-                                    <span class="text-xs text-muted">10%</span>
+                                <div class="col-md-3 col-6">
+                                    <a href="{{ route('admin.presentation-schedules') }}" class="card action-card border-0 shadow-sm text-decoration-none h-100">
+                                        <div class="card-body text-center p-4">
+                                            <div class="icon icon-shape bg-gradient-success shadow-success rounded-circle mx-auto mb-3">
+                                                <i class="fas fa-calendar-alt text-white"></i>
+                                            </div>
+                                            <h6 class="mb-2 text-dark">Manage Schedule</h6>
+                                        </div>
+                                    </a>
                                 </div>
                             </div>
                         </div>
@@ -274,7 +172,7 @@
             <div class="row">
                 <!-- Recent Proposals -->
                 <div class="col-lg-6 mb-4">
-                    <div class="card border-0 shadow-sm h-100">
+                    <div class="card border shadow-xs h-100">
                         <div class="card-header bg-white border-0 pb-3">
                             <div class="d-flex align-items-center justify-content-between">
                                 <div>
@@ -334,7 +232,7 @@
 
                 <!-- Recent Reports -->
                 <div class="col-lg-6 mb-4">
-                    <div class="card border-0 shadow-sm h-100">
+                    <div class="card border shadow-xs h-100">
                         <div class="card-header bg-white border-0 pb-3">
                             <div class="d-flex align-items-center justify-content-between">
                                 <div>
@@ -411,11 +309,10 @@
     .card {
         border-radius: 0.75rem;
         transition: all 0.3s ease;
-        border: none;
     }
     
-    .shadow-sm {
-        box-shadow: 0 0.125rem 0.25rem rgba(0, 0, 0, 0.075) !important;
+    .shadow-xs {
+        box-shadow: 0 4px 6px -1px rgba(0, 0, 0, 0.1), 0 2px 4px -1px rgba(0, 0, 0, 0.06) !important;
     }
     
     .action-card:hover {
@@ -471,10 +368,6 @@
     
     .bg-gradient-danger {
         background: var(--danger-gradient);
-    }
-    
-    .status-item {
-        padding: 0.5rem 0;
     }
     
     .progress {

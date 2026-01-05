@@ -78,22 +78,21 @@
                     <span class="nav-link-text">Profile</span>
                 </a>
             </li>
-            
+
             <li class="nav-item">
-                <a class="nav-link {{ request()->routeIs('signin') ? 'active' : '' }}"
-                    href="{{ route('signin') }}">
-                    <i class="fas fa-sign-in-alt nav-icon"></i>
-                    <span class="nav-link-text">Sign In</span>
-                </a>
+                <form method="POST" action="{{ route('logout') }}" class="d-inline">
+                    @csrf
+                    <a href="javascript:;" 
+                    class="nav-link {{ request()->routeIs('logout') ? 'active' : '' }}"
+                    onclick="event.preventDefault(); this.closest('form').submit();"
+                    onmouseover="this.style.cursor='pointer'"
+                    onmouseout="this.style.cursor='default'">
+                        <i class="fas fa-sign-out-alt nav-icon"></i>
+                        <span class="nav-link-text">Logout</span>
+                    </a>
+                </form>
             </li>
             
-            <li class="nav-item">
-                <a class="nav-link {{ request()->routeIs('signup') ? 'active' : '' }}"
-                    href="{{ route('signup') }}">
-                    <i class="fas fa-user-plus nav-icon"></i>
-                    <span class="nav-link-text">Sign Up</span>
-                </a>
-            </li>
         </ul>
     </div>
 </aside>

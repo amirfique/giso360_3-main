@@ -12,6 +12,7 @@
         "google/cloud-ai-platform": "^1.43",
         "google/cloud-storage": "^1.48",
         "guzzlehttp/guzzle": "^7.10",
+        "intervention/image": "^3.11",
         "laravel/framework": "^11.0",
         "laravel/sanctum": "^4.0",
         "laravel/tinker": "^2.8",

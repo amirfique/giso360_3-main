@@ -110,13 +110,11 @@
                                                 <tr>
                                                     <th class="text-secondary text-xs font-weight-semibold opacity-7">No.</th>
                                                     <th class="text-secondary text-xs font-weight-semibold opacity-7 ps-2">Report ID</th>
-                                                    <th class="text-secondary text-xs font-weight-semibold opacity-7 ps-2">GISO Team ID</th>
-                                                    <th class="text-secondary text-xs font-weight-semibold opacity-7 ps-2">GISO Team Name</th>
+                                                    <th class="text-secondary text-xs font-weight-semibold opacity-7 ps-2">GISO Team</th>
                                                     <th class="text-center text-secondary text-xs font-weight-semibold opacity-7">Date Sent</th>
                                                     <th class="text-center text-secondary text-xs font-weight-semibold opacity-7">Sender's Email</th>
                                                     <th class="text-center text-secondary text-xs font-weight-semibold opacity-7">File</th>
-                                                    <th class="text-center text-secondary text-xs font-weight-semibold opacity-7">Status</th>
-                                                    <th class="text-center text-secondary text-xs font-weight-semibold opacity-7">Note</th>
+                                                    <th class="text-center text-secondary text-xs font-weight-semibold opacity-7">Actions</th>
                                                 </tr>
                                             </thead>
                                             <tbody>
@@ -129,10 +127,10 @@
                                                         <span class="text-sm font-weight-semibold">#{{ $report->id }}</span>
                                                     </td>
                                                     <td class="align-middle">
-                                                        <span class="text-sm">{{ $report->team->id }}</span>
-                                                    </td>
-                                                    <td class="align-middle">
-                                                        <span class="text-sm font-weight-semibold">{{ $report->team->name }}</span>
+                                                        <div>
+                                                            <span class="text-sm font-weight-semibold d-block">{{ $report->team->name }}</span>
+                                                            <span class="text-xs text-secondary">ID: {{ $report->team->id }}</span>
+                                                        </div>
                                                     </td>
                                                     <td class="align-middle text-center">
                                                         <span class="text-secondary text-sm font-weight-normal">
@@ -143,39 +141,31 @@
                                                         <span class="text-sm">{{ $report->user->email }}</span>
                                                     </td>
                                                     <td class="align-middle text-center">
-                                                        <a href="{{ route('reports.download', $report) }}" 
-                                                           class="btn btn-sm btn-outline-dark mb-0"
-                                                           target="_blank">
-                                                            <i class="fas fa-download me-1"></i>Download
+                                                        <a href="{{ route('admin.reports.download', $report) }}" 
+                                                        class="btn btn-sm btn-outline-dark mb-0"
+                                                        target="_blank">
+                                                            <i class="fas fa-file-pdf me-1"></i>View File
                                                         </a>
                                                     </td>
                                                     <td class="align-middle text-center">
-                                                        <form action="{{ route('admin.reports.updateStatus', $report) }}" method="POST" class="d-inline">
-                                                            @csrf
-                                                            @method('PATCH')
-                                                            <select name="status" 
-                                                                    class="form-select status-select text-xs border-0 p-2 rounded" 
-                                                                    onchange="this.form.submit()"
-                                                                    style="
-                                                                        background-color: #f3f4f6; color: #6b7280;
-                                                                        font-weight: 600;">
-                                                        <option value="pending" {{ $report->status === 'pending' ? 'selected' : '' }}>Pending</option>
-                                                        <option value="approved" {{ $report->status === 'approved' ? 'selected' : '' }}>Approved</option>
-                                                        <option value="rejected" {{ $report->status === 'rejected' ? 'selected' : '' }}>Rejected</option>
-                                                    </select>
-                                                        </form>
-                                                    </td>
-                                                    <td class="align-middle text-center">
-                                                        <button type="button" 
-                                                                class="btn btn-sm btn-outline-primary mb-0"
-                                                                data-bs-toggle="modal" 
-                                                                data-bs-target="#noteModal{{ $report->id }}">
-                                                            <svg width="14" height="14" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2">
-                                                                <path d="M12 20h9"></path>
-                                                                <path d="M16.5 3.5a2.121 2.121 0 0 1 3 3L7 19l-4 1 1-4L16.5 3.5z"></path>
-                                                            </svg>
-                                                            Note
-                                                        </button>
+                                                        <div class="d-flex gap-1 justify-content-center">
+                                                            <button type="button" 
+                                                                    class="btn btn-sm btn-success mb-0"
+                                                                    onclick="updateReportStatus({{ $report->id }}, 'approved')">
+                                                                <i class="fas fa-check"></i> Approve
+                                                            </button>
+                                                            <button type="button" 
+                                                                    class="btn btn-sm btn-danger mb-0"
+                                                                    onclick="updateReportStatus({{ $report->id }}, 'rejected')">
+                                                                <i class="fas fa-times"></i> Reject
+                                                            </button>
+                                                            <button type="button" 
+                                                                    class="btn btn-sm btn-outline-primary mb-0"
+                                                                    data-bs-toggle="modal" 
+                                                                    data-bs-target="#noteModal{{ $report->id }}">
+                                                                <i class="fas fa-sticky-note"></i> Note
+                                                            </button>
+                                                        </div>
 
                                                         <!-- Note Modal for each report -->
                                                         <div class="modal fade" id="noteModal{{ $report->id }}" tabindex="-1" aria-labelledby="noteModalLabel{{ $report->id }}" aria-hidden="true">
@@ -218,8 +208,7 @@
                                                 <tr>
                                                     <th class="text-secondary text-xs font-weight-semibold opacity-7">No.</th>
                                                     <th class="text-secondary text-xs font-weight-semibold opacity-7 ps-2">Report ID</th>
-                                                    <th class="text-secondary text-xs font-weight-semibold opacity-7 ps-2">GISO Team ID</th>
-                                                    <th class="text-secondary text-xs font-weight-semibold opacity-7 ps-2">GISO Team Name</th>
+                                                    <th class="text-secondary text-xs font-weight-semibold opacity-7 ps-2">GISO Team</th>
                                                     <th class="text-center text-secondary text-xs font-weight-semibold opacity-7">Date Sent</th>
                                                     <th class="text-center text-secondary text-xs font-weight-semibold opacity-7">Sender's Email</th>
                                                     <th class="text-center text-secondary text-xs font-weight-semibold opacity-7">File</th>
@@ -236,10 +225,15 @@
                                                         <span class="text-sm font-weight-semibold">#{{ $report->id }}</span>
                                                     </td>
                                                     <td class="align-middle">
-                                                        <span class="text-sm">{{ $report->team->id }}</span>
-                                                    </td>
-                                                    <td class="align-middle">
-                                                        <span class="text-sm font-weight-semibold">{{ $report->team->name }}</span>
+                                                        <div class="d-flex align-items-center">
+                                                            <div class="avatar avatar-sm rounded-circle bg-gradient-success text-white me-2">
+                                                                <span class="avatar-initials">{{ substr($report->team->name, 0, 2) }}</span>
+                                                            </div>
+                                                            <div>
+                                                                <span class="text-sm font-weight-semibold d-block">{{ $report->team->name }}</span>
+                                                                <span class="text-xs text-secondary">ID: {{ $report->team->id }}</span>
+                                                            </div>
+                                                        </div>
                                                     </td>
                                                     <td class="align-middle text-center">
                                                         <span class="text-secondary text-sm font-weight-normal">
@@ -250,10 +244,10 @@
                                                         <span class="text-sm">{{ $report->user->email }}</span>
                                                     </td>
                                                     <td class="align-middle text-center">
-                                                        <a href="{{ route('reports.download', $report) }}" 
-                                                           class="btn btn-sm btn-outline-dark mb-0"
-                                                           target="_blank">
-                                                            <i class="fas fa-download me-1"></i>Download
+                                                        <a href="{{ route('admin.reports.download', $report) }}" 
+                                                        class="btn btn-sm btn-outline-dark mb-0"
+                                                        target="_blank">
+                                                            <i class="fas fa-file-pdf me-1"></i>View File
                                                         </a>
                                                     </td>
                                                     <td class="align-middle text-center">
@@ -262,11 +256,7 @@
                                                                 class="btn btn-sm btn-outline-primary mb-0"
                                                                 data-bs-toggle="modal" 
                                                                 data-bs-target="#noteModal{{ $report->id }}">
-                                                            <svg width="14" height="14" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2">
-                                                                <path d="M12 20h9"></path>
-                                                                <path d="M16.5 3.5a2.121 2.121 0 0 1 3 3L7 19l-4 1 1-4L16.5 3.5z"></path>
-                                                            </svg>
-                                                            View Note
+                                                            <i class="fas fa-sticky-note"></i> View Note
                                                         </button>
                                                         @else
                                                         <span class="text-muted text-sm">No note</span>
@@ -313,8 +303,7 @@
                                                 <tr>
                                                     <th class="text-secondary text-xs font-weight-semibold opacity-7">No.</th>
                                                     <th class="text-secondary text-xs font-weight-semibold opacity-7 ps-2">Report ID</th>
-                                                    <th class="text-secondary text-xs font-weight-semibold opacity-7 ps-2">GISO Team ID</th>
-                                                    <th class="text-secondary text-xs font-weight-semibold opacity-7 ps-2">GISO Team Name</th>
+                                                    <th class="text-secondary text-xs font-weight-semibold opacity-7 ps-2">GISO Team</th>
                                                     <th class="text-center text-secondary text-xs font-weight-semibold opacity-7">Date Sent</th>
                                                     <th class="text-center text-secondary text-xs font-weight-semibold opacity-7">Sender's Email</th>
                                                     <th class="text-center text-secondary text-xs font-weight-semibold opacity-7">File</th>
@@ -331,10 +320,15 @@
                                                         <span class="text-sm font-weight-semibold">#{{ $report->id }}</span>
                                                     </td>
                                                     <td class="align-middle">
-                                                        <span class="text-sm">{{ $report->team->id }}</span>
-                                                    </td>
-                                                    <td class="align-middle">
-                                                        <span class="text-sm font-weight-semibold">{{ $report->team->name }}</span>
+                                                        <div class="d-flex align-items-center">
+                                                            <div class="avatar avatar-sm rounded-circle bg-gradient-danger text-white me-2">
+                                                                <span class="avatar-initials">{{ substr($report->team->name, 0, 2) }}</span>
+                                                            </div>
+                                                            <div>
+                                                                <span class="text-sm font-weight-semibold d-block">{{ $report->team->name }}</span>
+                                                                <span class="text-xs text-secondary">ID: {{ $report->team->id }}</span>
+                                                            </div>
+                                                        </div>
                                                     </td>
                                                     <td class="align-middle text-center">
                                                         <span class="text-secondary text-sm font-weight-normal">
@@ -345,10 +339,10 @@
                                                         <span class="text-sm">{{ $report->user->email }}</span>
                                                     </td>
                                                     <td class="align-middle text-center">
-                                                        <a href="{{ route('reports.download', $report) }}" 
-                                                           class="btn btn-sm btn-outline-dark mb-0"
-                                                           target="_blank">
-                                                            <i class="fas fa-download me-1"></i>Download
+                                                        <a href="{{ route('admin.reports.download', $report) }}" 
+                                                        class="btn btn-sm btn-outline-dark mb-0"
+                                                        target="_blank">
+                                                            <i class="fas fa-file-pdf me-1"></i>View File
                                                         </a>
                                                     </td>
                                                     <td class="align-middle text-center">
@@ -357,11 +351,7 @@
                                                                 class="btn btn-sm btn-outline-primary mb-0"
                                                                 data-bs-toggle="modal" 
                                                                 data-bs-target="#noteModal{{ $report->id }}">
-                                                            <svg width="14" height="14" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2">
-                                                                <path d="M12 20h9"></path>
-                                                                <path d="M16.5 3.5a2.121 2.121 0 0 1 3 3L7 19l-4 1 1-4L16.5 3.5z"></path>
-                                                            </svg>
-                                                            View Note
+                                                            <i class="fas fa-sticky-note"></i> View Note
                                                         </button>
                                                         @else
                                                         <span class="text-muted text-sm">No note</span>

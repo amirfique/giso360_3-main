@@ -773,7 +773,7 @@
 
             <!-- Column 2: My Teams -->
             <div class="col-md-6 mb-4 px-3">
-                <div class="clickable-container" onclick="window.location.href='{{ route('teams.index') }}'">
+                <div class="clickable-container" onclick="window.location.href='{{ route('profile') }}'">
                     <div class="dashboard-header-actions position-relative border rounded-3 p-4 h-100">
                         <div class="row align-items-center" style="z-index: 2;">
                             <!-- Greeting Section - Left Side -->

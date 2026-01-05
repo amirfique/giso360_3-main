@@ -7,10 +7,33 @@
             <div class="card mb-4">
                 <div class="card-header pb-4">
                     <div class="d-sm-flex align-items-center justify-content-between">
-                        <div>
-                            <!-- Gradient Team Name -->
-                            <h3 class="font-weight-bold text-gradient text-primary mb-1">{{ $team->name }}</h3>
-                            <p class="text-lg mb-0 text-secondary">{{ $team->description ?? 'Team workspace' }}</p>
+                        <div class="d-flex align-items-center">
+                            <!-- Team Profile Picture -->
+                            <div class="team-profile-picture me-4">
+                                <div class="position-relative">
+                                    @if($team->team_image)
+                                        <img src="{{ asset('storage/' . $team->team_image) }}" alt="{{ $team->name }}" class="team-header-image">
+                                    @else
+                                        <div class="team-header-placeholder">
+                                            {{ strtoupper(substr($team->name, 0, 1)) }}
+                                        </div>
+                                    @endif
+                                    
+                                    <!-- Edit button for team owner -->
+                                    @if(Auth::id() === $team->owner_id)
+                                    <button type="button" class="btn btn-sm btn-primary btn-edit-image" data-bs-toggle="modal" data-bs-target="#teamImageModal">
+                                        <i class="fas fa-camera"></i>
+                                    </button>
+                                    @endif
+                                </div>
+                            </div>
+                            
+                            <!-- Team Information -->
+                            <div>
+                                <!-- Gradient Team Name -->
+                                <h3 class="font-weight-bold text-gradient text-primary mb-1">{{ $team->name }}</h3>
+                                <p class="text-lg mb-0 text-secondary">{{ $team->description ?? 'Team workspace' }}</p>
+                            </div>
                         </div>
                         <div class="mt-2 mt-sm-0">
                             <div class="d-flex flex-wrap gap-2">
@@ -29,6 +52,57 @@
             </div>
         </div>
     </div>
+
+
+    <!-- Team Image Upload Modal (Simplified Version) -->
+    @if(Auth::id() === $team->owner_id)
+    <div class="modal fade" id="teamImageModal" tabindex="-1" role="dialog" aria-labelledby="teamImageModalLabel" aria-hidden="true">
+        <div class="modal-dialog modal-dialog-centered" role="document">
+            <div class="modal-content border-0 shadow-lg">
+                <div class="modal-header bg-gradient-primary text-white">
+                    <h5 class="modal-title mb-0" id="teamImageModalLabel">Update Team Profile Picture</h5>
+                    <button type="button" class="btn-close btn-close-white" data-bs-dismiss="modal" aria-label="Close"></button>
+                </div>
+                <form action="{{ route('teams.updateImage', $team->id) }}" method="POST" enctype="multipart/form-data">
+                    @csrf
+                    @method('PATCH')
+                    <div class="modal-body p-4">
+                        <div class="mb-4 text-center">
+                            @if($team->team_image)
+                                <img src="{{ asset('storage/' . $team->team_image) }}" alt="{{ $team->name }}" class="img-fluid rounded mb-3" style="max-height: 200px;">
+                            @else
+                                <div class="team-preview-placeholder mb-3">
+                                    {{ strtoupper(substr($team->name, 0, 1)) }}
+                                </div>
+                            @endif
+                        </div>
+                        
+                        <div class="mb-4">
+                            <label for="teamImage" class="form-label fw-bold">Choose New Image</label>
+                            <input type="file" class="form-control" id="teamImage" name="team_image" accept="image/*">
+                            <div class="form-text">The image will be automatically cropped to a square.</div>
+                        </div>
+                        
+                        @if($team->team_image)
+                        <div class="mb-3">
+                            <div class="form-check">
+                                <input class="form-check-input" type="checkbox" name="remove_image" id="removeImage">
+                                <label class="form-check-label" for="removeImage">
+                                    Remove current team image
+                                </label>
+                            </div>
+                        </div>
+                        @endif
+                    </div>
+                    <div class="modal-footer bg-gray-100 border-top">
+                        <button type="button" class="btn-white-simple" data-bs-dismiss="modal">Cancel</button>
+                        <button type="submit" class="btn-primary-simple" id="submitImageBtn">Update Image</button>
+                    </div>
+                </form>
+            </div>
+        </div>
+    </div>
+    @endif
     
     <!-- Members table -->
     <div class="row mb-5">
@@ -383,6 +457,7 @@
                                             <th class="text-center">Date Submitted</th>
                                             <th class="text-center">Status</th>
                                             <th class="text-center">File</th>
+                                            <th class="text-center">Admin Note</th>
                                             <th class="text-center">Actions</th>
                                         </tr>
                                     </thead>
@@ -447,6 +522,29 @@
                                                 </a>
                                             </td>
                                             <td class="text-center">
+                                                <div class="note-cell">
+                                                    @if($proposal->admin_note)
+                                                        <div class="note-display">
+                                                            <p class="note-text">{{ Str::limit($proposal->admin_note, 50) }}</p>
+                                                            <button type="button" class="btn-expand-note" onclick="toggleNote(this)">
+                                                                <i class="fas fa-chevron-down"></i>
+                                                            </button>
+                                                        </div>
+                                                        <div class="note-full" style="display: none;">
+                                                            <p class="note-text-full">{{ $proposal->admin_note }}</p>
+                                                            <p class="note-meta text-muted">
+                                                                <small>{{ $proposal->updated_at->format('d M Y, h:i A') }}</small>
+                                                            </p>
+                                                            <button type="button" class="btn-collapse-note" onclick="toggleNote(this)">
+                                                                <i class="fas fa-chevron-up"></i>
+                                                            </button>
+                                                        </div>
+                                                    @else
+                                                        <span class="no-note">No note</span>
+                                                    @endif
+                                                </div>
+                                            </td>
+                                            <td class="text-center">
                                                 @if(auth()->id() === $proposal->user_id || auth()->id() === $team->owner_id)
                                                     <form action="{{ route('proposals.destroy', $proposal) }}" method="POST" class="d-inline">
                                                         @csrf
@@ -465,7 +563,7 @@
                                 </table>
                             </div>
                         </div>
-                        
+
                         <!-- Reports Tab -->
                         <div class="tab-pane fade" id="reports" role="tabpanel" aria-labelledby="reports-tab">
                             <div class="table-actions-container d-flex justify-content-between align-items-center mb-4">
@@ -499,6 +597,7 @@
                                             <th class="text-center">Date Submitted</th>
                                             <th class="text-center">Status</th>
                                             <th class="text-center">File</th>
+                                            <th class="text-center">Admin Note</th>
                                             <th class="text-center">Actions</th>
                                         </tr>
                                     </thead>
@@ -563,6 +662,29 @@
                                                 </a>
                                             </td>
                                             <td class="text-center">
+                                                <div class="note-cell">
+                                                    @if($report->admin_note)
+                                                        <div class="note-display">
+                                                            <p class="note-text">{{ Str::limit($report->admin_note, 50) }}</p>
+                                                            <button type="button" class="btn-expand-note" onclick="toggleNote(this)">
+                                                                <i class="fas fa-chevron-down"></i>
+                                                            </button>
+                                                        </div>
+                                                        <div class="note-full" style="display: none;">
+                                                            <p class="note-text-full">{{ $report->admin_note }}</p>
+                                                            <p class="note-meta text-muted">
+                                                                <small>{{ $report->updated_at->format('d M Y, h:i A') }}</small>
+                                                            </p>
+                                                            <button type="button" class="btn-collapse-note" onclick="toggleNote(this)">
+                                                                <i class="fas fa-chevron-up"></i>
+                                                            </button>
+                                                        </div>
+                                                    @else
+                                                        <span class="no-note">No note</span>
+                                                    @endif
+                                                </div>
+                                            </td>
+                                            <td class="text-center">
                                                 @if(auth()->id() === $report->user_id || auth()->id() === $team->owner_id)
                                                     <form action="{{ route('reports.destroy', $report) }}" method="POST" class="d-inline">
                                                         @csrf
@@ -581,6 +703,110 @@
                                 </table>
                             </div>
                         </div>
+
+                        <style>
+                        /* Note cell styles */
+                        .note-cell {
+                            max-width: 200px;
+                            position: relative;
+                        }
+
+                        .note-display {
+                            background-color: #f8f9fa;
+                            border: 1px solid #e9ecef;
+                            border-radius: 6px;
+                            padding: 8px;
+                            position: relative;
+                        }
+
+                        .note-text {
+                            margin: 0;
+                            font-size: 0.875rem;
+                            color: #495057;
+                            line-height: 1.4;
+                        }
+
+                        .note-full {
+                            background-color: #fff;
+                            border: 1px solid #dee2e6;
+                            border-radius: 6px;
+                            padding: 12px;
+                            margin-top: 8px;
+                            box-shadow: 0 2px 4px rgba(0,0,0,0.1);
+                            position: absolute;
+                            z-index: 10;
+                            min-width: 250px;
+                            left: 50%;
+                            transform: translateX(-50%);
+                        }
+
+                        .note-text-full {
+                            margin: 0 0 8px 0;
+                            font-size: 0.875rem;
+                            color: #212529;
+                            line-height: 1.5;
+                        }
+
+                        .note-meta {
+                            margin: 0;
+                            font-size: 0.75rem;
+                            border-top: 1px solid #e9ecef;
+                            padding-top: 8px;
+                        }
+
+                        .btn-expand-note, .btn-collapse-note {
+                            background: none;
+                            border: none;
+                            color: #667eea;
+                            padding: 2px 4px;
+                            border-radius: 3px;
+                            font-size: 0.75rem;
+                            transition: all 0.2s ease;
+                            position: absolute;
+                            top: 4px;
+                            right: 4px;
+                        }
+
+                        .btn-expand-note:hover, .btn-collapse-note:hover {
+                            background-color: rgba(102, 126, 234, 0.1);
+                        }
+
+                        .no-note {
+                            color: #adb5bd;
+                            font-size: 0.875rem;
+                            font-style: italic;
+                        }
+                        </style>
+
+                        <script>
+                        function toggleNote(button) {
+                            const noteCell = button.closest('.note-cell');
+                            const noteDisplay = noteCell.querySelector('.note-display');
+                            const noteFull = noteCell.querySelector('.note-full');
+                            
+                            if (noteFull.style.display === 'none') {
+                                // Show full note
+                                noteFull.style.display = 'block';
+                                noteDisplay.style.display = 'none';
+                            } else {
+                                // Hide full note
+                                noteFull.style.display = 'none';
+                                noteDisplay.style.display = 'block';
+                            }
+                        }
+
+                        // Close expanded notes when clicking outside
+                        document.addEventListener('click', function(event) {
+                            if (!event.target.closest('.note-cell')) {
+                                document.querySelectorAll('.note-full').forEach(function(note) {
+                                    note.style.display = 'none';
+                                });
+                                document.querySelectorAll('.note-display').forEach(function(display) {
+                                    display.style.display = 'block';
+                                });
+                            }
+                        });
+                        </script>
                         
                         <!-- Finance Tab -->
                         <div class="tab-pane fade" id="finance" role="tabpanel" aria-labelledby="finance-tab">
@@ -2332,6 +2558,82 @@ document.addEventListener('DOMContentLoaded', function() {
         grid-template-columns: 1fr;
     }
 }
+
+
+
+
+/* Team Card Image Styles */
+.team-image-container {
+    position: relative;
+    height: 120px;
+    overflow: hidden;
+    border-radius: 8px 8px 0 0;
+}
+
+.team-image {
+    width: 100%;
+    height: 100%;
+    object-fit: cover;
+}
+
+/* Team Header Image Styles */
+.team-profile-picture {
+    position: relative;
+}
+
+.team-header-image {
+    width: 80px;
+    height: 80px;
+    border-radius: 50%;
+    object-fit: cover;
+    border: 3px solid #fff;
+    box-shadow: 0 4px 8px rgba(0, 0, 0, 0.1);
+}
+
+.team-header-placeholder {
+    width: 80px;
+    height: 80px;
+    border-radius: 50%;
+    background: linear-gradient(135deg, #774dd3 0%, #9d72ff 100%);
+    color: white;
+    display: flex;
+    align-items: center;
+    justify-content: center;
+    font-size: 2rem;
+    font-weight: bold;
+    border: 3px solid #fff;
+    box-shadow: 0 4px 8px rgba(0, 0, 0, 0.1);
+}
+
+.team-preview-placeholder {
+    width: 200px;
+    height: 200px;
+    border-radius: 8px;
+    background: linear-gradient(135deg, #774dd3 0%, #9d72ff 100%);
+    color: white;
+    display: flex;
+    align-items: center;
+    justify-content: center;
+    font-size: 4rem;
+    font-weight: bold;
+    margin: 0 auto;
+}
+
+.btn-edit-image {
+    position: absolute;
+    bottom: 0;
+    right: 0;
+    width: 32px;
+    height: 32px;
+    border-radius: 50%;
+    display: flex;
+    align-items: center;
+    justify-content: center;
+    font-size: 0.75rem;
+    padding: 0;
+    border: 2px solid #fff;
+    box-shadow: 0 2px 4px rgba(0, 0, 0, 0.1);
+}
 </style>
 
 <script>
@@ -2611,6 +2913,19 @@ document.addEventListener('DOMContentLoaded', function() {
     var tooltipList = tooltipTriggerList.map(function (tooltipTriggerEl) {
         return new bootstrap.Tooltip(tooltipTriggerEl)
     });
+});
+</script>
+
+<script>
+document.addEventListener('DOMContentLoaded', function() {
+    const teamImageForm = document.querySelector('#teamImageModal form');
+    if (teamImageForm) {
+        teamImageForm.addEventListener('submit', function() {
+            const submitBtn = document.getElementById('submitImageBtn');
+            submitBtn.innerHTML = '<i class="fas fa-spinner fa-spin me-2"></i> Uploading...';
+            submitBtn.disabled = true;
+        });
+    }
 });
 </script>
 

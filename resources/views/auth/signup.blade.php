@@ -17,7 +17,7 @@
                                 <div class="oblique-image position-absolute d-flex fixed-top ms-auto h-100 z-index-0 bg-cover me-n8"
                                     style="background-image:url('../assets/img/image-sign-up.jpg')">
                                     <div class="my-auto text-start max-width-350 ms-7">
-                                        <h1 class="mt-3 text-white font-weight-bolder">Start your <br> new journey.</h1>
+                                        <h1 class="mt-3 text-white font-weight-bolder">Start your <br> GISO journey.</h1>
                                         <div class="d-flex align-items-center">
                                         </div>
                                     </div>

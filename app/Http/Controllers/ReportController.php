@@ -6,6 +6,7 @@ use App\Models\Report;
 use App\Models\Team;
 use Illuminate\Http\Request;
 use Illuminate\Support\Facades\Storage;
+use Illuminate\Support\Facades\Auth;
 
 class ReportController extends Controller
 {
@@ -45,7 +46,13 @@ class ReportController extends Controller
     public function download(Report $report)
     {
         // Check if user has permission to download
-        if (!auth()->user()->teams->contains($report->team_id)) {
+        // Allow team members, team owners, and admins
+        $user = auth()->user();
+        $isTeamMember = $user->teams->contains($report->team_id);
+        $isTeamOwner = $report->team->owner_id === $user->id;
+        $isAdmin = $user->isAdmin(); // Make sure you have this method in your User model
+        
+        if (!$isTeamMember && !$isTeamOwner && !$isAdmin) {
             abort(403, 'Unauthorized action.');
         }
 
@@ -66,7 +73,7 @@ class ReportController extends Controller
         ]);
 
         // Add authorization check here (only team owner/admin can update status)
-        if (auth()->id() !== $report->team->owner_id) {
+        if (!auth()->user()->isAdmin() && auth()->id() !== $report->team->owner_id) {
             abort(403, 'Unauthorized action.');
         }
 
@@ -75,10 +82,27 @@ class ReportController extends Controller
         return redirect()->back()->with('success', 'Report status updated successfully!');
     }
 
+    // Update report note (for admin)
+    public function updateNote(Request $request, Report $report)
+    {
+        $request->validate([
+            'note' => 'nullable|string|max:1000'
+        ]);
+
+        // Only admins can add notes
+        if (!auth()->user()->isAdmin()) {
+            abort(403, 'Unauthorized action.');
+        }
+
+        $report->update(['admin_note' => $request->note]);
+
+        return redirect()->back()->with('success', 'Report note updated successfully!');
+    }
+
     // Delete report
     public function destroy(Report $report)
     {
-        // Check if user is the owner of the report or team owner
+        // Check if user is owner of report or team owner
         if (auth()->id() !== $report->user_id && auth()->id() !== $report->team->owner_id) {
             abort(403, 'Unauthorized action.');
         }

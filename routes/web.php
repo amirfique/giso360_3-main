@@ -128,6 +128,7 @@ Route::prefix('admin')->name('admin.')->middleware(['auth', 'admin'])->group(fun
     Route::get('/reports', [AdminController::class, 'reports'])->name('reports');
     Route::patch('/reports/{report}/status', [AdminController::class, 'updateReportStatus'])->name('reports.updateStatus');
     Route::patch('/reports/{report}/note', [AdminController::class, 'updateReportNote'])->name('reports.updateNote');
+    Route::get('/reports/{report}/download', [ReportController::class, 'download'])->name('reports.download');
     
     // Expense Management
     Route::get('/expenses', [AdminController::class, 'expenses'])->name('expenses');
@@ -135,6 +136,8 @@ Route::prefix('admin')->name('admin.')->middleware(['auth', 'admin'])->group(fun
     // Presentation Schedule Management
     Route::get('/presentation-schedules', [AdminController::class, 'presentationSchedules'])->name('presentation-schedules');
     Route::patch('/presentation-schedules/{team}', [AdminController::class, 'updatePresentationSchedule'])->name('presentation-schedules.update');
+
+   
 });
 
 // Student Routes - Protected with student middleware
@@ -169,5 +172,8 @@ Route::middleware(['auth', 'student'])->group(function () {
     Route::patch('/expenses/{expense}/status', [FinanceController::class, 'updateStatus'])->name('expenses.updateStatus');
     Route::delete('/expenses/{expense}', [FinanceController::class, 'destroy'])->name('expenses.destroy');
     Route::patch('/teams/{team}/budget', [FinanceController::class, 'updateBudget'])->name('teams.updateBudget');
+
+     // Team Image Update Route
+    Route::patch('/teams/{team}/image', [TeamController::class, 'updateTeamImage'])->name('teams.updateImage');
 
 });

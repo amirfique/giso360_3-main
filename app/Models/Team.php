@@ -16,6 +16,7 @@ class Team extends Model
         'slug',
         'join_code',
         'owner_id',
+        'team_image',
     ];
 
     public function owner()

@@ -87,27 +87,38 @@
                                         <p class="text-sm text-muted mt-2">Click the camera icon to update your profile photo</p>
                                     </div>
 
-                                    <!-- Account Info -->
-                                    <div class="simple-card" style="background: rgba(100, 116, 139, 0.05); border-color: rgba(100, 116, 139, 0.2);">
-                                        <div class="card-body">
+                                    <!-- Account Info - Redesigned -->
+                                    <div class="account-info">
+                                        <div class="account-header">
                                             <h6 class="mb-3 text-dark fw-bold">Account Information</h6>
-                                            <div class="d-flex justify-content-between align-items-center mb-3">
-                                                <span class="text-sm text-muted">Member Since</span>
-                                                <span class="text-sm fw-bold text-dark">
-                                                    {{ auth()->user()->created_at->format('M d, Y') }}
-                                                </span>
+                                        </div>
+                                        <div class="info-item">
+                                            <div class="info-icon">
+                                                <i class="fas fa-calendar-alt"></i>
                                             </div>
-                                            <div class="d-flex justify-content-between align-items-center mb-3">
-                                                <span class="text-sm text-muted">Account Role</span>
+                                            <div class="info-content">
+                                                <span class="info-label">Member Since</span>
+                                                <span class="info-value">{{ auth()->user()->created_at->format('M d, Y') }}</span>
+                                            </div>
+                                        </div>
+                                        <div class="info-item">
+                                            <div class="info-icon">
+                                                <i class="fas fa-user-tag"></i>
+                                            </div>
+                                            <div class="info-content">
+                                                <span class="info-label">Account Role</span>
                                                 <span class="badge bg-gradient-{{ auth()->user()->role === 'admin' ? 'warning' : 'info' }}">
                                                     {{ ucfirst(auth()->user()->role) }}
                                                 </span>
                                             </div>
-                                            <div class="d-flex justify-content-between align-items-center">
-                                                <span class="text-sm text-muted">Last Updated</span>
-                                                <span class="text-sm fw-bold text-dark">
-                                                    {{ auth()->user()->updated_at->format('M d, Y') }}
-                                                </span>
+                                        </div>
+                                        <div class="info-item">
+                                            <div class="info-icon">
+                                                <i class="fas fa-clock"></i>
+                                            </div>
+                                            <div class="info-content">
+                                                <span class="info-label">Last Updated</span>
+                                                <span class="info-value">{{ auth()->user()->updated_at->format('M d, Y') }}</span>
                                             </div>
                                         </div>
                                     </div>
@@ -237,6 +248,68 @@
 
     .card-body-simple {
         padding: 1.5rem;
+    }
+
+    /* Account Info Styles - Redesigned */
+    .account-info {
+        padding: 1.5rem;
+        border-radius: 12px;
+        background: linear-gradient(135deg, #f8f9ff 0%, #f1f5ff 100%);
+        border: 1px solid rgba(119, 77, 211, 0.1);
+        box-shadow: 0 4px 15px rgba(119, 77, 211, 0.05);
+    }
+
+    .account-header {
+        margin-bottom: 1.5rem;
+        padding-bottom: 1rem;
+        border-bottom: 1px solid rgba(119, 77, 211, 0.1);
+    }
+
+    .info-item {
+        display: flex;
+        align-items: center;
+        margin-bottom: 1.2rem;
+        padding: 0.5rem 0;
+        transition: transform 0.2s ease;
+    }
+
+    .info-item:hover {
+        transform: translateX(5px);
+    }
+
+    .info-item:last-child {
+        margin-bottom: 0;
+    }
+
+    .info-icon {
+        width: 40px;
+        height: 40px;
+        border-radius: 50%;
+        background: var(--primary);
+        color: var(--white);
+        display: flex;
+        align-items: center;
+        justify-content: center;
+        margin-right: 1rem;
+        font-size: 0.9rem;
+        box-shadow: 0 2px 8px rgba(119, 77, 211, 0.2);
+    }
+
+    .info-content {
+        flex: 1;
+    }
+
+    .info-label {
+        display: block;
+        font-size: 0.8rem;
+        color: var(--secondary);
+        margin-bottom: 0.25rem;
+    }
+
+    .info-value {
+        font-size: 0.9rem;
+        font-weight: 600;
+        color: var(--dark);
     }
 
     /* Form Styles */

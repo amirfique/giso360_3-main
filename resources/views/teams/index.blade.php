@@ -19,13 +19,13 @@
             <div class="col-12">
                 <div class="card card-background card-background-after-none align-items-start mt-4 mb-5">
                     <div class="full-background"
-                        style="background-image: url('../assets/img/header-blue-purple.jpg')"></div>
+                        style="background-image: url('{{ asset('assets/img/header-blue-purple.jpg') }}')"></div>
                     <div class="card-body text-start p-4 w-100">
                         <h3 class="text-white my-3">Team Management</h3>
                         <p class="mb-4 mt-2 font-weight-semibold">
                             Create or Join and Manage your Team
                         </p>
-                        <img src="../assets/img/team management 3d.png" alt="3d-cube"
+                        <img src="{{ asset('assets/img/team management 3d.png') }}" alt="3d-cube"
                             class="position-absolute top-0 end-1 w-25 max-width-200 mt-n6 d-sm-block d-none" />
                     </div>
                 </div>
@@ -151,8 +151,14 @@
                                 @foreach($teams as $team)
                                     <div class="col-xl-3 col-lg-4 col-md-6 col-sm-12 mb-4">
                                         <div class="team-card">
-                                            <div class="team-icon">
-                                                {{ strtoupper(substr($team->name, 0, 1)) }}
+                                            <div class="team-image-container">
+                                                @if($team->team_image)
+                                                    <img src="{{ asset('storage/' . $team->team_image) }}" alt="{{ $team->name }}" class="team-image">
+                                                @else
+                                                    <div class="team-icon">
+                                                        {{ strtoupper(substr($team->name, 0, 1)) }}
+                                                    </div>
+                                                @endif
                                             </div>
                                             <div class="team-info">
                                                 <h5 class="team-name">{{ $team->name }}</h5>
@@ -194,7 +200,6 @@
         --border-dark: rgba(30, 41, 59, 0.6);
     }
 
-
     /* Simple Card Styles */
     .simple-card {
         background: var(--light-bg);
@@ -207,13 +212,11 @@
         transition: transform 0.2s ease;
     }
 
-
     .card-header-simple {
-        background: linear-gradient(135deg, rgba(73, 0, 230, 0.1) 0%, rgba(73, 0, 230, 0.1) 100%);
+        background: linear-gradient(135deg, rgba(119, 77, 211, 0.1) 0%, rgba(119, 77, 211, 0.1) 100%);
         padding: 1.5rem;
         border-bottom: 2px solid var(--border-color);
     }
-
 
     .card-header-simple p {
         color: var(--secondary);
@@ -292,17 +295,54 @@
         border-color: #6439b3;
     }
 
-    /* Team Card Styles */
+    /* --- START: NEW & UPDATED TEAM CARD STYLES --- */
+
+    /* Team Card Image Container - FIXED SIZE */
+    .team-image-container {
+        position: relative;
+        width: 100%;
+        height: 200px;           /* FIXED height - all cards will be this tall */
+        overflow: hidden;
+        border-radius: 12px 12px 0 0; /* Rounded top corners to match card */
+        background-color: #f8f9fa; /* A light background for the fallback icon */
+    }
+
+    /* The uploaded image itself */
+    .team-image {
+        width: 100%;
+        height: 100%;
+        object-fit: cover;      /* KEY: Scales image and crops to fit without distortion */
+        display: block;
+    }
+
+    /* Fallback icon for teams without a picture */
+    .team-icon {
+        position: absolute;
+        top: 0;
+        left: 0;
+        width: 100%;
+        height: 100%;
+        display: flex;
+        align-items: center;
+        justify-content: center;
+        background: linear-gradient(135deg, var(--primary) 0%, #9d72ff 100%);
+        color: white;
+        font-size: 4rem;
+        font-weight: bold;
+        border-radius: 12px 12px 0 0;
+    }
+
+    /* Updated Team Card Style */
     .team-card {
         background: var(--white);
         border-radius: 12px;
-        padding: 1.5rem;
         border: 2px solid var(--border-color);
         box-shadow: 0 4px 12px rgba(0, 0, 0, 0.08);
         height: 100%;
         display: flex;
         flex-direction: column;
         transition: all 0.2s ease;
+        padding: 0; /* REMOVED padding from card itself */
     }
 
     .team-card:hover {
@@ -311,24 +351,11 @@
         border-color: var(--border-dark);
     }
 
-    .team-icon {
-        width: 60px;
-        height: 60px;
-        border-radius: 50%;
-        background: linear-gradient(135deg, var(--primary) 0%, var(--secondary) 100%);
-        color: var(--white);
-        display: flex;
-        align-items: center;
-        justify-content: center;
-        font-size: 1.5rem;
-        font-weight: bold;
-        margin: 0 auto 1rem;
-    }
-
     .team-info {
         flex-grow: 1;
         display: flex;
         flex-direction: column;
+        padding: 1.5rem; /* ADDED padding here instead */
     }
 
     .team-name {
@@ -373,5 +400,7 @@
         color: var(--white);
         border-color: var(--primary);
     }
+
+    /* --- END: NEW & UPDATED TEAM CARD STYLES --- */
     </style>
 </x-app-layout>

@@ -1,7 +1,7 @@
 <head>
     <meta charset="UTF-8">
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
-    <title>AI Assistant</title>
+    
     <!-- CSRF Token (you'll need to add this in your Laravel layout) -->
     <meta name="csrf-token" content="{{ csrf_token() }}">
     
